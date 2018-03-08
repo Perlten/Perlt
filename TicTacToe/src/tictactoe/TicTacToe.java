@@ -48,7 +48,7 @@ public class TicTacToe extends Application {
         grid.getChildren().addAll(buttonList);
         grid.getChildren().addAll(playerTurn, playerWin);
 
-        Scene scene = new Scene(grid, 500, 500);
+        Scene scene = new Scene(grid, 475, 450);
 
         String css = this.getClass().getResource("Viper.css").toExternalForm();
         scene.getStylesheets().add(css);
