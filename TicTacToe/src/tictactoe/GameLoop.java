@@ -43,7 +43,7 @@ public class GameLoop extends Task<Integer> {
                 }
             }
             if(full){
-                ttt.close();
+                break;
             }
         }
         printWinner();

@@ -99,7 +99,6 @@ public class TicTacToe extends Application {
     public void close() throws Exception {
         Platform.runLater(() -> {
             ConfirmBox cb = new ConfirmBox();
-            System.out.println("Hej");
             boolean answer = cb.confirm("Quit?", "Do you whanna restart or quit the game");
             if (answer) {
                 System.out.println("Restarting app!");
