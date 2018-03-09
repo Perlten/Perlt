@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe;
 
 import java.util.ArrayList;
@@ -27,7 +22,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tic Tac Toe");
-
+        
         grid = new GridPane();
         grid.setPadding(new Insets(10));
         grid.setHgap(8);
@@ -79,28 +74,25 @@ public class TicTacToe extends Application {
     }
 
     private void makeMove(Button button) {
+        //TODO: wired bug if x presses his own button again the text get small
         button.getStyleClass().clear();
         String player;
-        if (player1Turn) {
-            player = "O";
-            player1Turn = false;
-            playerTurn.setText("Player turn: X");
-            button.getStyleClass().add("usedXButton");
-        } else {
+        if (player1Turn && (!button.getText().equals("O") )) {
             player = "X";
-            player1Turn = true;
+            player1Turn = false;
             playerTurn.setText("Player turn: O");
+            button.getStyleClass().add("usedXButton");
+            button.setText(player);
+        } else if(!button.getText().equals("X")){
+            player = "O";
+            player1Turn = true;
+            playerTurn.setText("Player turn: X");
             button.getStyleClass().add("usedOButton");
+            button.setText(player);
         }
-        button.setText(player);
     }
     
-    public void printNode(Node node, int x, int y){
-        GridPane.setConstraints(node, x, y);
-        grid.getChildren().add(node);
-    }
-    
-    public void close(){
+    public void close() throws Exception{
         Platform.exit();
     }
 
