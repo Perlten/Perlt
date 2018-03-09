@@ -37,6 +37,16 @@ public class GameLoop extends Task<Integer> {
                     || (compare(2, 4) && compare(4, 6))) {
                 break;
             }
+            boolean full = true;
+            for(Button x : buttonList){
+                if(!x.getText().equals("X") && !x.getText().equals("O")){
+                    full = false;
+                    break;
+                }
+            }
+            if(full){
+                ttt.close();
+            }
         }
         printWinner();
         return 1;

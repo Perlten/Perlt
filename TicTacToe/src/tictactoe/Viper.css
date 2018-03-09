@@ -5,12 +5,12 @@
 
 .usedXButton{
     -fx-alignment: center;
-    -fx-font-size: 30;
+    -fx-font-size: 40;
     -fx-text-fill: blue;
 }
 
 .usedOButton{
     -fx-alignment: center;
-    -fx-font-size: 30;
+    -fx-font-size: 40;
     -fx-text-fill: red;
 }
