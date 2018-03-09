@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
 
-public class GameLoop extends Task<Integer> {
+public class GameLoop implements Runnable{
 
     private List<Button> buttonList;
     private TicTacToe ttt;
@@ -15,8 +15,8 @@ public class GameLoop extends Task<Integer> {
         this.ttt = ttt;
     }
 
-    @Override
-    protected Integer call() throws Exception {
+   @Override
+    public void run() {
         boolean loop = true;
         while (loop) {
             System.out.print("");
@@ -47,7 +47,6 @@ public class GameLoop extends Task<Integer> {
             }
         }
         printWinner();
-        return 1;
     }
 
     public void printWinner() {
@@ -67,4 +66,5 @@ public class GameLoop extends Task<Integer> {
         return buttonList.get(index1).getText().equals(buttonList.get(index2).getText());
     }
 
+    
 }

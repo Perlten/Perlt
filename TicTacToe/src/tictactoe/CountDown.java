@@ -5,6 +5,8 @@
  */
 package tictactoe;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
@@ -13,7 +15,7 @@ import javafx.scene.control.Label;
  *
  * @author Perlt
  */
-public class CountDown extends Task<Integer> {
+public class CountDown implements Runnable{
 
     private TicTacToe tic;
     private int count = 3;
@@ -25,7 +27,7 @@ public class CountDown extends Task<Integer> {
     }
 
     @Override
-    protected Integer call() throws Exception {
+    public void run() {
         try {
             Platform.runLater(() -> {
                 label.setText("Closeing program in " + String.valueOf(count) + " sec");
@@ -46,8 +48,10 @@ public class CountDown extends Task<Integer> {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-        tic.close();
-        return 1;
+        try {
+            tic.close();
+        } catch (Exception ex) {
+            Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
 }
