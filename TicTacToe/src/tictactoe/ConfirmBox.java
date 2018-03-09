@@ -23,12 +23,10 @@ public class ConfirmBox {
         
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
-        stage.setMinWidth(200);
-        stage.setMinHeight(200);
         
         Label label = new Label(message);
-        Button yesButton = new Button("Yes");
-        Button noButton = new Button("No");
+        Button yesButton = new Button("Restart");
+        Button noButton = new Button("Quit");
 
         
         yesButton.setOnAction(e -> {
@@ -45,7 +43,9 @@ public class ConfirmBox {
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         
-        Scene scene = new Scene(layout, 300, 300);
+        Scene scene = new Scene(layout, 400, 300);
+        String css = this.getClass().getResource("Viper.css").toExternalForm();
+        scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.showAndWait();
         

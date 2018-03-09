@@ -17,12 +17,15 @@ public class TicTacToe extends Application {
     private Label playerTurn;
     private GridPane grid;
     private Label playerWin;
-    private Stage stage;
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tic Tac Toe");
-        this.stage = stage;
+        
+        stage.setOnCloseRequest((event) -> {
+            event.consume();
+            Platform.exit();
+        });
 
         grid = new GridPane();
         grid.setPadding(new Insets(10));
@@ -97,12 +100,12 @@ public class TicTacToe extends Application {
         Platform.runLater(() -> {
             ConfirmBox cb = new ConfirmBox();
             System.out.println("Hej");
-            boolean answer = cb.confirm("Quit?", "Do you whanna quit or restart the game");
+            boolean answer = cb.confirm("Quit?", "Do you whanna restart or quit the game");
             if (answer) {
-                Platform.exit();
-            } else {
                 System.out.println("Restarting app!");
                 Platform.runLater(() -> new TicTacToe().start(new Stage()));
+            } else {
+                Platform.exit();
             }
         });
     }
