@@ -4,7 +4,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 public class GameLoop extends Task<Integer> {
 
@@ -19,7 +18,6 @@ public class GameLoop extends Task<Integer> {
     @Override
     protected Integer call() throws Exception {
         boolean loop = true;
-        int count = 0;
         while (loop) {
             System.out.print("");
             if ( //Hori
@@ -55,9 +53,9 @@ public class GameLoop extends Task<Integer> {
     public void printWinner() {
         Platform.runLater(() -> {
             if (ttt.isPlayer1Turn()) {
-                ttt.getPlayerWin().setText("Player X win");
-            } else {
                 ttt.getPlayerWin().setText("Player O win");
+            } else {
+                ttt.getPlayerWin().setText("Player X win");
             }
             Thread th = new Thread(new CountDown(ttt));
             th.setDaemon(true);
