@@ -1,6 +1,5 @@
 .emptyButton{
     -fx-text-fill: transparent;
-    -fx-background-color: black;
 }
 
 .usedXButton{
@@ -15,6 +14,10 @@
     -fx-text-fill: red;
 }
 
-.root{
-    -fx-background-color: green;
+.root {
+    -fx-background-color: black;
+}
+
+.label{
+    -fx-text-fill: white;
 }
