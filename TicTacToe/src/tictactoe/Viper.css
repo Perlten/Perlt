@@ -3,7 +3,14 @@
     /*-fx-font-size: 0;*/
 }
 
-.usedButton{
+.usedXButton{
     -fx-alignment: center;
     -fx-font-size: 30;
+    -fx-text-fill: blue;
+}
+
+.usedOButton{
+    -fx-alignment: center;
+    -fx-font-size: 30;
+    -fx-text-fill: red;
 }

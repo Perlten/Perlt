@@ -79,21 +79,20 @@ public class TicTacToe extends Application {
     }
 
     private void makeMove(Button button) {
-        //TODO: make so you cant chooce button already clicked
+        button.getStyleClass().clear();
         String player;
         if (player1Turn) {
             player = "O";
             player1Turn = false;
             playerTurn.setText(PRINT + "X");
-
+            button.getStyleClass().add("usedXButton");
         } else {
             player = "X";
             player1Turn = true;
             playerTurn.setText(PRINT + "O");
+            button.getStyleClass().add("usedOButton");
         }
         button.setText(player);
-        button.getStyleClass().clear();
-        button.getStyleClass().add("usedButton");
     }
     
     public void close(){
