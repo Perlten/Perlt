@@ -1,6 +1,5 @@
 .emptyButton{
     -fx-text-fill: transparent;
-    /*-fx-font-size: 0;*/
 }
 
 .usedXButton{
@@ -13,4 +12,8 @@
     -fx-alignment: center;
     -fx-font-size: 40;
     -fx-text-fill: red;
+}
+
+.root{
+    -fx-background-color: green;
 }
