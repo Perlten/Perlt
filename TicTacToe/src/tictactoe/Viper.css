@@ -1,3 +1,9 @@
-.button{
-    /*-fx-font: ";*/
+.emptyButton{
+    -fx-text-fill: transparent;
+    /*-fx-font-size: 0;*/
+}
+
+.usedButton{
+    -fx-alignment: center;
+    -fx-font-size: 30;
 }

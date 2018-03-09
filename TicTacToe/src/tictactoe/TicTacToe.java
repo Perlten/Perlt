@@ -66,6 +66,7 @@ public class TicTacToe extends Application {
                 yVal++;
             }
             Button button = new Button(String.valueOf(i));
+            button.getStyleClass().add("emptyButton");
             GridPane.setConstraints(button, i % 3, yVal);
             list.add(button);
         }
@@ -91,6 +92,8 @@ public class TicTacToe extends Application {
             playerTurn.setText(PRINT + "O");
         }
         button.setText(player);
+        button.getStyleClass().clear();
+        button.getStyleClass().add("usedButton");
     }
     
     public void close(){
