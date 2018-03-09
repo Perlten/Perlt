@@ -21,7 +21,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tic Tac Toe");
-        
+
         stage.setOnCloseRequest((event) -> {
             event.consume();
             Platform.exit();
@@ -78,16 +78,16 @@ public class TicTacToe extends Application {
     }
 
     private void makeMove(Button button) {
-        //TODO: wired bug if x presses his own button again the text get small
-        button.getStyleClass().clear();
         String player;
         if (player1Turn && (!button.getText().equals("O"))) {
+            button.getStyleClass().clear();
             player = "X";
             player1Turn = false;
             playerTurn.setText("Player turn: O");
             button.getStyleClass().add("usedXButton");
             button.setText(player);
         } else if (!button.getText().equals("X")) {
+            button.getStyleClass().clear();
             player = "O";
             player1Turn = true;
             playerTurn.setText("Player turn: X");
