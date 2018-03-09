@@ -16,22 +16,35 @@ import javafx.scene.control.Label;
 public class CountDown extends Task<Integer> {
 
     private TicTacToe tic;
+    private int count = 3;
+    private Label label;
 
     public CountDown(TicTacToe tic) {
         this.tic = tic;
+        this.label = new Label();
     }
 
     @Override
     protected Integer call() throws Exception {
-        Platform.runLater(() -> {
-            Label countDown = new Label("Closeing program in 3 sec");
-            tic.getGrid().add(countDown, 1, 5);
-        });
-        for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(i * 1000);
-            } catch (InterruptedException interrupted) {
-            }
+        try {
+            Platform.runLater(() -> {
+                label.setText("Closeing program in " + String.valueOf(count) + " sec");
+                tic.getGrid().add(label, 1, 5);
+            });
+            Thread.sleep(1000);
+            count--;
+            Platform.runLater(() -> {
+                label.setText("Closeing program in " + String.valueOf(count) + " sec");
+            });
+            Thread.sleep(1000);
+            count--;
+            Platform.runLater(() -> {
+               label.setText("Closeing program in " + String.valueOf(count) + " sec");
+            });
+            Thread.sleep(1000);
+            
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
         tic.close();
         return 1;

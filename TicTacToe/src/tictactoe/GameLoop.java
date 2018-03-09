@@ -59,8 +59,6 @@ public class GameLoop extends Task<Integer> {
             } else {
                 ttt.getPlayerWin().setText("Player O win");
             }
-            Label countDown = new Label();
-            ttt.getGrid().add(countDown, 1, 4);
             Thread th = new Thread(new CountDown(ttt));
             th.setDaemon(true);
             th.start();

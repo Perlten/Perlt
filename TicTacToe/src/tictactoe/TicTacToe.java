@@ -10,6 +10,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +21,6 @@ public class TicTacToe extends Application {
 
     private boolean player1Turn = true;
     private Label playerTurn;
-    private final String PRINT = "Player turn: ";
     private GridPane grid;
     private Label playerWin;
 
@@ -35,7 +35,7 @@ public class TicTacToe extends Application {
 
         List<Button> buttonList = makeGrid();
 
-        playerTurn = new Label(PRINT + "X");
+        playerTurn = new Label("Player turn: X");
         GridPane.setConstraints(playerTurn, 8, 1);
 
         playerWin = new Label();
@@ -84,15 +84,20 @@ public class TicTacToe extends Application {
         if (player1Turn) {
             player = "O";
             player1Turn = false;
-            playerTurn.setText(PRINT + "X");
+            playerTurn.setText("Player turn: X");
             button.getStyleClass().add("usedXButton");
         } else {
             player = "X";
             player1Turn = true;
-            playerTurn.setText(PRINT + "O");
+            playerTurn.setText("Player turn: O");
             button.getStyleClass().add("usedOButton");
         }
         button.setText(player);
+    }
+    
+    public void printNode(Node node, int x, int y){
+        GridPane.setConstraints(node, x, y);
+        grid.getChildren().add(node);
     }
     
     public void close(){
