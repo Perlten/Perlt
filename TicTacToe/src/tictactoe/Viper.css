@@ -1,5 +1,6 @@
 .emptyButton{
     -fx-text-fill: transparent;
+    -fx-background-color: black;
 }
 
 .usedXButton{

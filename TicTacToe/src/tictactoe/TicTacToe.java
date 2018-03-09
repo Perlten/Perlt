@@ -5,7 +5,6 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,11 +17,13 @@ public class TicTacToe extends Application {
     private Label playerTurn;
     private GridPane grid;
     private Label playerWin;
+    private Stage stage;
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tic Tac Toe");
-        
+        this.stage = stage;
+
         grid = new GridPane();
         grid.setPadding(new Insets(10));
         grid.setHgap(8);
@@ -77,13 +78,13 @@ public class TicTacToe extends Application {
         //TODO: wired bug if x presses his own button again the text get small
         button.getStyleClass().clear();
         String player;
-        if (player1Turn && (!button.getText().equals("O") )) {
+        if (player1Turn && (!button.getText().equals("O"))) {
             player = "X";
             player1Turn = false;
             playerTurn.setText("Player turn: O");
             button.getStyleClass().add("usedXButton");
             button.setText(player);
-        } else if(!button.getText().equals("X")){
+        } else if (!button.getText().equals("X")) {
             player = "O";
             player1Turn = true;
             playerTurn.setText("Player turn: X");
@@ -91,9 +92,19 @@ public class TicTacToe extends Application {
             button.setText(player);
         }
     }
-    
-    public void close() throws Exception{
-        Platform.exit();
+
+    public void close() throws Exception {
+        Platform.runLater(() -> {
+            ConfirmBox cb = new ConfirmBox();
+            System.out.println("Hej");
+            boolean answer = cb.confirm("Quit?", "Do you whanna quit or restart the game");
+            if (answer) {
+                Platform.exit();
+            } else {
+                System.out.println("Restarting app!");
+                Platform.runLater(() -> new TicTacToe().start(new Stage()));
+            }
+        });
     }
 
     public Label getPlayerWin() {
