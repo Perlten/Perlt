@@ -5,17 +5,16 @@ import javafx.scene.control.Label;
 
 public class CountDown implements Runnable {
 
-    private final TicTacToe tic;
+    private  TicTacToe tic;
     private int seconds = 3;
-    private final Label label;
 
     public CountDown(TicTacToe tic) {
         this.tic = tic;
-        this.label = new Label();
     }
 
     @Override
     public void run() {
+        Label label = new Label();
         int count = seconds;
         Platform.runLater(() -> {
             tic.getGrid().add(label, 1, 5);
