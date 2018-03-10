@@ -23,8 +23,7 @@ public class TicTacToe extends Application {
         stage.setTitle("Tic Tac Toe");
 
         stage.setOnCloseRequest((event) -> {
-            event.consume();
-            Platform.exit();
+            close();
         });
 
         grid = new GridPane();
@@ -43,7 +42,7 @@ public class TicTacToe extends Application {
         Thread th = new Thread(new GameLoop(buttonList, this));
         th.setDaemon(true);
         th.start();
-
+        
         grid.getChildren().addAll(buttonList);
         grid.getChildren().addAll(playerTurn, playerWin);
 
@@ -93,10 +92,11 @@ public class TicTacToe extends Application {
             playerTurn.setText("Player turn: X");
             button.getStyleClass().add("usedOButton");
             button.setText(player);
+            
         }
     }
 
-    public void close() throws Exception {
+    public void close() {
         Platform.runLater(() -> {
             ConfirmBox cb = new ConfirmBox();
             boolean answer = cb.confirm("Quit?", "Do you whanna restart or quit the game");
@@ -104,7 +104,11 @@ public class TicTacToe extends Application {
                 System.out.println("Restarting app!");
                 Platform.runLater(() -> new TicTacToe().start(new Stage()));
             } else {
+            try{
                 Platform.exit();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
