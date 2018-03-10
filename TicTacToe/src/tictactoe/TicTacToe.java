@@ -46,7 +46,7 @@ public class TicTacToe extends Application {
         grid.getChildren().addAll(buttonList);
         grid.getChildren().addAll(playerTurn, playerWin);
 
-        Scene scene = new Scene(grid, 500, 480);
+        Scene scene = new Scene(grid, 600, 500);
 
         String css = this.getClass().getResource("Viper.css").toExternalForm();
         scene.getStylesheets().add(css);
@@ -99,7 +99,7 @@ public class TicTacToe extends Application {
     public void close() {
         Platform.runLater(() -> {
             ConfirmBox cb = new ConfirmBox();
-            boolean answer = cb.confirm("Quit?", "Do you whanna restart or quit the game");
+            boolean answer = cb.confirm("Quit?", "Do you wanna restart or quit the game?");
             if (answer) {
                 System.out.println("Restarting app!");
                 Platform.runLater(() -> new TicTacToe().start(new Stage()));

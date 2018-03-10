@@ -43,7 +43,7 @@ public class ConfirmBox {
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         
-        Scene scene = new Scene(layout, 400, 300);
+        Scene scene = new Scene(layout, 500, 300);
         String css = this.getClass().getResource("Viper.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);

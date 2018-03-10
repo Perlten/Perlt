@@ -2,7 +2,6 @@ package tictactoe;
 
 import java.util.List;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.scene.control.Button;
 
 public class GameLoop implements Runnable{
@@ -17,8 +16,8 @@ public class GameLoop implements Runnable{
 
    @Override
     public void run() {
-        boolean loop = true;
-        while (loop) {
+        boolean tie = false;
+        while (true) {
             System.out.print("");
             if ( //Hori
                     (compare(0, 1) && compare(1, 2))
@@ -43,18 +42,21 @@ public class GameLoop implements Runnable{
                 }
             }
             if(full){
+                tie = true;
                 break;
             }
         }
-        printWinner();
+        printWinner(tie);
     }
 
-    public void printWinner() {
+    public void printWinner(boolean tie) {
         Platform.runLater(() -> {
-            if (ttt.isPlayer1Turn()) {
-                ttt.getPlayerWin().setText("Player O win");
+            if(tie){
+                ttt.getPlayerWin().setText("Its a tie");
+            }else if (ttt.isPlayer1Turn()) {
+                ttt.getPlayerWin().setText("Player O wins");
             } else {
-                ttt.getPlayerWin().setText("Player X win");
+                ttt.getPlayerWin().setText("Player X wins");
             }
             Thread th = new Thread(new CountDown(ttt));
             th.setDaemon(true);
