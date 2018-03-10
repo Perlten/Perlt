@@ -5,9 +5,9 @@ import javafx.scene.control.Label;
 
 public class CountDown implements Runnable {
 
-    private TicTacToe tic;
+    private final TicTacToe tic;
     private int seconds = 3;
-    private Label label;
+    private final Label label;
 
     public CountDown(TicTacToe tic) {
         this.tic = tic;
