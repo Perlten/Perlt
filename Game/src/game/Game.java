@@ -6,6 +6,8 @@ import entity.Player;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import keyinput.KeyInput;
+import state.GameState;
+import tile.TileManager;
 
 public class Game implements Runnable {
 
@@ -23,8 +25,7 @@ public class Game implements Runnable {
 
     private FpsLock fpsLock;
 
-    
-    private Player player;
+    private GameState gameState;
 
     public Game(int width, int height, String title) {
         this.width = width;
@@ -34,17 +35,17 @@ public class Game implements Runnable {
     }
 
     private void init() {
-        this.display = new Display(width, height, title);
-        this.keyInput = new KeyInput();
+        display = new Display(width, height, title);
+        keyInput = new KeyInput();
         display.getFrame().addKeyListener(keyInput);
-        this.fpsLock = new FpsLock(60);
-        this.player = new Player("resources/textures/ezio.png",100, 100, this);
+        fpsLock = new FpsLock(60);
+        TileManager.init();
+        gameState = new GameState(this);
     }
 
     public void update() {
         keyInput.update();
-        player.update();
-       
+        gameState.update();
     }
 
     public void render() {
@@ -59,7 +60,7 @@ public class Game implements Runnable {
         g.clearRect(0, 0, width, height);
         //Draw to screen
 
-        player.render(g);
+        gameState.render(g);
         
         //End draw
         bs.show();
