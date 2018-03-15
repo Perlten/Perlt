@@ -31,8 +31,8 @@ public class GameState {
         world.render(g);
         player.render(g);
     }
-    
-    
-    
-    
+
+    public Player getPlayer() {
+        return player;
+    }
 }

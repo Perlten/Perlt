@@ -27,7 +27,6 @@ public class Tile {
         }
         this.solid = solid;
         this.id = id;
-        TileManager.tileList.add(this);
     }
     
     public void update(){
@@ -36,5 +35,9 @@ public class Tile {
     
     public void render(Graphics g, int x, int y){
         g.drawImage(texture, x, y, null);
+    }
+
+    public int getId() {
+        return id;
     }
 }

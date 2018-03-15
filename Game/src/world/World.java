@@ -29,7 +29,8 @@ public class World {
     public void render(Graphics g) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = TileManager.tileList.get(world[x][y]);
+                int test = world[x][y];
+                Tile tile = TileManager.tileList.get(test);
                 tile.render(g, x * 32, y * 32);
             }
         }
@@ -41,7 +42,7 @@ public class World {
 
         String line;
         while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
+            sb.append(line + System.lineSeparator());
         }
         String worldString = sb.toString();
         String[] temp = worldString.split("\\s+");
@@ -53,8 +54,7 @@ public class World {
         world = new int[width][height];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int tmp = Integer.parseInt(temp[x + y + 4]);
-                world[x][y] = tmp;
+                world[x][y] = Integer.parseInt(temp[(x + y * width) + 4]);;
             }
         }
     }

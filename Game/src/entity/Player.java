@@ -2,6 +2,7 @@ package entity;
 
 import game.Game;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class Player {
     private int x, y;
     private Game game;
     private KeyInput keyInput;
+    private Rectangle collisionBox;
+    
 
     public Player(String path, int x, int y, Game game) {
         try {
@@ -26,14 +29,17 @@ public class Player {
         this.y = y;
         this.game = game;
         this.keyInput = game.getKeyInput();
+        collisionBox = new Rectangle(x + 20, y + 30, 25, 25);
     }
     
     public void update(){
         move();
+        updateCollision();
     }
     
     public void render(Graphics g){
         g.drawImage(texture, x, y, null);
+        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
     }
     
     private void move(){
@@ -50,4 +56,17 @@ public class Player {
             x += 3;
         }
     }
+    
+    private void updateCollision(){
+        collisionBox.setBounds(x + 20, y + 30, 25, 25);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
 }

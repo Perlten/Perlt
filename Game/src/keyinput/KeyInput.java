@@ -3,21 +3,17 @@ package keyinput;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/**
- *
- * @author Perlt
- */
-public class KeyInput implements KeyListener{
-    
+public class KeyInput implements KeyListener {
+
     private boolean[] keysPressed;
-    
-    private boolean up, down, left, right;
+
+    private boolean up, down, left, right, debug;
 
     public KeyInput() {
         this.keysPressed = new boolean[256];
     }
-    
-    public void update(){
+
+    public void update() {
         up = keysPressed[KeyEvent.VK_W];
         down = keysPressed[KeyEvent.VK_S];
         left = keysPressed[KeyEvent.VK_A];
@@ -31,12 +27,16 @@ public class KeyInput implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent ke) {
+         if (ke.getKeyCode() == KeyEvent.VK_U) {
+             debug = !debug;
+         }else{
         keysPressed[ke.getKeyCode()] = true;
+         }
     }
 
     @Override
     public void keyReleased(KeyEvent ke) {
-        keysPressed[ke.getKeyCode()] = false;
+            keysPressed[ke.getKeyCode()] = false;
     }
 
     public boolean isDown() {
@@ -53,5 +53,9 @@ public class KeyInput implements KeyListener{
 
     public boolean isRight() {
         return right;
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 }

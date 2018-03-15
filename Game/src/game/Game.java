@@ -3,6 +3,7 @@ package game;
 import display.Display;
 import display.FpsLock;
 import entity.Player;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import keyinput.KeyInput;
@@ -61,10 +62,21 @@ public class Game implements Runnable {
         //Draw to screen
 
         gameState.render(g);
+        debugMode();
         
         //End draw
         bs.show();
         g.dispose();
+    }
+    
+    private void debugMode(){
+        if(keyInput.isDebug()){
+            int playerX = gameState.getPlayer().getX();
+            int playerY = gameState.getPlayer().getY();
+            g.setColor(Color.red);
+            g.drawString("Pos X: " + String.valueOf(playerX), 10, 25);
+            g.drawString("Pos Y: " + String.valueOf(playerY), 10, 40);
+        }
     }
 
     @Override
@@ -102,5 +114,5 @@ public class Game implements Runnable {
     public KeyInput getKeyInput() {
         return keyInput;
     }
-
+    
 }
