@@ -31,7 +31,6 @@ public class KeyInput implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        System.out.println(ke.getKeyChar());
         keysPressed[ke.getKeyCode()] = true;
     }
 
