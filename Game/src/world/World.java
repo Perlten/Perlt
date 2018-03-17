@@ -1,9 +1,13 @@
 package world;
 
+import entity.Star;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tile.Tile;
@@ -13,13 +17,15 @@ public class World {
 
     private int[][] world;
     private int width, height;
-
+    private List<Star> starList = new ArrayList<>();
+    
     public World(String path) {
         try {
             makeWorld(path);
         } catch (IOException ex) {
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
         }
+        CreateStars(5);
     }
 
     public void update() {
@@ -33,6 +39,9 @@ public class World {
                 Tile tile = TileManager.tileList.get(test);
                 tile.render(g, x * 32, y * 32);
             }
+        }
+        for(Star star : starList){
+            star.render(g);
         }
     }
 
@@ -58,6 +67,13 @@ public class World {
             }
         }
     }
+    
+    private void CreateStars(int amount){
+        Random ra = new Random();
+        for (int i = 0; i < amount; i++) {
+            starList.add(new Star(ra.nextInt(550), ra.nextInt(400)));
+        }
+    }
 
     public int[][] getWorld() {
         return world;
@@ -70,5 +86,8 @@ public class World {
     public int getWidth() {
         return width;
     }
-    
+
+    public List<Star> getStarList() {
+        return starList;
+    }
 }
