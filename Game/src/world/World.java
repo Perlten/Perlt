@@ -59,8 +59,16 @@ public class World {
         }
     }
 
-    public static void main(String[] args) {
-        World world = new World("worlds/world1.txt");
+    public int[][] getWorld() {
+        return world;
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+    
 }

@@ -18,7 +18,7 @@ public class GameState {
     public GameState(Game game) {
         this.game = game;
         world = new World("worlds/world1.txt");
-        this.player = new Player("resources/textures/ezio.png",100, 100, game);
+        this.player = new Player("resources/textures/ezio.png",100, 100, game, world);
     }
     
     

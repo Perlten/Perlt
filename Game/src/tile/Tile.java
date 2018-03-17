@@ -40,4 +40,9 @@ public class Tile {
     public int getId() {
         return id;
     }
+
+    public boolean isSolid() {
+        return solid;
+    }
+    
 }
