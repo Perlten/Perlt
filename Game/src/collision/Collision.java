@@ -23,22 +23,22 @@ public class Collision {
 
     public boolean checkCollisionWithTile(String direction){
         if(direction.equalsIgnoreCase("up")){
-            if (isColliding(cb.x, cb.y - 3) && isColliding(cb.x + cb.width, cb.y - 3)) {
+            if (!isCollidingWithSolidTile(cb.x, cb.y - 3) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y - 3)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("down")){
-             if (isColliding(cb.x, cb.y + cb.height + 3) && isColliding(cb.x + cb.width, cb.y + cb.height + 3)) {
+             if (!isCollidingWithSolidTile(cb.x, cb.y + cb.height + 3) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y + cb.height + 3)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("left")){
-              if (isColliding(cb.x - 3, cb.y) && isColliding(cb.x - 3, cb.y + cb.height)) {
+              if (!isCollidingWithSolidTile(cb.x - 3, cb.y) && !isCollidingWithSolidTile(cb.x - 3, cb.y + cb.height)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("right")){
-            if(isColliding(cb.x + cb.width + 3, cb.y) && isColliding(cb.x + cb.width + 3, cb.y + cb.height)){
+            if(!isCollidingWithSolidTile(cb.x + cb.width + 3, cb.y) && !isCollidingWithSolidTile(cb.x + cb.width + 3, cb.y + cb.height)){
                 return true;
             }
         }
@@ -71,7 +71,7 @@ public class Collision {
     }
     
     
-    private boolean isColliding(int MoveX, int moveY) {
+    private boolean isCollidingWithSolidTile(int MoveX, int moveY) {
 
         int[][] tempWorld = world.getWorld();
 
@@ -79,12 +79,12 @@ public class Collision {
             int goingTo = tempWorld[MoveX / 32][moveY / 32];
             Tile tile = TileManager.tileList.get(goingTo);
             if (tile.isSolid()) {
-                return false;
+                return true;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private boolean isTouchingStar(int x, int y) {

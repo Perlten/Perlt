@@ -24,7 +24,8 @@ public class Player {
     private Collision col;
     
     private Font scoreFont;
-
+    private Font normalFont;
+    
     private int score;
 
     public Player(String path, int x, int y, Game game, World world) {
@@ -41,7 +42,8 @@ public class Player {
         cb = new Rectangle(x + 23, y + 30, 25, 25);
         col = new Collision(this, world);
         score = 0;
-        scoreFont = new Font("roman", 30, 30);
+        scoreFont = new Font("Dialog", 1, 35);
+        normalFont = new Font("roman", 0, 12);
     }
 
     public void update() {
@@ -55,6 +57,8 @@ public class Player {
         g.setColor(Color.orange);
         g.setFont(scoreFont);
         g.drawString(String.valueOf(score), 8, 30);
+        g.setFont(normalFont);
+        
     }
 
     private void move() {

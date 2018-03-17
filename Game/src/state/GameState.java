@@ -1,7 +1,6 @@
 package state;
 
 import entity.Player;
-import entity.Star;
 import game.Game;
 import java.awt.Graphics;
 import world.World;
@@ -17,8 +16,7 @@ public class GameState {
     public GameState(Game game) {
         this.game = game;
         world = new World("worlds/world1.txt");
-        player = new Player("resources/textures/ezio.png",100, 100, game, world);
-        
+        player = new Player("resources/textures/player.png",100, 100, game, world);
     }
     
     public void update(){

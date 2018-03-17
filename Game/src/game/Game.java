@@ -74,8 +74,8 @@ public class Game implements Runnable {
             int playerX = gameState.getPlayer().getX();
             int playerY = gameState.getPlayer().getY();
             g.setColor(Color.red);
-            g.drawString("Pos X: " + String.valueOf(playerX), 10, 25);
-            g.drawString("Pos Y: " + String.valueOf(playerY), 10, 40);
+            g.drawString("Pos X: " + String.valueOf(playerX), 480, 20);
+            g.drawString("Pos Y: " + String.valueOf(playerY), 480, 35);
         }
     }
 
