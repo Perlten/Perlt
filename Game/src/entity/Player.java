@@ -17,7 +17,7 @@ public class Player {
     private int x, y;
     private Game game;
     private KeyInput keyInput;
-    private Rectangle collisionBox;
+    private Rectangle cb;
     private World world;
     private Collision col;
 
@@ -32,7 +32,7 @@ public class Player {
         this.game = game;
         this.world = world;
         this.keyInput = game.getKeyInput();
-        collisionBox = new Rectangle(x + 20, y + 30, 25, 25);
+        cb = new Rectangle(x + 20, y + 30, 25, 25);
         col = new Collision(this, world);
     }
 
@@ -43,35 +43,35 @@ public class Player {
 
     public void render(Graphics g) {
         g.drawImage(texture, x, y, null);
-        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
+        g.fillRect(cb.x, cb.y, cb.width, cb.height);
     }
 
     private void move() {
 
         if (keyInput.isUp()) {
-            if (col.isColliding(collisionBox.x, collisionBox.y - 3) && col.isColliding(collisionBox.x + collisionBox.width, collisionBox.y - 3)) {
+            if (col.isColliding(cb.x, cb.y - 3) && col.isColliding(cb.x + cb.width, cb.y - 3)) {
                 y -= 3;
             }
         }
         if (keyInput.isDown()) {
-            if (col.isColliding(collisionBox.x, collisionBox.y + collisionBox.height + 3) && col.isColliding(collisionBox.x + collisionBox.width, collisionBox.y + collisionBox.height + 3)) {
+            if (col.isColliding(cb.x, cb.y + cb.height + 3) && col.isColliding(cb.x + cb.width, cb.y + cb.height + 3)) {
                 y += 3;
             }
         }
         if (keyInput.isLeft()) {
-            if (col.isColliding(collisionBox.x - 3, collisionBox.y) && col.isColliding(collisionBox.x, collisionBox.y + collisionBox.height - 3)) {
+            if (col.isColliding(cb.x - 3, cb.y) && col.isColliding(cb.x - 3, cb.y + cb.height)) {
                 x -= 3;
             }
         }
         if (keyInput.isRight()) {
-            if(col.isColliding(collisionBox.x + collisionBox.width + 3, collisionBox.y) && col.isColliding(collisionBox.x + collisionBox.width + 3, collisionBox.y + collisionBox.height)){
+            if(col.isColliding(cb.x + cb.width + 3, cb.y) && col.isColliding(cb.x + cb.width + 3, cb.y + cb.height)){
                 x += 3;
             }
         }
     }
 
     private void updateCollision() {
-        collisionBox.setBounds(x + 20, y + 30, 25, 25);
+        cb.setBounds(x + 20, y + 30, 25, 25);
     }
 
     public int getX() {
