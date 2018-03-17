@@ -21,7 +21,7 @@ public class Player {
     private Rectangle cb;
     private World world;
     private Collision col;
-    
+
     private int score;
 
     public Player(String path, int x, int y, Game game, World world) {
@@ -55,35 +55,35 @@ public class Player {
     private void move() {
 
         if (keyInput.isUp()) {
-            if (col.isColliding(cb.x, cb.y - 3) && col.isColliding(cb.x + cb.width, cb.y - 3)) {
+            if (col.checkCollisionWithTile("up")) {
                 y -= 3;
             }
-             if (col.isTouchingStar(cb.x, cb.y - 3) || col.isTouchingStar(cb.x + cb.width, cb.y - 3)){
-                 score++;
-             }
+            if (col.checkCollisionWithStar("up")) {
+                score++;
+            }
         }
         if (keyInput.isDown()) {
-            if (col.isColliding(cb.x, cb.y + cb.height + 3) && col.isColliding(cb.x + cb.width, cb.y + cb.height + 3)) {
+            if (col.checkCollisionWithTile("down")) {
                 y += 3;
             }
-             if (col.isTouchingStar(cb.x, cb.y + cb.height + 3) || col.isTouchingStar(cb.x + cb.width, cb.y + cb.height + 3)){
-                 score ++;
-             }
+            if (col.checkCollisionWithStar("down")) {
+                score++;
+            }
         }
         if (keyInput.isLeft()) {
-            if (col.isColliding(cb.x - 3, cb.y) && col.isColliding(cb.x - 3, cb.y + cb.height)) {
+            if (col.checkCollisionWithTile("left")) {
                 x -= 3;
             }
-             if (col.isTouchingStar(cb.x - 3, cb.y) || col.isTouchingStar(cb.x - 3, cb.y + cb.height)){
-                 score++;
-             }
+            if (col.checkCollisionWithStar("left")) {
+                score++;
+            }
         }
         if (keyInput.isRight()) {
-            if(col.isColliding(cb.x + cb.width + 3, cb.y) && col.isColliding(cb.x + cb.width + 3, cb.y + cb.height)){
+            if (col.checkCollisionWithTile("right")) {
                 x += 3;
             }
-            if(col.isTouchingStar(cb.x + cb.width + 3, cb.y) || col.isTouchingStar(cb.x + cb.width + 3, cb.y + cb.height)){
-                score ++;
+            if (col.checkCollisionWithStar("right")) {
+                score++;
             }
         }
     }
@@ -100,4 +100,7 @@ public class Player {
         return y;
     }
 
+    public Rectangle getCb() {
+        return cb;
+    }
 }
