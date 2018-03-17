@@ -21,7 +21,6 @@ public class GameState {
         
     }
     
-    
     public void update(){
         world.update();
         player.update();

@@ -25,7 +25,7 @@ public class World {
         } catch (IOException ex) {
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CreateStars(5);
+        CreateStars(10);
     }
 
     public void update() {

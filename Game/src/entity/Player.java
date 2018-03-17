@@ -3,6 +3,7 @@ package entity;
 import collision.Collision;
 import game.Game;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,8 @@ public class Player {
     private Rectangle cb;
     private World world;
     private Collision col;
+    
+    private Font scoreFont;
 
     private int score;
 
@@ -38,6 +41,7 @@ public class Player {
         cb = new Rectangle(x + 23, y + 30, 25, 25);
         col = new Collision(this, world);
         score = 0;
+        scoreFont = new Font("roman", 30, 30);
     }
 
     public void update() {
@@ -47,9 +51,10 @@ public class Player {
 
     public void render(Graphics g) {
         g.drawImage(texture, x, y, null);
-        g.fillRect(cb.x, cb.y, cb.width, cb.height);
+        //g.fillRect(cb.x, cb.y, cb.width, cb.height); Renders collisionBox
         g.setColor(Color.orange);
-        g.drawString(String.valueOf(score), 10, 20);
+        g.setFont(scoreFont);
+        g.drawString(String.valueOf(score), 8, 30);
     }
 
     private void move() {
