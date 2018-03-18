@@ -31,6 +31,9 @@ public class PreGameState implements State {
         if(startButton.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.isLeftMouse()){
             game.setStage(StateManager.gameState);
         }
+        if(hightScoreButton.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.isLeftMouse()){
+            game.setStage(new HighScoreState(game));
+        }
     }
 
     @Override

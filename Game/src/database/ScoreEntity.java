@@ -30,12 +30,12 @@ public class ScoreEntity implements Comparable<ScoreEntity> {
 
     @Override
     public int compareTo(ScoreEntity t) {
-        return this.score - t.score;
+        return t.score - this.score; 
     }
 
     @Override
     public String toString() {
-        return "ScoreEntity{" + "id=" + id + ", username=" + username + ", score=" + score + '}';
+        return "Name: " + username + " Score: " + score;
     }
 
     
