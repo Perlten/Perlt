@@ -18,7 +18,7 @@ public class GameState implements State {
     public GameState(Game game) {
         this.game = game;
         world = new World("worlds/world1.txt", this);
-        player = new Player("resources/textures/player.png",80, 100, game, world);
+        player = new Player("resources/textures/player.png",80, 100, 3, game, world);
         enemy = new Enemy(this, 200, 200, 1);
     }
     
@@ -42,6 +42,7 @@ public class GameState implements State {
             world.CreateStars(10);
             if(player.getScore() % 20 == 0){
                 enemy.updateSpeed(1);
+                player.updateSpeed(1);
             }
         }
     }

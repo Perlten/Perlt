@@ -21,24 +21,24 @@ public class Collision {
         this.cb = cb;
     }
 
-    public boolean checkCollisionWithTile(String direction){
+    public boolean checkCollisionWithTile(String direction, int speed){
         if(direction.equalsIgnoreCase("up")){
-            if (!isCollidingWithSolidTile(cb.x, cb.y - 3) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y - 3)) {
+            if (!isCollidingWithSolidTile(cb.x, cb.y - speed) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y - speed)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("down")){
-             if (!isCollidingWithSolidTile(cb.x, cb.y + cb.height + 3) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y + cb.height + 3)) {
+             if (!isCollidingWithSolidTile(cb.x, cb.y + cb.height + speed) && !isCollidingWithSolidTile(cb.x + cb.width, cb.y + cb.height + speed)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("left")){
-              if (!isCollidingWithSolidTile(cb.x - 3, cb.y) && !isCollidingWithSolidTile(cb.x - 3, cb.y + cb.height)) {
+              if (!isCollidingWithSolidTile(cb.x - speed, cb.y) && !isCollidingWithSolidTile(cb.x - speed, cb.y + cb.height)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("right")){
-            if(!isCollidingWithSolidTile(cb.x + cb.width + 3, cb.y) && !isCollidingWithSolidTile(cb.x + cb.width + 3, cb.y + cb.height)){
+            if(!isCollidingWithSolidTile(cb.x + cb.width + speed, cb.y) && !isCollidingWithSolidTile(cb.x + cb.width + speed, cb.y + cb.height)){
                 return true;
             }
         }
@@ -46,24 +46,24 @@ public class Collision {
         return false;
     }
     
-    public boolean checkCollisionWithStar(String direction){
+    public boolean checkCollisionWithStar(String direction, int speed){
         if(direction.equalsIgnoreCase("up")){
-            if (isTouchingStar(cb.x, cb.y - 3) || isTouchingStar(cb.x + cb.width, cb.y - 3)){
+            if (isTouchingStar(cb.x, cb.y - speed) || isTouchingStar(cb.x + cb.width, cb.y - speed)){
                  return true;
              }
         }
          if(direction.equalsIgnoreCase("down")){
-             if (isTouchingStar(cb.x, cb.y + cb.height + 3) || isTouchingStar(cb.x + cb.width, cb.y + cb.height + 3)) {
+             if (isTouchingStar(cb.x, cb.y + cb.height + speed) || isTouchingStar(cb.x + cb.width, cb.y + cb.height + speed)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("left")){
-              if (isTouchingStar(cb.x - 3, cb.y) || isTouchingStar(cb.x - 3, cb.y + cb.height)) {
+              if (isTouchingStar(cb.x - speed, cb.y) || isTouchingStar(cb.x - speed, cb.y + cb.height)) {
                 return true;
             }
         }
         if(direction.equalsIgnoreCase("right")){
-            if(isTouchingStar(cb.x + cb.width + 3, cb.y) || isTouchingStar(cb.x + cb.width + 3, cb.y + cb.height)){
+            if(isTouchingStar(cb.x + cb.width + speed, cb.y) || isTouchingStar(cb.x + cb.width + speed, cb.y + cb.height)){
                 return true;
             }
         }

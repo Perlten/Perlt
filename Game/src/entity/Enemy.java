@@ -55,23 +55,22 @@ public class Enemy {
 
     private void move() {
         if (player.getCb().y < cb.y) {
-            if (col.checkCollisionWithTile("up")) {
+            if (col.checkCollisionWithTile("up", speed)) {
                 y -= speed;
             }
-            
         }
         if (player.getCb().y > cb.y) {
-            if (col.checkCollisionWithTile("down")) {
+            if (col.checkCollisionWithTile("down", speed)) {
                 y += speed;
             }
         }
         if (player.getCb().x < cb.x) {
-            if (col.checkCollisionWithTile("left")) {
+            if (col.checkCollisionWithTile("left", speed)) {
                 x -= speed;
             }
         }
         if (player.getCb().x > cb.x) {
-            if (col.checkCollisionWithTile("right")) {
+            if (col.checkCollisionWithTile("right", speed)) {
                 x += speed;
             }
         }

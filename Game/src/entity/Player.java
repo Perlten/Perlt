@@ -27,8 +27,9 @@ public class Player {
     private Font normalFont;
     
     private int score;
+    private int speed;
 
-    public Player(String path, int x, int y, Game game, World world) {
+    public Player(String path, int x, int y, int speed, Game game, World world) {
         try {
             texture = ImageIO.read(new File(path));
         } catch (IOException ex) {
@@ -39,6 +40,7 @@ public class Player {
         this.game = game;
         this.world = world;
         this.keyInput = game.getKeyInput();
+        this.speed = speed;
         cb = new Rectangle(x + 23, y + 30, 25, 25);
         col = new Collision(cb, world);
         score = 0;
@@ -64,39 +66,43 @@ public class Player {
     private void move() {
 
         if (keyInput.isUp()) {
-            if (col.checkCollisionWithTile("up")) {
-                y -= 3;
+            if (col.checkCollisionWithTile("up", speed)) {
+                y -= speed;
             }
-            if (col.checkCollisionWithStar("up")) {
+            if (col.checkCollisionWithStar("up", speed)) {
                 score++;
             }
         }
         if (keyInput.isDown()) {
-            if (col.checkCollisionWithTile("down")) {
-                y += 3;
+            if (col.checkCollisionWithTile("down", speed)) {
+                y += speed;
             }
-            if (col.checkCollisionWithStar("down")) {
+            if (col.checkCollisionWithStar("down", speed)) {
                 score++;
             }
         }
         if (keyInput.isLeft()) {
-            if (col.checkCollisionWithTile("left")) {
-                x -= 3;
+            if (col.checkCollisionWithTile("left", speed)) {
+                x -= speed;
             }
-            if (col.checkCollisionWithStar("left")) {
+            if (col.checkCollisionWithStar("left", speed)) {
                 score++;
             }
         }
         if (keyInput.isRight()) {
-            if (col.checkCollisionWithTile("right")) {
-                x += 3;
+            if (col.checkCollisionWithTile("right", speed)) {
+                x += speed;
             }
-            if (col.checkCollisionWithStar("right")) {
+            if (col.checkCollisionWithStar("right", speed)) {
                 score++;
             }
         }
     }
 
+    public void updateSpeed(int amount){
+        speed += amount;
+    }
+    
     private void updateCollision() {
         cb.setBounds(x + 20, y + 30, 25, 25);
     }
