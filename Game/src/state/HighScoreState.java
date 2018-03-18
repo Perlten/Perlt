@@ -53,4 +53,5 @@ public class HighScoreState implements State {
         g.setColor(Color.ORANGE);
         g.drawString("Back", backButton.x + backButton.width / 2 - 12, backButton.y + backButton.height / 2 + 2);
     }
+
 }

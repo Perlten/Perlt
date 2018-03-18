@@ -45,6 +45,7 @@ public class DataMapper {
                 
                 list.add(new ScoreEntity(id, username, score));
             }
+            DBCon.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
