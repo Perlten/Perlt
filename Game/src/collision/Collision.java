@@ -5,20 +5,20 @@ import entity.Star;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Random;
 import tile.Tile;
 import tile.TileManager;
 import world.World;
 
 public class Collision {
 
-    private Player player;
+    
     private Rectangle cb;
     private World world;
 
-    public Collision(Player player, World world) {
-        this.player = player;
+    public Collision(Rectangle cb, World world) {
         this.world = world;
-        this.cb = player.getCb();
+        this.cb = cb;
     }
 
     public boolean checkCollisionWithTile(String direction){
@@ -96,6 +96,14 @@ public class Collision {
                 return true;
             }
         }
+        return false;
+    }
+    
+    public boolean collisionWithEntity(Player player, int x, int y){
+        Rectangle cb = player.getCb();
+            if ((x >= player.getCb().x && x <= player.getCb().x + cb.getWidth()) && (y >= player.getCb().y && player.getCb().y + cb.getHeight() >= y)) {
+                return true;
+            }
         return false;
     }
 

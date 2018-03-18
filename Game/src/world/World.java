@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import state.GameState;
 import tile.Tile;
 import tile.TileManager;
 
@@ -18,18 +19,23 @@ public class World {
     private int[][] world;
     private int width, height;
     private List<Star> starList = new ArrayList<>();
+    private final GameState gameState;
     
-    public World(String path) {
+    public World(String path, GameState gameState) {
         try {
             makeWorld(path);
         } catch (IOException ex) {
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.gameState = gameState;
         CreateStars(10);
     }
 
     public void update() {
-        
+        if(starList.size() == 0){
+            CreateStars(10);
+            gameState.getEnemy().updateSpeed(1);
+        }
     }
 
     public void render(Graphics g) {

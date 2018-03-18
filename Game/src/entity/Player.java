@@ -40,7 +40,7 @@ public class Player {
         this.world = world;
         this.keyInput = game.getKeyInput();
         cb = new Rectangle(x + 23, y + 30, 25, 25);
-        col = new Collision(this, world);
+        col = new Collision(cb, world);
         score = 0;
         scoreFont = new Font("Dialog", 1, 35);
         normalFont = new Font("roman", 0, 12);
@@ -53,7 +53,7 @@ public class Player {
 
     public void render(Graphics g) {
         g.drawImage(texture, x, y, null);
-        //g.fillRect(cb.x, cb.y, cb.width, cb.height); Renders collisionBox
+//        g.fillRect(cb.x, cb.y, cb.width, cb.height); //Renders collisionBox
         g.setColor(Color.orange);
         g.setFont(scoreFont);
         g.drawString(String.valueOf(score), 8, 30);
@@ -111,5 +111,9 @@ public class Player {
 
     public Rectangle getCb() {
         return cb;
+    }
+
+    public BufferedImage getTexture() {
+        return texture;
     }
 }

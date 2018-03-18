@@ -1,5 +1,6 @@
 package state;
 
+import entity.Enemy;
 import entity.Player;
 import game.Game;
 import java.awt.Graphics;
@@ -11,25 +12,35 @@ public class GameState {
     private World world;
     private Game game;
     private Player player;
+    private Enemy enemy;
     
 
     public GameState(Game game) {
         this.game = game;
-        world = new World("worlds/world1.txt");
-        player = new Player("resources/textures/player.png",100, 100, game, world);
+        world = new World("worlds/world1.txt", this);
+        player = new Player("resources/textures/player.png",80, 100, game, world);
+        enemy = new Enemy(player, world, 200, 200, 1);
     }
     
     public void update(){
         world.update();
         player.update();
+        enemy.update();
     }
     
     public void render(Graphics g){
         world.render(g);
+        enemy.render(g);
         player.render(g);
     }
 
     public Player getPlayer() {
         return player;
     }
+
+    public Enemy getEnemy() {
+        return enemy;
+    }
+    
+    
 }
