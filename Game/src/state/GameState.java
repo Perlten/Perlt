@@ -26,6 +26,7 @@ public class GameState {
         world.update();
         player.update();
         enemy.update();
+        updateLevel();
     }
     
     public void render(Graphics g){
@@ -42,5 +43,11 @@ public class GameState {
         return enemy;
     }
     
+    public void updateLevel(){
+        if(world.getStarList().size() == 0){
+            world.CreateStars(10);
+            enemy.updateSpeed(1);
+        }
+    }
     
 }

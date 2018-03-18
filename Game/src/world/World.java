@@ -32,10 +32,7 @@ public class World {
     }
 
     public void update() {
-        if(starList.size() == 0){
-            CreateStars(10);
-            gameState.getEnemy().updateSpeed(1);
-        }
+       
     }
 
     public void render(Graphics g) {
@@ -74,7 +71,7 @@ public class World {
         }
     }
     
-    private void CreateStars(int amount){
+    public void CreateStars(int amount){
         Random ra = new Random();
         for (int i = 0; i < amount; i++) {
             starList.add(new Star(ra.nextInt(550 - 50), ra.nextInt(400 - 50)));
