@@ -54,7 +54,7 @@ public class Game implements Runnable {
         
         TileManager.init();
         StateManager.initStates(this);
-        CurrentState = StateManager.gameState;
+        CurrentState = StateManager.preGameState;
     }
 
     public void update() {

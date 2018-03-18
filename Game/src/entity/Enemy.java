@@ -74,7 +74,6 @@ public class Enemy {
                 x += speed;
             }
         }
-
     }
 
     public void updateCollisionWithPlayer(){
