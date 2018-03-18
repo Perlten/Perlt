@@ -7,7 +7,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import keyinput.KeyInput;
+import keyinput.MouseInput;
 import state.GameState;
+import state.PostGameState;
+import state.State;
+import state.StateManager;
 import tile.TileManager;
 
 public class Game implements Runnable {
@@ -23,30 +27,44 @@ public class Game implements Runnable {
     private Graphics g;
 
     private KeyInput keyInput;
+    private MouseInput mouseInput;
 
     private FpsLock fpsLock;
 
-    private GameState gameState;
+    private State CurrentState;
 
     public Game(int width, int height, String title) {
         this.width = width;
         this.height = height;
         this.title = title;
+        display = new Display(width, height, title);
+        keyInput = new KeyInput();
+        mouseInput = new MouseInput();
+        fpsLock = new FpsLock(60);
+        
         init();
     }
 
     private void init() {
-        display = new Display(width, height, title);
-        keyInput = new KeyInput();
         display.getFrame().addKeyListener(keyInput);
-        fpsLock = new FpsLock(60);
+        display.getFrame().addMouseListener(mouseInput);
+        display.getFrame().addMouseMotionListener(mouseInput);
+        display.getCanvas().addMouseListener(mouseInput);
+        display.getCanvas().addMouseMotionListener(mouseInput);
+        
         TileManager.init();
-        gameState = new GameState(this);
+        StateManager.initStates(this);
+        CurrentState = StateManager.gameState;
     }
 
     public void update() {
         keyInput.update();
-        gameState.update();
+        CurrentState.update();
+
+        if (keyInput.isTest()) {
+            CurrentState = StateManager.postGameState;
+        }
+
     }
 
     public void render() {
@@ -61,18 +79,22 @@ public class Game implements Runnable {
         g.clearRect(0, 0, width, height);
         //Draw to screen
 
-        gameState.render(g);
+        CurrentState.render(g);
         debugMode();
-        
+
         //End draw
         bs.show();
         g.dispose();
     }
     
-    private void debugMode(){
-        if(keyInput.isDebug()){
-            int playerX = gameState.getPlayer().getX();
-            int playerY = gameState.getPlayer().getY();
+    public void setStage(State state){
+        CurrentState = state;
+    }
+
+    private void debugMode() {
+        if (keyInput.isDebug() && CurrentState.equals(StateManager.gameState)) {
+            int playerX = StateManager.gameState.getPlayer().getCb().x;
+            int playerY = StateManager.gameState.getPlayer().getCb().y;
             g.setColor(Color.red);
             g.drawString("Pos X: " + String.valueOf(playerX), 480, 20);
             g.drawString("Pos Y: " + String.valueOf(playerY), 480, 35);
@@ -114,5 +136,14 @@ public class Game implements Runnable {
     public KeyInput getKeyInput() {
         return keyInput;
     }
+
+    public MouseInput getMouseInput() {
+        return mouseInput;
+    }
+
+    public Display getDisplay() {
+        return display;
+    }
+    
     
 }

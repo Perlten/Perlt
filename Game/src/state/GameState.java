@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import world.World;
 
 
-public class GameState {
+public class GameState implements State {
     
     private World world;
     private Game game;
@@ -19,22 +19,32 @@ public class GameState {
         this.game = game;
         world = new World("worlds/world1.txt", this);
         player = new Player("resources/textures/player.png",80, 100, game, world);
-        enemy = new Enemy(player, world, 200, 200, 1);
+        enemy = new Enemy(this, 200, 200, 1);
     }
     
+    @Override
     public void update(){
         world.update();
         player.update();
         enemy.update();
         updateLevel();
     }
-    
+    @Override
     public void render(Graphics g){
         world.render(g);
         enemy.render(g);
         player.render(g);
     }
 
+    
+    public void updateLevel(){
+        if(world.getStarList().isEmpty()){
+            world.CreateStars(10);
+            if(player.getScore() % 20 == 0){
+                enemy.updateSpeed(1);
+            }
+        }
+    }
     public Player getPlayer() {
         return player;
     }
@@ -42,12 +52,15 @@ public class GameState {
     public Enemy getEnemy() {
         return enemy;
     }
-    
-    public void updateLevel(){
-        if(world.getStarList().size() == 0){
-            world.CreateStars(10);
-            enemy.updateSpeed(1);
-        }
+
+    public World getWorld() {
+        return world;
     }
+
+    public Game getGame() {
+        return game;
+    }
+    
+    
     
 }

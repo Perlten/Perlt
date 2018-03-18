@@ -7,7 +7,7 @@ public class KeyInput implements KeyListener {
 
     private boolean[] keysPressed;
 
-    private boolean up, down, left, right, debug;
+    private boolean up, down, left, right, debug, test;
 
     public KeyInput() {
         this.keysPressed = new boolean[256];
@@ -18,6 +18,7 @@ public class KeyInput implements KeyListener {
         down = keysPressed[KeyEvent.VK_S];
         left = keysPressed[KeyEvent.VK_A];
         right = keysPressed[KeyEvent.VK_D];
+        test = keysPressed[KeyEvent.VK_T];
     }
 
     @Override
@@ -57,5 +58,9 @@ public class KeyInput implements KeyListener {
 
     public boolean isDebug() {
         return debug;
+    }
+
+    public boolean isTest() {
+        return test;
     }
 }

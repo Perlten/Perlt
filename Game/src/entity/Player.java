@@ -116,4 +116,9 @@ public class Player {
     public BufferedImage getTexture() {
         return texture;
     }
+
+    public int getScore() {
+        return score;
+    }
+    
 }
