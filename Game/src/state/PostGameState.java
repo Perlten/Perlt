@@ -50,6 +50,7 @@ public class PostGameState implements State {
             scoreSubmit = true;
         }
         if(showHighscore.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.isLeftMouse()){
+            StateManager.makeNewGameState(game);
             game.setStage(new HighScoreState(game));
         }
     }
