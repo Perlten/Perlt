@@ -13,6 +13,7 @@ import handler.Handler;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import mapEditor.MapEditor;
 import world.GameWorld;
 import world.World;
 
@@ -26,6 +27,7 @@ public class GameState implements State {
     private Actor player;
     private Handler handler;
     private Game game;
+    private MapEditor mapEditor;
     
     private Camera cam;
     
@@ -36,6 +38,7 @@ public class GameState implements State {
         world = new GameWorld(handler);
         player = new Player(100, 100, 3, handler);
         handler.setActor(player);
+        mapEditor = new MapEditor(handler, world.getTileList());
     }
 
     @Override
@@ -44,12 +47,14 @@ public class GameState implements State {
         world.update();
         player.update();
         playerDead();
+        mapEditor.update();
     }
 
     @Override
     public void render(Graphics g) {
         world.render(g);
         player.render(g);
+        mapEditor.render(g);
     }
     
     private void playerDead(){

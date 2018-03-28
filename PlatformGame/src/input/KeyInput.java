@@ -38,15 +38,6 @@ public class KeyInput implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         keys[ke.getKeyCode()] = true;
-        if (ke.getKeyCode() == KeyEvent.VK_U) {
-            editor = !editor;
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_N) {
-            save = !save;
-        }
-//        if(ke.getKeyChar() == '1' || ke.getKeyChar() == '2' || ke.getKeyChar() == '3'){
-//            tileId = Integer.parseInt(String.valueOf(ke.getKeyChar()));
-//        }
         try {
             for (int i = 1; i <= TileManager.TotalTiles; i++) {
                 if (Integer.parseInt(String.valueOf(ke.getKeyChar())) == i) {
@@ -60,6 +51,12 @@ public class KeyInput implements KeyListener {
     @Override
     public void keyReleased(KeyEvent ke) {
         keys[ke.getKeyCode()] = false;
+        if (ke.getKeyCode() == KeyEvent.VK_U) {
+            editor = !editor;
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_N) {
+            save = !save;
+        }
     }
 
     public boolean[] getKeys() {

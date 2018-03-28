@@ -28,22 +28,22 @@ public class Util {
         return texture;
     }
 
-    public static void saveWorld(String path, List<Tile> tileList) {
+    public static void saveToFile(String path, List list) {
         try {
             FileOutputStream fos = new FileOutputStream(path);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(tileList);
+            oos.writeObject(list);
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<Tile> readWorld(String path) {
+    public static List readWorld(String path) {
         try {
             FileInputStream fin = new FileInputStream(path);
             ObjectInputStream ois = new ObjectInputStream(fin);
-            return (List<Tile>) ois.readObject();
+            return (List) ois.readObject();
         } catch (Exception ex) {
             return new ArrayList<>();
         }
