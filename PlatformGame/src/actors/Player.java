@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package actors;
+
+import display.Camera;
+import handler.Handler;
+import input.KeyInput;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import physics.Gravity;
+import physics.Physics;
+
+/**
+ *
+ * @author Perlt
+ */
+public class Player extends Actor {
+
+    private KeyInput key;
+    private boolean jumping;
+    private double time = 0;
+
+    public Player(int x, int y, int speed, Handler handler) {
+        super(x, y, speed, "resources/textures/player.png", handler, new Rectangle());
+        this.key = handler.getKeyInput();
+        collision = new Collision(this, handler.getState().getWorld());
+        physics = new Physics(this);
+    }
+
+    @Override
+    public void update() {
+        updateCollisionBox(7, 11, 17, 20);
+        physics.update(jumping);
+        jump();
+        move();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        renderPlayer(g);
+    }
+
+    private void move() {
+            if (key.isRight()) {
+                if (!collision.collisionWithSolidTile(speed, "right") || handler.getKeyInput().isEditor()) {
+                    x += speed;
+                }
+            }
+            if (key.isLeft()) {
+                if (!collision.collisionWithSolidTile(speed, "left") || handler.getKeyInput().isEditor()) {
+                    x -= speed;
+                }
+            }
+    }
+
+    private void jump() {
+        double jumpSpeed = 2.0;
+
+        if (jumping) {
+            y -= jumpSpeed * time;
+            time -= 0.2;
+        }
+        if (!physics.getGravity().isFalling() && !jumping) {
+            if (key.isUp()) {
+                jumping = true;
+            }
+        }
+        if (time <= 0.0 || collision.collisionWithSolidTile((int) jumpSpeed, "up")) {
+            time = 5;
+            jumping = false;
+        }
+    }
+
+    private void renderPlayer(Graphics g) {
+            g.drawImage(texture, x - Camera.xOffset, y, null);
+//            g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
+    }
+
+    public Collision getCollision() {
+        return collision;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+}
