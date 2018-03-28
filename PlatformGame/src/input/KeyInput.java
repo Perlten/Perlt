@@ -16,7 +16,7 @@ import tile.TileManager;
 public class KeyInput implements KeyListener {
 
     private boolean[] keys;
-    private boolean up, down, left, right, editor, save, delete;
+    private boolean up, down, left, right, editor, save, delete, removeLast;
     private int tileId = 1;
 
     public KeyInput() {
@@ -55,8 +55,12 @@ public class KeyInput implements KeyListener {
             editor = !editor;
         }
         if (ke.getKeyCode() == KeyEvent.VK_N) {
-            save = !save;
+            save = true;
         }
+        if (ke.getKeyCode() == KeyEvent.VK_Z) {
+            removeLast = true;
+        }
+
     }
 
     public boolean[] getKeys() {
@@ -79,6 +83,10 @@ public class KeyInput implements KeyListener {
         this.save = false;
     }
 
+    public void setRemoveLastFalse() {
+        removeLast = false;
+    }
+
     public boolean isUp() {
         return up;
     }
@@ -99,4 +107,7 @@ public class KeyInput implements KeyListener {
         return delete;
     }
 
+    public boolean isRemoveLast() {
+        return removeLast;
+    }
 }

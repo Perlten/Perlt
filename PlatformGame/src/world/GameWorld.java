@@ -18,6 +18,7 @@ public class GameWorld extends World {
 
     @Override
     public void update() {
+        Tile.editor = handler.getKeyInput().isEditor();
         for (Tile tile : tileList) {
             tile.update();
         }

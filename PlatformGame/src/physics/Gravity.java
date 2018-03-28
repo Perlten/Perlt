@@ -15,12 +15,11 @@ import actors.Collision;
 public class Gravity {
 
     private Actor actor;
-    private double fallSpeed;
+    private double fallSpeed = 0;
     private boolean falling;
 
     public Gravity(Actor actor) {
         this.actor = actor;
-        fallSpeed = 0;
     }
 
     public void update() {

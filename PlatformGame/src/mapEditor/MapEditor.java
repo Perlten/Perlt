@@ -51,6 +51,7 @@ public class MapEditor {
     private void updateEditor() {
             addTile(handler.getKeyInput().getTileId());
             removeTile();
+            removeLast();
             if (handler.getKeyInput().isSave()) {
                 System.out.println("saved");
                 Util.saveToFile("resources/worlds/world1/tileFile", tileList);
@@ -80,6 +81,13 @@ public class MapEditor {
             if (tile != null) {
                 tileList.remove(tile);
             }
+        }
+    }
+    
+    public void removeLast(){
+        if(handler.getKeyInput().isRemoveLast()){
+            tileList.remove(tileList.size() - 1);
+            handler.getKeyInput().setRemoveLastFalse();
         }
     }
 

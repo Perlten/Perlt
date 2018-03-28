@@ -28,8 +28,10 @@ public abstract class Tile implements Serializable {
     protected Rectangle collisionBox;
     protected int id;
     
-    protected boolean solid = false;
+    protected boolean solid;
 
+    public static boolean editor;
+            
     public Tile(int x, int y, String path, int id, boolean solid) {
         this.x = x;
         this.y = y;
@@ -73,5 +75,5 @@ public abstract class Tile implements Serializable {
     public boolean isSolid() {
         return solid;
     }
-    
+
 }

@@ -69,4 +69,8 @@ public class Collision {
         }
         return false;
     }
+    
+//    public Actor collisionWithActor(){
+//        
+//    }
 }

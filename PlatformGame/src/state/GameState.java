@@ -6,6 +6,7 @@
 package state;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 import display.Camera;
 import game.Game;
@@ -30,6 +31,8 @@ public class GameState implements State {
     private MapEditor mapEditor;
     
     private Camera cam;
+
+    Enemy en;
     
     public GameState(Game game) {
         this.game = game;
@@ -39,6 +42,8 @@ public class GameState implements State {
         player = new Player(100, 100, 3, handler);
         handler.setActor(player);
         mapEditor = new MapEditor(handler, world.getTileList());
+        en = new Enemy(200, 150, 1, handler);
+        
     }
 
     @Override
@@ -48,6 +53,7 @@ public class GameState implements State {
         player.update();
         playerDead();
         mapEditor.update();
+        en.update();
     }
 
     @Override
@@ -55,6 +61,7 @@ public class GameState implements State {
         world.render(g);
         player.render(g);
         mapEditor.render(g);
+        en.render(g);
     }
     
     private void playerDead(){

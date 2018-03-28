@@ -13,15 +13,16 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import physics.Physics;
 import util.Util;
+
 public abstract class Actor {
-    
+
     protected int x, y;
     protected int speed;
     protected BufferedImage texture;
     protected Rectangle collisionBox;
     protected Handler handler;
     protected Collision collision;
-    protected Physics physics;
+    protected Physics physics = new Physics(this);
 
     public Actor(int x, int y, int speed, String path, Handler handler, Rectangle collisionBox) {
         this.x = x;
@@ -30,17 +31,19 @@ public abstract class Actor {
         this.handler = handler;
         this.collisionBox = collisionBox;
         texture = Util.getImage(path);
+        collision = new Collision(this, handler.getState().getWorld());
     }
-    
+
     public abstract void update();
+
     public abstract void render(Graphics g);
+
+    protected void updateCollisionBox(int x, int y, int width, int height) {
+        collisionBox.setBounds(this.x + x - Camera.xOffset, this.y + y, width, height);
+    }
 
     public Rectangle getCollisionBox() {
         return collisionBox;
-    }
-    
-    protected void updateCollisionBox(int x, int y, int width, int height){
-        collisionBox.setBounds(this.x + x - Camera.xOffset , this.y + y, width, height);
     }
 
     public Collision getCollision() {
@@ -51,7 +54,7 @@ public abstract class Actor {
         return speed;
     }
 
-    public void addToY(int amount){
+    public void addToY(int amount) {
         y += amount;
     }
 
