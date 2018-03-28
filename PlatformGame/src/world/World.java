@@ -5,6 +5,8 @@
  */
 package world;
 
+import actors.Actor;
+import actors.Player;
 import display.Camera;
 import handler.Handler;
 import input.MouseInput;
@@ -22,7 +24,11 @@ import util.Util;
 public abstract class World {
     
     protected List<Tile> tileList;
+    protected List<Actor> enemyList;
     protected BufferedImage Background;
+    
+    protected Actor player;
+    
     protected Handler handler;
 
     protected Tile currentTile;
@@ -33,6 +39,7 @@ public abstract class World {
     public World(Handler handler, String backgroundPath) {
         this.handler = handler;
         tileList = Util.readWorld("resources/worlds/world1/tileFile");
+        enemyList = Util.readWorld("resources/worlds/world1/enemyFile");
         Background = Util.getImage(backgroundPath);
         currentTile = TileManager.getTile(1);
     }
@@ -42,5 +49,13 @@ public abstract class World {
 
     public List<Tile> getTileList() {
         return tileList;
+    }
+
+    public Actor getPlayer() {
+        return player;
+    }
+
+    public List<Actor> getEnemyList() {
+        return enemyList;
     }
 }

@@ -49,14 +49,14 @@ public class MapEditor {
     }
 
     private void updateEditor() {
-            addTile(handler.getKeyInput().getTileId());
-            removeTile();
-            removeLast();
-            if (handler.getKeyInput().isSave()) {
-                System.out.println("saved");
-                Util.saveToFile("resources/worlds/world1/tileFile", tileList);
-                handler.getKeyInput().setSaveFalse();
-            }
+        addTile(handler.getKeyInput().getTileId());
+        removeTile();
+        removeLast();
+        if (handler.getKeyInput().isSave()) {
+            System.out.println("saved");
+            Util.saveToFile("resources/worlds/world1/tileFile", tileList);
+            handler.getKeyInput().setSaveFalse();
+        }
         if (handler.getKeyInput().isDelete()) {
             tileList.clear();
         }
@@ -83,9 +83,9 @@ public class MapEditor {
             }
         }
     }
-    
-    public void removeLast(){
-        if(handler.getKeyInput().isRemoveLast()){
+
+    public void removeLast() {
+        if (handler.getKeyInput().isRemoveLast()) {
             tileList.remove(tileList.size() - 1);
             handler.getKeyInput().setRemoveLastFalse();
         }

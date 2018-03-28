@@ -28,7 +28,6 @@ public class Gravity {
 
     public void falling() {
         Collision col = actor.getCollision();
-        //TODO: there might be a problem with falling and getting stuck in a tile 
         if (!col.collisionWithSolidTile((int) (fallSpeed + 1), "down")) {
             fallSpeed += 0.3;
             actor.addToY((int) fallSpeed);

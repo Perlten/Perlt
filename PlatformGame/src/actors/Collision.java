@@ -5,7 +5,9 @@
  */
 package actors;
 
+import display.Camera;
 import java.awt.Rectangle;
+import java.util.List;
 import tile.Tile;
 import world.World;
 
@@ -70,7 +72,12 @@ public class Collision {
         return false;
     }
     
-//    public Actor collisionWithActor(){
-//        
-//    }
+    public Actor collisionWithActor(List<Actor> list){
+        for(Actor x : list){
+            if(x.getCollisionBox().contains(actorCB.x, actorCB.y)){
+                return x;
+            }
+        }
+        return null;
+    }
 }

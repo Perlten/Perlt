@@ -10,6 +10,7 @@ import handler.Handler;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import util.Util;
+import world.World;
 
 /**
  *
@@ -19,8 +20,8 @@ public class Enemy extends Actor {
     
     private boolean goingLeft = false;
 
-    public Enemy(int x, int y, int speed, Handler handler) {
-        super(x, y, speed, "resources/textures/enemy.png", handler, new Rectangle());
+    public Enemy(int x, int y, int speed, Handler handler, World world) {
+        super(x, y, speed, "resources/textures/enemy.png", handler, new Rectangle(), world);
     }
 
     @Override

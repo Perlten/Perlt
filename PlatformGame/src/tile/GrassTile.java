@@ -21,12 +21,13 @@ public class GrassTile extends Tile {
 
     @Override
     public void update() {
+       
         updateCollisionBox();
     }
 
     @Override
     public void render(Graphics g) {
-        if(texture == null){
+         if(texture == null){
             texture = Util.getImage(path);
         }
         g.drawImage(texture, x - Camera.xOffset, y, null);
