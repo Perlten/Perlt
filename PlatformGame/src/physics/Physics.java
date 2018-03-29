@@ -22,10 +22,8 @@ public class Physics {
     }
 
     public void update(boolean jumping) {
-        if (!actor.getHandler().getKeyInput().isEditor()) {
             if (!jumping) {
                 gravity.update();
-            }
         }
     }
 

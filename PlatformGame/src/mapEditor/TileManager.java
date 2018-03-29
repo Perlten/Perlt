@@ -24,7 +24,7 @@ public class TileManager {
             return new TransparentTile(0, 0, "resources/textures/transparentTile.png", 3);
         }
         if(id == 4){
-            return new Enemy(0, 0, 2, handler, world);
+            return new Enemy(0, 0, 2, world);
         }
         return null;
     }

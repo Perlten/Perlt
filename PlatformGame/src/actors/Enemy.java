@@ -20,8 +20,8 @@ public class Enemy extends Actor {
     
     private boolean goingLeft = false;
 
-    public Enemy(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/enemy.png", handler, new Rectangle(), world, false);
+    public Enemy(int x, int y, int speed, World world) {
+        super(x, y, speed, "resources/textures/enemy.png", new Rectangle(), world, false);
     }
 
     @Override

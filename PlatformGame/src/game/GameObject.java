@@ -18,11 +18,13 @@ public abstract class GameObject implements Serializable{
     protected int x, y;
     protected Rectangle collisionBox;
     protected boolean solid;
+    protected String path;
 
-    public GameObject(int x, int y, boolean solid) {
+    public GameObject(int x, int y, boolean solid, String path) {
         this.x = x;
         this.y = y;
         this.solid = solid;
+        this.path = path;
     }
     
     public abstract void update();
@@ -50,5 +52,9 @@ public abstract class GameObject implements Serializable{
 
     public boolean isSolid() {
         return solid;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

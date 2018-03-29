@@ -15,11 +15,13 @@ public class GameWorld extends World {
 
     private Game game;
     private MapEditor mapEditor;
-    
+
     public GameWorld(Handler handler) {
         super(handler, "resources/textures/background.png");
+        tileList = Util.readWorld("resources/worlds/world1/tileFile");
+        enemyList = converToEnemyFile("resources/worlds/world1/enemyFile");
         player = new Player(100, 100, 3, handler, this);
-        mapEditor = new MapEditor(handler, tileList, this);
+        mapEditor = new MapEditor(handler, tileList, enemyList, this);
         game = handler.getState().getGame();
     }
 
@@ -29,7 +31,7 @@ public class GameWorld extends World {
         for (GameObject tile : tileList) {
             tile.update();
         }
-        for(Actor enemy : enemyList){
+        for (GameObject enemy : enemyList) {
             enemy.update();
         }
         player.update();
@@ -46,10 +48,10 @@ public class GameWorld extends World {
         g.drawImage(Background, 0, 0, null);
         for (GameObject tile : tileList) {
             if (tile.getX() >= actor.getX() - (game.getWidth() + 32) / 2 && tile.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
-                tile.render(g);         
+                tile.render(g);
             }
         }
-        for (Actor enemy : enemyList) {
+        for (GameObject enemy : enemyList) {
             if (enemy.getX() >= actor.getX() - (game.getWidth() + 32) / 2 && actor.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
                 enemy.render(g);
             }

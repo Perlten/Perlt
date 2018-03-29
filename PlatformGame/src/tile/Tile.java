@@ -23,21 +23,17 @@ public abstract class Tile extends GameObject {
     public static final int width = 32;
     public static final int height = 32;
     
-    protected String path;
     protected transient BufferedImage texture;
     protected int id;
 
     public static boolean editor;
 
     public Tile(int x, int y, String path, int id, boolean solid) {
-        super(x, y, solid);
+        super(x, y, solid, path);
         this.id = id;
         this.path = path;
         collisionBox = new Rectangle(width, height);
     }
-
-    public abstract void update();
-    public abstract void render(Graphics g);
 
     protected void updateCollisionBox(){
         collisionBox.setBounds(x - Camera.xOffset, y, width, height);

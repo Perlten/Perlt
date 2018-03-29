@@ -25,7 +25,7 @@ public class Player extends Actor {
     
 
     public Player(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/player.png", handler, new Rectangle(), world, true);
+        super(x, y, speed, "resources/textures/player.png", new Rectangle(), world, true);
         this.key = handler.getKeyInput();
     }
 
@@ -46,12 +46,12 @@ public class Player extends Actor {
 
     private void move() {
             if (key.isRight()) {
-                if (!collision.collisionWithSolidTile(speed, "right") || handler.getKeyInput().isEditor()) {
+                if (!collision.collisionWithSolidTile(speed, "right") || key.isEditor()) {
                     x += speed;
                 }
             }
             if (key.isLeft()) {
-                if (!collision.collisionWithSolidTile(speed, "left") || handler.getKeyInput().isEditor()) {
+                if (!collision.collisionWithSolidTile(speed, "left") || key.isEditor()) {
                     x -= speed;
                 }
             }

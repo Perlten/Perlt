@@ -6,6 +6,7 @@
 package world;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 import display.Camera;
 import game.GameObject;
@@ -13,9 +14,11 @@ import handler.Handler;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
 import mapEditor.TileManager;
+import util.EnemyWrapper;
 import util.Util;
 
 /**
@@ -24,7 +27,7 @@ import util.Util;
  */
 public abstract class World {
     
-    protected List<GameObject> tileList;
+    protected List<Tile> tileList;
     protected List<Actor> enemyList;
     protected BufferedImage Background;
     
@@ -39,8 +42,6 @@ public abstract class World {
     
     public World(Handler handler, String backgroundPath) {
         this.handler = handler;
-        tileList = Util.readWorld("resources/worlds/world1/tileFile");
-        enemyList = Util.readWorld("resources/worlds/world1/enemyFile");
         Background = Util.getImage(backgroundPath);
         currentTile = TileManager.getTile(1, handler, this);
     }
@@ -48,7 +49,16 @@ public abstract class World {
     public abstract void update();
     public abstract void render(Graphics g);
 
-    public List<GameObject> getTileList() {
+    protected List<Actor> converToEnemyFile(String path){
+        List<EnemyWrapper> list = Util.readWorld(path);
+        List<Actor> enemyTempList = new ArrayList<>();
+        for(EnemyWrapper x : list){
+            enemyTempList.add(new Enemy(x.getX(), x.getY(), x.getSpeed(), this));
+        }
+        return enemyTempList;
+    }
+    
+    public List<Tile> getTileList() {
         return tileList;
     }
 
