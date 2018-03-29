@@ -62,6 +62,7 @@ public class GameState implements State {
     public World getWorld() {
         return world;
     }
+    
     @Override
     public Game getGame() {
         return game;
