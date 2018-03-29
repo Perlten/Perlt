@@ -25,7 +25,7 @@ public class Player extends Actor {
     
 
     public Player(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/player.png", handler, new Rectangle(), world);
+        super(x, y, speed, "resources/textures/player.png", handler, new Rectangle(), world, true);
         this.key = handler.getKeyInput();
     }
 

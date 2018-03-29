@@ -6,13 +6,14 @@
 package mapEditor;
 
 import display.Camera;
+import game.GameObject;
 import handler.Handler;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.util.List;
 import tile.Tile;
-import tile.TileManager;
 import util.Util;
+import world.World;
 
 /**
  *
@@ -20,16 +21,18 @@ import util.Util;
  */
 public class MapEditor {
 
-    private Tile currentTile;
+    private GameObject currentGameObject;
     private boolean editor;
     private Handler handler;
-    private List<Tile> tileList;
+    private List<GameObject> gameObjectList;
+    private World world;
 
     private MouseInput mouse;
 
-    public MapEditor(Handler handler, List<Tile> tileList) {
+    public MapEditor(Handler handler, List<GameObject> tileList, World world) {
         this.handler = handler;
-        this.tileList = tileList;
+        this.gameObjectList = tileList;
+        this.world = world;
         mouse = handler.getMouseInput();
     }
 
@@ -42,8 +45,8 @@ public class MapEditor {
 
     public void render(Graphics g) {
         if (editor) {
-            if (currentTile != null) {
-                currentTile.render(g);
+            if (currentGameObject != null) {
+                currentGameObject.render(g);
             }
         }
     }
@@ -54,45 +57,45 @@ public class MapEditor {
         removeLast();
         if (handler.getKeyInput().isSave()) {
             System.out.println("saved");
-            Util.saveToFile("resources/worlds/world1/tileFile", tileList);
+            Util.saveToFile("resources/worlds/world1/tileFile", gameObjectList);
             handler.getKeyInput().setSaveFalse();
         }
         if (handler.getKeyInput().isDelete()) {
-            tileList.clear();
+            gameObjectList.clear();
         }
     }
 
     protected void addTile(int tileId) {
-        currentTile = TileManager.getTile(handler.getKeyInput().getTileId());
-        currentTile.setX(((handler.getMouseInput().getX() + Camera.xOffset) / Tile.width) * Tile.width);
-        currentTile.setY((handler.getMouseInput().getY() / Tile.height) * Tile.height);
+        currentGameObject = TileManager.getTile(handler.getKeyInput().getTileId(),handler, world);
+        currentGameObject.setX(((handler.getMouseInput().getX() + Camera.xOffset) / Tile.width) * Tile.width);
+        currentGameObject.setY((handler.getMouseInput().getY() / Tile.height) * Tile.height);
 
         if (handler.getMouseInput().isLeftMouseClicked()) {
-            tileList.add(currentTile);
+            gameObjectList.add(currentGameObject);
             handler.getMouseInput().setMouse1False();
-            currentTile = null;
+            currentGameObject = null;
         }
     }
 
     protected void removeTile() {
         MouseInput mouse = handler.getMouseInput();
         if (handler.getMouseInput().isRightMouseClicked()) {
-            Tile tile = FindTile(mouse.getX(), mouse.getY());
+            GameObject tile = FindTile(mouse.getX(), mouse.getY());
             if (tile != null) {
-                tileList.remove(tile);
+                gameObjectList.remove(tile);
             }
         }
     }
 
     public void removeLast() {
         if (handler.getKeyInput().isRemoveLast()) {
-            tileList.remove(tileList.size() - 1);
+            gameObjectList.remove(gameObjectList.size() - 1);
             handler.getKeyInput().setRemoveLastFalse();
         }
     }
 
-    private Tile FindTile(int x, int y) {
-        for (Tile tile : tileList) {
+    private GameObject FindTile(int x, int y) {
+        for (GameObject tile : gameObjectList) {
             if (tile.getCollisionBox().contains(x, y)) {
                 return tile;
             }

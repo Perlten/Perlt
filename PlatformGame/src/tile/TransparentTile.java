@@ -21,7 +21,6 @@ public class TransparentTile extends Tile {
 
     @Override
     public void update() {
-        
         updateCollisionBox();
     }
 

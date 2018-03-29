@@ -21,7 +21,7 @@ public class Enemy extends Actor {
     private boolean goingLeft = false;
 
     public Enemy(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/enemy.png", handler, new Rectangle(), world);
+        super(x, y, speed, "resources/textures/enemy.png", handler, new Rectangle(), world, false);
     }
 
     @Override
@@ -33,6 +33,9 @@ public class Enemy extends Actor {
 
     @Override
     public void render(Graphics g) {
+        if(texture == null){
+            texture = Util.getImage(path);
+        }
         g.drawImage(texture, x - Camera.xOffset, y, null);
     }
     

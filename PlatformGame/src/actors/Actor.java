@@ -6,6 +6,7 @@
 package actors;
 
 import display.Camera;
+import game.GameObject;
 import handler.Handler;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,32 +16,27 @@ import physics.Physics;
 import util.Util;
 import world.World;
 
-public abstract class Actor {
+public abstract class Actor extends GameObject {
 
-    protected int x, y;
     protected int speed;
-    protected BufferedImage texture;
-    protected Rectangle collisionBox;
+    protected transient BufferedImage texture;
     protected Handler handler;
     protected Collision collision;
     protected Physics physics = new Physics(this);
     protected World world;
     protected int health = 3;
+    protected String path;
 
-    public Actor(int x, int y, int speed, String path, Handler handler, Rectangle collisionBox, World world) {
-        this.x = x;
-        this.y = y;
+    public Actor(int x, int y, int speed, String path, Handler handler, Rectangle collisionBox, World world, boolean ignoreTrans) {
+        super(x, y, false);
         this.speed = speed;
         this.handler = handler;
         this.collisionBox = collisionBox;
+        this.path = path;
         texture = Util.getImage(path);
         this.world = world;
-        collision = new Collision(this, world);
+        collision = new Collision(this, world, ignoreTrans);
     }
-
-    public abstract void update();
-
-    public abstract void render(Graphics g);
 
     protected void updateCollisionBox(int x, int y, int width, int height) {
         collisionBox.setBounds(this.x + x - Camera.xOffset, this.y + y, width, height);
@@ -60,14 +56,6 @@ public abstract class Actor {
 
     public void addToY(int amount) {
         y += amount;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public BufferedImage getTexture() {

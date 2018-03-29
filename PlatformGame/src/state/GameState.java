@@ -23,7 +23,7 @@ public class GameState implements State {
     private World world;
     private Handler handler;
     private Game game;
-    private MapEditor mapEditor;
+    
     
     private Camera cam;
 
@@ -34,7 +34,6 @@ public class GameState implements State {
         handler = new Handler(game.getKeyInput(), game.getMouseInput(), this);
         world = new GameWorld(handler);
         handler.setActor(world.getPlayer());
-        mapEditor = new MapEditor(handler, world.getTileList());
     }
 
     @Override
@@ -42,13 +41,11 @@ public class GameState implements State {
         cam.focusOnActor(world.getPlayer());
         world.update();
         playerDead();
-        mapEditor.update();
     }
 
     @Override
     public void render(Graphics g) {
         world.render(g);
-        mapEditor.render(g);
     }
     
     private void playerDead(){

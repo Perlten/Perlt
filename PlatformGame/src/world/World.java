@@ -8,13 +8,14 @@ package world;
 import actors.Actor;
 import actors.Player;
 import display.Camera;
+import game.GameObject;
 import handler.Handler;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import tile.Tile;
-import tile.TileManager;
+import mapEditor.TileManager;
 import util.Util;
 
 /**
@@ -23,7 +24,7 @@ import util.Util;
  */
 public abstract class World {
     
-    protected List<Tile> tileList;
+    protected List<GameObject> tileList;
     protected List<Actor> enemyList;
     protected BufferedImage Background;
     
@@ -31,7 +32,7 @@ public abstract class World {
     
     protected Handler handler;
 
-    protected Tile currentTile;
+    protected GameObject currentTile;
     protected boolean editor;
     
     
@@ -41,13 +42,13 @@ public abstract class World {
         tileList = Util.readWorld("resources/worlds/world1/tileFile");
         enemyList = Util.readWorld("resources/worlds/world1/enemyFile");
         Background = Util.getImage(backgroundPath);
-        currentTile = TileManager.getTile(1);
+        currentTile = TileManager.getTile(1, handler, this);
     }
     
     public abstract void update();
     public abstract void render(Graphics g);
 
-    public List<Tile> getTileList() {
+    public List<GameObject> getTileList() {
         return tileList;
     }
 
