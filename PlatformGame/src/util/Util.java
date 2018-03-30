@@ -29,6 +29,16 @@ public class Util {
         return texture;
     }
 
+    public static BufferedImage[] getImageArray(String path, int numOfImages){
+        BufferedImage[] arr = new BufferedImage[numOfImages];
+        BufferedImage image = getImage(path);
+        
+        for(int i = 0; i < numOfImages; i++){
+            arr[i] = image.getSubimage(i * Tile.width, 0, Tile.width, Tile.height);
+        }
+        return arr;
+    }
+    
     public static void saveToFile(String path, List list) {
         try {
             FileOutputStream fos = new FileOutputStream(path);

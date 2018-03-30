@@ -9,7 +9,7 @@ import tile.TransparentTile;
 import world.World;
 
 
-public class TileManager {
+public class GameObjectManager {
     
     public static final int TotalTiles = 4;
     

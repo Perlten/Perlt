@@ -1,7 +1,6 @@
 package world;
 
 import actors.Actor;
-import actors.Enemy;
 import actors.Player;
 import game.Game;
 import game.GameObject;
@@ -31,8 +30,10 @@ public class GameWorld extends World {
         for (GameObject tile : tileList) {
             tile.update();
         }
-        for (GameObject enemy : enemyList) {
-            enemy.update();
+        if (!handler.getKeyInput().isEditor()) {
+            for (GameObject enemy : enemyList) {
+                enemy.update();
+            }
         }
         player.update();
         mapEditor.update();

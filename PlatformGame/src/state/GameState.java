@@ -10,7 +10,6 @@ import game.Game;
 import handler.Handler;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import mapEditor.MapEditor;
 import world.GameWorld;
 import world.World;
 

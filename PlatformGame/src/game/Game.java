@@ -14,7 +14,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import state.GameState;
 import state.State;
-import mapEditor.TileManager;
+import mapEditor.GameObjectManager;
 
 /**
  *

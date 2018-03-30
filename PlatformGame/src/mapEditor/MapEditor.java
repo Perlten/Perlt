@@ -73,7 +73,7 @@ public class MapEditor {
     }
 
     protected void addTile(int tileId) {
-        currentGameObject = TileManager.getTile(handler.getKeyInput().getTileId(), handler, world);
+        currentGameObject = GameObjectManager.getTile(handler.getKeyInput().getTileId(), handler, world);
         currentGameObject.setX(((handler.getMouseInput().getX() + Camera.xOffset) / Tile.width) * Tile.width);
         currentGameObject.setY((handler.getMouseInput().getY() / Tile.height) * Tile.height);
 

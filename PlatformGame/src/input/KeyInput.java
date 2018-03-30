@@ -7,7 +7,7 @@ package input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import mapEditor.TileManager;
+import mapEditor.GameObjectManager;
 
 /**
  *
@@ -39,7 +39,7 @@ public class KeyInput implements KeyListener {
     public void keyPressed(KeyEvent ke) {
         keys[ke.getKeyCode()] = true;
         try {
-            for (int i = 0; i <= TileManager.TotalTiles; i++) {
+            for (int i = 0; i <= GameObjectManager.TotalTiles; i++) {
                 if (Integer.parseInt(String.valueOf(ke.getKeyChar())) == i) {
                     tileId = i;
                 }

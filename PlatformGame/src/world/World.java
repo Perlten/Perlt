@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
-import mapEditor.TileManager;
+import mapEditor.GameObjectManager;
 import util.EnemyWrapper;
 import util.Util;
 
@@ -36,14 +36,13 @@ public abstract class World {
     protected Handler handler;
 
     protected GameObject currentTile;
-    protected boolean editor;
     
     
     
     public World(Handler handler, String backgroundPath) {
         this.handler = handler;
         Background = Util.getImage(backgroundPath);
-        currentTile = TileManager.getTile(1, handler, this);
+        currentTile = GameObjectManager.getTile(1, handler, this);
     }
     
     public abstract void update();
