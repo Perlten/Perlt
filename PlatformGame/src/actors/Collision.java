@@ -89,6 +89,7 @@ public class Collision {
     public Actor collisionWithEnemy() {
         for (Actor actor : world.getEnemyList()) {
             if (checkCorners(actor)) {
+                System.out.println("Hit");
                 return actor;
             }
         }
@@ -98,7 +99,6 @@ public class Collision {
     public Entity collisionWithEntity() {
         for (Entity entity : world.getEntityList()) {
             if (checkCorners(entity)) {
-                System.out.println("Hit");
                 return entity;
             }
         }
@@ -109,7 +109,9 @@ public class Collision {
         if (gameObject.getCollisionBox().contains(actorCB.x, actorCB.y)
                 || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y)
                 || gameObject.getCollisionBox().contains(actorCB.x, actorCB.y + actorCB.height)
-                || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y + actorCB.height)) {
+                || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y + actorCB.height) 
+                || gameObject.getCollisionBox().contains(actorCB.x, actorCB.y + (actorCB.height / 2))
+                || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y + (actorCB.height / 2))) {
             return true;
         }
         return false;

@@ -1,13 +1,10 @@
 package world;
 
 import actors.Actor;
-import actors.Player;
-import entity.Coin;
 import game.Game;
 import game.GameObject;
 import handler.Handler;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import mapEditor.MapEditor;
 import tile.Tile;
 import util.Util;
@@ -17,7 +14,6 @@ public class GameWorld extends World {
     private Game game;
     private MapEditor mapEditor;
 
-    Coin coin = new Coin(50, 50);
 
     public GameWorld(Handler handler) {
         super(handler, "resources/textures/background.png");
@@ -46,10 +42,10 @@ public class GameWorld extends World {
 
     @Override
     public void render(Graphics g) {
-        renderTile(g);
+        renderWorld(g);
     }
 
-    private void renderTile(Graphics g) {
+    private void renderWorld(Graphics g) {
         Actor actor = handler.getActor();
         g.drawImage(Background, 0, 0, null);
         for (GameObject tile : tileList) {
@@ -63,7 +59,9 @@ public class GameWorld extends World {
             }
         }
         for (GameObject entity : entityList) {
-            entity.render(g);
+            if (entity.getX() >= actor.getX() - (game.getWidth() + 32) / 2 && entity.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
+                entity.render(g);
+            }
         }
         player.render(g);
         mapEditor.render(g);

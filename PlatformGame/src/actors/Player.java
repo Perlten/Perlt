@@ -10,7 +10,9 @@ import entity.Entity;
 import handler.Handler;
 import input.KeyInput;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import tile.Tile;
+import util.Util;
 import world.World;
 
 public class Player extends Actor {
@@ -40,6 +42,7 @@ public class Player extends Actor {
     public void render(Graphics g) {
         renderPlayer(g);
         renderHealth(g);
+        RenderPoints(g);
     }
 
     private void move() {
@@ -79,15 +82,18 @@ public class Player extends Actor {
     }
 
     private void updateCollisionWithEnemy() {
-        Actor enemy = collision.collisionWithEnemy();
-        if (enemy != null) {
-            health--;
-            world.getEnemyList().remove(enemy);
+        if (!Tile.editor) {
+            Actor enemy = collision.collisionWithEnemy();
+            if (enemy != null) {
+                health--;
+                world.getEnemyList().remove(enemy);
+            }
         }
     }
-    private void updateCollisionWithEntity(){
+
+    private void updateCollisionWithEntity() {
         Entity entity = collision.collisionWithEntity();
-        if(entity != null){
+        if (entity != null) {
             points += entity.getPoints();
             world.getEntityList().remove(entity);
         }
@@ -98,11 +104,19 @@ public class Player extends Actor {
             animationFrame++;
         }
         g.drawImage(animation[animationDirection][animationFrame % 5], x - Camera.xOffset, y, null);
-        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
+//        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
     }
 
     private void renderHealth(Graphics g) {
-        g.drawString(String.valueOf(health), 5, 20);
+        int imageY = 7;
+        BufferedImage image = Util.getImage("resources/textures/heart.png");
+        for (int i = 0; i < health; i++) {
+            g.drawImage(image, i * 32, imageY, null);
+        }
+    }
+
+    private void RenderPoints(Graphics g) {
+        g.drawString(String.valueOf(points), 10, 50);
     }
 
     public Collision getCollision() {

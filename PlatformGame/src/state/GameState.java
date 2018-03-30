@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package state;
 
 import display.Camera;
@@ -13,19 +8,13 @@ import java.awt.Rectangle;
 import world.GameWorld;
 import world.World;
 
-/**
- *
- * @author Perlt
- */
 public class GameState implements State {
     
     private World world;
     private Handler handler;
     private Game game;
     
-    
     private Camera cam;
-
     
     public GameState(Game game) {
         this.game = game;

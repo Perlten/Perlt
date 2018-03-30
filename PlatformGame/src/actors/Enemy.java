@@ -25,7 +25,7 @@ public class Enemy extends Actor {
 
     @Override
     public void update() {
-        updateCollisionBox(0, 4 ,23 ,23);
+        updateCollisionBox(0, 4 ,23 ,24);
         physics.update(false);
         move();
     }
@@ -36,7 +36,7 @@ public class Enemy extends Actor {
             if(animationLock.check()){
                 animationFrame++;
             }
-             g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
+//             g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
     }
     
     private void move(){
