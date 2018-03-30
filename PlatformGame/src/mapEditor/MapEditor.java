@@ -30,6 +30,8 @@ public class MapEditor {
     private Handler handler;
     private List<Tile> tileList;
     private List<Actor> enemyList;
+    private List<GameObject> tempList = new ArrayList<>();
+
     private World world;
 
     private MouseInput mouse;
@@ -59,16 +61,18 @@ public class MapEditor {
 
     private void updateEditor() {
         addTile(handler.getKeyInput().getTileId());
-        removeTile();
+        removeGameObject();
         removeLast();
         if (handler.getKeyInput().isSave()) {
             System.out.println("saved");
             Util.saveToFile("resources/worlds/world1/tileFile", tileList);
             Util.saveToFile("resources/worlds/world1/enemyFile", createEnemySaveList());
             handler.getKeyInput().setSaveFalse();
+            tempList.clear();
         }
         if (handler.getKeyInput().isDelete()) {
             tileList.clear();
+            tempList.clear();
         }
     }
 
@@ -78,48 +82,81 @@ public class MapEditor {
         currentGameObject.setY((handler.getMouseInput().getY() / Tile.height) * Tile.height);
 
         if (handler.getMouseInput().isLeftMouseClicked()) {
+            tempList.add(currentGameObject);
             if (currentGameObject instanceof Tile) {
-                tileList.add((Tile)currentGameObject);
+                tileList.add((Tile) currentGameObject);
                 handler.getMouseInput().setMouse1False();
                 currentGameObject = null;
             }
-            if(currentGameObject instanceof Enemy){
-                enemyList.add((Actor)currentGameObject);
+            if (currentGameObject instanceof Enemy) {
+                enemyList.add((Actor) currentGameObject);
                 handler.getMouseInput().setMouse1False();
                 currentGameObject = null;
             }
         }
     }
 
-    protected void removeTile() {
+    protected void removeGameObject() {
         MouseInput mouse = handler.getMouseInput();
         if (handler.getMouseInput().isRightMouseClicked()) {
-            GameObject tile = FindTile(mouse.getX(), mouse.getY());
+            Tile tile = findTile(mouse.getX(), mouse.getY());
             if (tile != null) {
                 tileList.remove(tile);
+                return;
+            }
+            Actor actor = findActor(mouse.getX(), mouse.getY());
+            if (actor != null) {
+                enemyList.remove(actor);
+                return;
             }
         }
     }
 
     public void removeLast() {
         if (handler.getKeyInput().isRemoveLast()) {
-            tileList.remove(tileList.size() - 1);
             handler.getKeyInput().setRemoveLastFalse();
+            if (tempList.size() < 1) {
+                return;
+            }
+            GameObject gameObject = tempList.get(tempList.size() - 1);
+            for (Actor actor : enemyList) {
+                if (actor.equals(gameObject)) {
+                    enemyList.remove(actor);
+                    tempList.remove(tempList.size() - 1);
+                    return;
+                }
+            }
+            for (Tile tile : tileList) {
+                if (tile.equals(gameObject)) {
+                    tileList.remove(tile);
+                    tempList.remove(tempList.size() - 1);
+                    return;
+                }
+            }
         }
     }
 
-    private GameObject FindTile(int x, int y) {
-        for (GameObject tile : tileList) {
+    private Tile findTile(int x, int y) {
+        for (Tile tile : tileList) {
             if (tile.getCollisionBox().contains(x, y)) {
                 return tile;
             }
         }
         return null;
     }
-    
-    private List<EnemyWrapper> createEnemySaveList(){
+
+    private Actor findActor(int x, int y) {
+        for (Actor actor : enemyList) {
+            if (actor.getCollisionBox().contains(x, y)) {
+                return actor;
+            }
+        }
+        return null;
+    }
+
+    private List<EnemyWrapper> createEnemySaveList() {
         List<EnemyWrapper> list = new ArrayList<>();
-        for(Actor object : enemyList){
+        for (Actor object : enemyList) {
             list.add(new EnemyWrapper(object.getX(), object.getY(), object.getSpeed(), object.getPath()));
         }
         return list;
