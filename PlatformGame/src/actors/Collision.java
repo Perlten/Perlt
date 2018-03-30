@@ -5,6 +5,7 @@
  */
 package actors;
 
+import entity.Entity;
 import game.GameObject;
 import java.awt.Rectangle;
 import java.util.List;
@@ -15,14 +16,14 @@ import world.World;
  *
  * @author Perlt
  */
-public class Collision{
+public class Collision {
 
     private Actor actor;
     private World world;
     private Rectangle actorCB;
     private boolean ignoreTrans;
 
-    public Collision(Actor actor, World world,boolean ignoreTrans) {
+    public Collision(Actor actor, World world, boolean ignoreTrans) {
         this.actor = actor;
         this.world = world;
         this.ignoreTrans = ignoreTrans;
@@ -34,7 +35,7 @@ public class Collision{
             for (GameObject tile : world.getTileList()) {
                 if (tile.getCollisionBox().contains(actorCB.x + actorCB.width + speed, actorCB.y)
                         || tile.getCollisionBox().contains(actorCB.x + actorCB.width + speed, actorCB.y + actorCB.width)) { // right down corner
-                    if(ignoreTrans && tile instanceof TransparentTile){
+                    if (ignoreTrans && tile instanceof TransparentTile) {
                         return false;
                     }
                     if (tile.isSolid()) {
@@ -47,7 +48,7 @@ public class Collision{
             for (GameObject tile : world.getTileList()) {
                 if (tile.getCollisionBox().contains(actorCB.x - speed, actorCB.y)
                         || tile.getCollisionBox().contains(actorCB.x - speed, actorCB.y + actorCB.height)) {
-                     if(ignoreTrans && tile instanceof TransparentTile){
+                    if (ignoreTrans && tile instanceof TransparentTile) {
                         return false;
                     }
                     if (tile.isSolid()) {
@@ -60,7 +61,7 @@ public class Collision{
             for (GameObject tile : world.getTileList()) {
                 if (tile.getCollisionBox().contains(actorCB.x, actorCB.y + actorCB.height + speed)
                         || tile.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y + actorCB.height + speed)) {
-                     if(ignoreTrans && tile instanceof TransparentTile){
+                    if (ignoreTrans && tile instanceof TransparentTile) {
                         return false;
                     }
                     if (tile.isSolid()) {
@@ -69,11 +70,11 @@ public class Collision{
                 }
             }
         }
-        if(direction.equalsIgnoreCase("up")){
+        if (direction.equalsIgnoreCase("up")) {
             for (GameObject tile : world.getTileList()) {
                 if (tile.getCollisionBox().contains(actorCB.x, actorCB.y - speed)
                         || tile.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y - speed)) {
-                     if(ignoreTrans && tile instanceof TransparentTile){
+                    if (ignoreTrans && tile instanceof TransparentTile) {
                         return false;
                     }
                     if (tile.isSolid()) {
@@ -84,13 +85,33 @@ public class Collision{
         }
         return false;
     }
-    
-    public Actor collisionWithActor(List<Actor> list){
-        for(Actor x : list){
-            if(x.getCollisionBox().contains(actorCB.x, actorCB.y)){
-                return x;
+
+    public Actor collisionWithEnemy() {
+        for (Actor actor : world.getEnemyList()) {
+            if (checkCorners(actor)) {
+                return actor;
             }
         }
         return null;
+    }
+
+    public Entity collisionWithEntity() {
+        for (Entity entity : world.getEntityList()) {
+            if (checkCorners(entity)) {
+                System.out.println("Hit");
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    private boolean checkCorners(GameObject gameObject) {
+        if (gameObject.getCollisionBox().contains(actorCB.x, actorCB.y)
+                || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y)
+                || gameObject.getCollisionBox().contains(actorCB.x, actorCB.y + actorCB.height)
+                || gameObject.getCollisionBox().contains(actorCB.x + actorCB.width, actorCB.y + actorCB.height)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -6,6 +6,7 @@
 package actors;
 
 import display.Camera;
+import entity.Entity;
 import handler.Handler;
 import input.KeyInput;
 import java.awt.Graphics;
@@ -18,16 +19,18 @@ public class Player extends Actor {
     private boolean jumping;
     private double time = 0;
     private int health = 3;
+    private int points = 0;
 
     public Player(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, new Rectangle(7, 11, 17, 20), world, true);
+        super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, world, true);
         this.key = handler.getKeyInput();
     }
 
     @Override
     public void update() {
-        updateCollisionBox();
+        updateCollisionBox(7, 0, 17, 31);
         updateCollisionWithEnemy();
+        updateCollisionWithEntity();
         physics.update(jumping);
         jump();
         move();
@@ -76,10 +79,17 @@ public class Player extends Actor {
     }
 
     private void updateCollisionWithEnemy() {
-        Actor enemy = collision.collisionWithActor(world.getEnemyList());
+        Actor enemy = collision.collisionWithEnemy();
         if (enemy != null) {
             health--;
             world.getEnemyList().remove(enemy);
+        }
+    }
+    private void updateCollisionWithEntity(){
+        Entity entity = collision.collisionWithEntity();
+        if(entity != null){
+            points += entity.getPoints();
+            world.getEntityList().remove(entity);
         }
     }
 
@@ -88,8 +98,7 @@ public class Player extends Actor {
             animationFrame++;
         }
         g.drawImage(animation[animationDirection][animationFrame % 5], x - Camera.xOffset, y, null);
-        //g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
-
+        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
     }
 
     private void renderHealth(Graphics g) {
@@ -106,5 +115,9 @@ public class Player extends Actor {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

@@ -5,13 +5,8 @@
  */
 package tile;
 
-import display.Camera;
 import game.GameObject;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
-import util.Util;
 
 /**
  *
@@ -32,11 +27,6 @@ public abstract class Tile extends GameObject {
         super(x, y, solid, path);
         this.id = id;
         this.path = path;
-        collisionBox = new Rectangle(width, height);
-    }
-
-    public Rectangle getCollisionBox() {
-        return collisionBox;
     }
 
     public boolean isSolid() {

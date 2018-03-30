@@ -19,14 +19,9 @@ public class StoneTile extends Tile {
         super(x, y, path, id, true);
     }
 
-//    public StoneTile(int x, int y, String path, int id) {
-//        super(x, y, path, id, true);
-//    }
-    
-
     @Override
     public void update() {
-        updateCollisionBox();
+        updateCollisionBox(0, 0, Tile.width, Tile.height);
     }
 
     @Override

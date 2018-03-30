@@ -9,12 +9,12 @@ import util.Util;
 public class Coin extends Entity {
 
     public Coin(int x, int y) {
-        super(x, y, "resources/textures/coin.png", 1, new Rectangle(x, y, 32, 32));
+        super(x, y, "resources/textures/coin.png", 1, new Rectangle(0, 0, 32, 32));
     }
 
     @Override
     public void update() {
-        updateCollisionBox();
+        updateCollisionBox(7 ,0 ,18 ,20);
     }
 
     @Override

@@ -5,10 +5,8 @@
  */
 package actors;
 
-import display.Camera;
 import display.FpsManager;
 import game.GameObject;
-import handler.Handler;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import physics.Physics;
@@ -27,19 +25,14 @@ public abstract class Actor extends GameObject {
     protected int animationDirection;
     protected FpsManager animationLock;
 
-    public Actor(int x, int y, int speed, String path, int numOfImages, int numOfDir,int frameSwitchPerSecond, Rectangle collisionBox, World world, boolean ignoreTrans) {
+    public Actor(int x, int y, int speed, String path, int numOfImages, int numOfDir,int frameSwitchPerSecond, World world, boolean ignoreTrans) {
         super(x, y, false, path);
         this.speed = speed;
-        this.collisionBox = collisionBox;
         this.path = path;
+        this.world = world;
         animation = Util.getImageArray(path, numOfImages, numOfDir);
         animationLock = new FpsManager(frameSwitchPerSecond);
-        this.world = world;
         collision = new Collision(this, world, ignoreTrans);
-    }
-
-    public Rectangle getCollisionBox() {
-        return collisionBox;
     }
 
     public Collision getCollision() {

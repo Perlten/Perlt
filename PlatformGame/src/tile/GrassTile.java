@@ -21,8 +21,7 @@ public class GrassTile extends Tile {
 
     @Override
     public void update() {
-       
-        updateCollisionBox();
+        updateCollisionBox(0, 0, Tile.width, Tile.height);
     }
 
     @Override

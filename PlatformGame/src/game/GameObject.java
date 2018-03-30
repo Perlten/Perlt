@@ -9,8 +9,6 @@ import display.Camera;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
-import static tile.Tile.height;
-import static tile.Tile.width;
 
 /**
  *
@@ -28,14 +26,15 @@ public abstract class GameObject implements Serializable {
         this.y = y;
         this.solid = solid;
         this.path = path;
+        collisionBox = new Rectangle();
     }
 
     public abstract void update();
 
     public abstract void render(Graphics g);
 
-    protected void updateCollisionBox() {
-        collisionBox.setBounds(x - Camera.xOffset, y, 32, 32);
+    protected void updateCollisionBox(int x, int y, int width, int height) {
+        collisionBox.setBounds(this.x + x - Camera.xOffset, this.y + y, width, height);
     }
 
     public int getX() {

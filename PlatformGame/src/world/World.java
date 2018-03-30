@@ -68,4 +68,8 @@ public abstract class World {
     public List<Actor> getEnemyList() {
         return enemyList;
     }
+
+    public List<Entity> getEntityList() {
+        return entityList;
+    }
 }
