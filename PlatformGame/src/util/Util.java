@@ -29,13 +29,18 @@ public class Util {
         return texture;
     }
 
-    public static BufferedImage[] getImageArray(String path, int numOfImages){
-        BufferedImage[] arr = new BufferedImage[numOfImages];
+    public static BufferedImage[][] getImageArray(String path, int numOfImages, int numOfDirections){
+        BufferedImage[][] arr = new BufferedImage[numOfDirections][numOfImages];
         BufferedImage image = getImage(path);
+        int xSize = image.getWidth() / numOfImages;
+        int ySize = image.getHeight() / numOfDirections;
         
-        for(int i = 0; i < numOfImages; i++){
-            arr[i] = image.getSubimage(i * Tile.width, 0, Tile.width, Tile.height);
+        for(int y = 0; y < numOfDirections; y++){
+            for(int x = 0; x < numOfImages; x++){
+                arr[y][x] = image.getSubimage(x * xSize, y * ySize, Tile.width, Tile.height);
+            }
         }
+        
         return arr;
     }
     

@@ -6,12 +6,13 @@
 package display;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
 /**
  *
  * @author Perlt
  */
-public class FpsManager {
+public class FpsManager implements Serializable {
     
     private double timesPerUpdate;
     private double delta;

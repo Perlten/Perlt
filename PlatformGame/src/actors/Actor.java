@@ -6,6 +6,7 @@
 package actors;
 
 import display.Camera;
+import display.FpsManager;
 import game.GameObject;
 import handler.Handler;
 import java.awt.Rectangle;
@@ -17,18 +18,23 @@ import world.World;
 public abstract class Actor extends GameObject {
 
     protected int speed;
-    protected transient BufferedImage texture;
     protected Collision collision;
     protected Physics physics = new Physics(this);
     protected World world;
     protected int health = 3;
+    
+    protected BufferedImage[][]animation;
+    protected int animationFrame = 0;
+    protected int animationDirection = 0;
+    protected FpsManager animationLock;
 
-    public Actor(int x, int y, int speed, String path, Rectangle collisionBox, World world, boolean ignoreTrans) {
+    public Actor(int x, int y, int speed, String path, int numOfImages, int numOfDir,int animationframes, Rectangle collisionBox, World world, boolean ignoreTrans) {
         super(x, y, false, path);
         this.speed = speed;
         this.collisionBox = collisionBox;
         this.path = path;
-        texture = Util.getImage(path);
+        animation = Util.getImageArray(path, numOfImages, numOfDir);
+        animationLock = new FpsManager(animationframes);
         this.world = world;
         collision = new Collision(this, world, ignoreTrans);
     }
@@ -53,8 +59,8 @@ public abstract class Actor extends GameObject {
         y += amount;
     }
 
-    public BufferedImage getTexture() {
-        return texture;
+    public BufferedImage[][] getTexture() {
+        return animation;
     }
 
     public int getHealth() {

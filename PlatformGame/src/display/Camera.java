@@ -7,6 +7,7 @@ package display;
 
 import actors.Actor;
 import game.Game;
+import tile.Tile;
 
 
 public class Camera {
@@ -19,7 +20,7 @@ public class Camera {
     }
     
     public void focusOnActor(Actor actor){
-        xOffset = actor.getX() - game.getWidth() / 2 + actor.getTexture().getWidth() / 2;
+        xOffset = actor.getX() - game.getWidth() / 2 + Tile.width / 2;
     }
 
     public int getxOffset() {

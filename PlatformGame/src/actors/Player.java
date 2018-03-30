@@ -6,26 +6,24 @@
 package actors;
 
 import display.Camera;
+import display.FpsManager;
 import handler.Handler;
 import input.KeyInput;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import util.Util;
 import world.World;
 
-/**
- *
- * @author Perlt
- */
 public class Player extends Actor {
 
     private KeyInput key;
     private boolean jumping;
     private double time = 0;
-    
 
     public Player(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/player.png", new Rectangle(), world, true);
+        super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, new Rectangle(), world, true);
         this.key = handler.getKeyInput();
     }
 
@@ -45,16 +43,21 @@ public class Player extends Actor {
     }
 
     private void move() {
-            if (key.isRight()) {
-                if (!collision.collisionWithSolidTile(speed, "right") || key.isEditor()) {
-                    x += speed;
-                }
+        if (key.isRight()) {
+            if (!collision.collisionWithSolidTile(speed, "right") || key.isEditor()) {
+                x += speed;
+                animationDirection = 3;
+                return;
             }
-            if (key.isLeft()) {
-                if (!collision.collisionWithSolidTile(speed, "left") || key.isEditor()) {
-                    x -= speed;
-                }
+        }
+        if (key.isLeft()) {
+            if (!collision.collisionWithSolidTile(speed, "left") || key.isEditor()) {
+                x -= speed;
+                animationDirection = 1;
+                return;
             }
+        }
+        animationDirection = 0;
     }
 
     private void jump() {
@@ -75,20 +78,24 @@ public class Player extends Actor {
         }
     }
 
-    private void updateCollisionWithEnemy(){
+    private void updateCollisionWithEnemy() {
         Actor enemy = collision.collisionWithActor(world.getEnemyList());
-        if(enemy != null){
+        if (enemy != null) {
             health--;
             world.getEnemyList().remove(enemy);
         }
     }
-    
+
     private void renderPlayer(Graphics g) {
-            g.drawImage(texture, x - Camera.xOffset, y, null);
-//            g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
+        if (animationLock.check()) {
+            animationFrame++;
+        }
+        g.drawImage(animation[animationDirection][animationFrame % 5], x - Camera.xOffset, y, null);
+        //g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
+
     }
-    
-    private void renderHealth(Graphics g){
+
+    private void renderHealth(Graphics g) {
         g.drawString(String.valueOf(health), 5, 20);
     }
 
