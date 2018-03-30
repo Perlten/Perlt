@@ -21,26 +21,21 @@ public abstract class Actor extends GameObject {
     protected Collision collision;
     protected Physics physics = new Physics(this);
     protected World world;
-    protected int health = 3;
     
     protected BufferedImage[][]animation;
     protected int animationFrame = 0;
-    protected int animationDirection = 0;
+    protected int animationDirection;
     protected FpsManager animationLock;
 
-    public Actor(int x, int y, int speed, String path, int numOfImages, int numOfDir,int animationframes, Rectangle collisionBox, World world, boolean ignoreTrans) {
+    public Actor(int x, int y, int speed, String path, int numOfImages, int numOfDir,int frameSwitchPerSecond, Rectangle collisionBox, World world, boolean ignoreTrans) {
         super(x, y, false, path);
         this.speed = speed;
         this.collisionBox = collisionBox;
         this.path = path;
         animation = Util.getImageArray(path, numOfImages, numOfDir);
-        animationLock = new FpsManager(animationframes);
+        animationLock = new FpsManager(frameSwitchPerSecond);
         this.world = world;
         collision = new Collision(this, world, ignoreTrans);
-    }
-
-    protected void updateCollisionBox(int x, int y, int width, int height) {
-        collisionBox.setBounds(this.x + x - Camera.xOffset, this.y + y, width, height);
     }
 
     public Rectangle getCollisionBox() {
@@ -62,9 +57,4 @@ public abstract class Actor extends GameObject {
     public BufferedImage[][] getTexture() {
         return animation;
     }
-
-    public int getHealth() {
-        return health;
-    }
-    
 }

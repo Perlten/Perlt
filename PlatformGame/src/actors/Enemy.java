@@ -20,13 +20,13 @@ public class Enemy extends Actor {
     private boolean goingLeft;
 
     public Enemy(int x, int y, int speed, World world) {
-        super(x, y, speed, "resources/textures/enemyAnimation.png", 6, 2, 9, new Rectangle(), world, false);
+        super(x, y, speed, "resources/textures/enemyAnimation.png", 6, 2, 9, new Rectangle(7, 11, 17, 20), world, false);
         goingLeft = new Random().nextBoolean();
     }
 
     @Override
     public void update() {
-        updateCollisionBox(7, 11, 17, 20);
+        updateCollisionBox();
         physics.update(false);
         move();
     }

@@ -39,7 +39,7 @@ public class GameState implements State {
     public void update() {
         cam.focusOnActor(world.getPlayer());
         world.update();
-        playerDead();
+//        playerDead();
     }
 
     @Override

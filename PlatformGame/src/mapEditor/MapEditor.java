@@ -8,8 +8,10 @@ package mapEditor;
 import actors.Actor;
 import actors.Enemy;
 import display.Camera;
+import entity.Entity;
 import game.GameObject;
 import handler.Handler;
+import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -19,33 +21,32 @@ import util.EnemyWrapper;
 import util.Util;
 import world.World;
 
-/**
- *
- * @author Perlt
- */
 public class MapEditor {
 
     private GameObject currentGameObject;
     private boolean editor;
-    private Handler handler;
     private List<Tile> tileList;
     private List<Actor> enemyList;
+    private List<Entity> entityList;
     private List<GameObject> tempList = new ArrayList<>();
-
+    private Handler handler;
     private World world;
 
     private MouseInput mouse;
+    private KeyInput key;
 
-    public MapEditor(Handler handler, List<Tile> tileList, List<Actor> enemyList, World world) {
-        this.handler = handler;
+    public MapEditor(Handler handler, List<Tile> tileList, List<Actor> enemyList,List<Entity> entityList, World world) {
         this.tileList = tileList;
         this.enemyList = enemyList;
+        this.entityList = entityList;
         this.world = world;
+        this.handler = handler;
         mouse = handler.getMouseInput();
+        key = handler.getKeyInput();
     }
 
     public void update() {
-        editor = handler.getKeyInput().isEditor();
+        editor = key.isEditor();
         if (editor) {
             updateEditor();
         }
@@ -60,45 +61,48 @@ public class MapEditor {
     }
 
     private void updateEditor() {
-        addTile(handler.getKeyInput().getTileId());
+        addTile(key.getTileId());
         removeGameObject();
         removeLast();
-        if (handler.getKeyInput().isSave()) {
+        if (key.isSave()) {
             System.out.println("saved");
             Util.saveToFile("resources/worlds/world1/tileFile", tileList);
             Util.saveToFile("resources/worlds/world1/enemyFile", createEnemySaveList());
-            handler.getKeyInput().setSaveFalse();
+            Util.saveToFile("resources/worlds/world1/entityFile", entityList);
+            key.setSaveFalse();
             tempList.clear();
         }
-        if (handler.getKeyInput().isDelete()) {
+        if (key.isDelete()) {
             tileList.clear();
             tempList.clear();
         }
     }
 
     protected void addTile(int tileId) {
-        currentGameObject = GameObjectManager.getTile(handler.getKeyInput().getTileId(), handler, world);
-        currentGameObject.setX(((handler.getMouseInput().getX() + Camera.xOffset) / Tile.width) * Tile.width);
-        currentGameObject.setY((handler.getMouseInput().getY() / Tile.height) * Tile.height);
+        currentGameObject = GameObjectManager.getTile(tileId, handler, world);
+        currentGameObject.setX(((mouse.getX() + Camera.xOffset) / Tile.width) * Tile.width);
+        currentGameObject.setY((mouse.getY() / Tile.height) * Tile.height);
 
-        if (handler.getMouseInput().isLeftMouseClicked()) {
+        if (mouse.isLeftMouseClicked()) {
+            mouse.setMouse1False();
             tempList.add(currentGameObject);
             if (currentGameObject instanceof Tile) {
                 tileList.add((Tile) currentGameObject);
-                handler.getMouseInput().setMouse1False();
                 currentGameObject = null;
             }
             if (currentGameObject instanceof Enemy) {
                 enemyList.add((Actor) currentGameObject);
-                handler.getMouseInput().setMouse1False();
+                currentGameObject = null;
+            }
+            if(currentGameObject instanceof Entity){
+                entityList.add((Entity) currentGameObject);
                 currentGameObject = null;
             }
         }
     }
 
     protected void removeGameObject() {
-        MouseInput mouse = handler.getMouseInput();
-        if (handler.getMouseInput().isRightMouseClicked()) {
+        if (mouse.isRightMouseClicked()) {
             Tile tile = findTile(mouse.getX(), mouse.getY());
             if (tile != null) {
                 tileList.remove(tile);
@@ -109,12 +113,17 @@ public class MapEditor {
                 enemyList.remove(actor);
                 return;
             }
+            Entity entity = findEntity(mouse.getX(), mouse.getY());
+            if(entity != null){
+                entityList.remove(entity);
+                return;
+            }
         }
     }
 
     public void removeLast() {
-        if (handler.getKeyInput().isRemoveLast()) {
-            handler.getKeyInput().setRemoveLastFalse();
+        if (key.isRemoveLast()) {
+            key.setRemoveLastFalse();
             if (tempList.size() < 1) {
                 return;
             }
@@ -153,7 +162,16 @@ public class MapEditor {
         }
         return null;
     }
-
+    
+    private Entity findEntity(int x, int y){
+        for(Entity entity : entityList){
+            if(entity.getCollisionBox().contains(x, y)){
+                return entity;
+            }
+        }
+        return null;
+    }
+    
     private List<EnemyWrapper> createEnemySaveList() {
         List<EnemyWrapper> list = new ArrayList<>();
         for (Actor object : enemyList) {

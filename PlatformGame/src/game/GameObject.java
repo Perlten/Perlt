@@ -5,16 +5,19 @@
  */
 package game;
 
+import display.Camera;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
+import static tile.Tile.height;
+import static tile.Tile.width;
 
 /**
  *
  * @author Perlt
  */
-public abstract class GameObject implements Serializable{
-        
+public abstract class GameObject implements Serializable {
+
     protected int x, y;
     protected Rectangle collisionBox;
     protected boolean solid;
@@ -26,9 +29,14 @@ public abstract class GameObject implements Serializable{
         this.solid = solid;
         this.path = path;
     }
-    
+
     public abstract void update();
+
     public abstract void render(Graphics g);
+
+    protected void updateCollisionBox() {
+        collisionBox.setBounds(x - Camera.xOffset, y, 32, 32);
+    }
 
     public int getX() {
         return x;

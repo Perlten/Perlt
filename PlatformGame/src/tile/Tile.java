@@ -35,10 +35,6 @@ public abstract class Tile extends GameObject {
         collisionBox = new Rectangle(width, height);
     }
 
-    protected void updateCollisionBox(){
-        collisionBox.setBounds(x - Camera.xOffset, y, width, height);
-    }
-
     public Rectangle getCollisionBox() {
         return collisionBox;
     }

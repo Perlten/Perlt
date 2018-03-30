@@ -17,15 +17,16 @@ public class Player extends Actor {
     private KeyInput key;
     private boolean jumping;
     private double time = 0;
+    private int health = 3;
 
     public Player(int x, int y, int speed, Handler handler, World world) {
-        super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, new Rectangle(), world, true);
+        super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, new Rectangle(7, 11, 17, 20), world, true);
         this.key = handler.getKeyInput();
     }
 
     @Override
     public void update() {
-        updateCollisionBox(7, 11, 17, 20);
+        updateCollisionBox();
         updateCollisionWithEnemy();
         physics.update(jumping);
         jump();
@@ -101,5 +102,9 @@ public class Player extends Actor {
 
     public boolean isJumping() {
         return jumping;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

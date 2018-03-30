@@ -1,6 +1,7 @@
 package mapEditor;
 
 import actors.Enemy;
+import entity.Coin;
 import game.GameObject;
 import handler.Handler;
 import tile.GrassTile;
@@ -11,7 +12,7 @@ import world.World;
 
 public class GameObjectManager {
     
-    public static final int TotalTiles = 4;
+    public static final int TotalTiles = 5;
     
     public static GameObject getTile(int id, Handler handler, World world){
         if(id == 1){
@@ -25,6 +26,9 @@ public class GameObjectManager {
         }
         if(id == 4){
             return new Enemy(0, 0, 2, world);
+        }
+        if(id == 5){
+            return new Coin(0, 0);
         }
         return null;
     }
