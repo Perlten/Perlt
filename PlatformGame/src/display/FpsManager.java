@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Perlt
  */
-public class FpsManager implements Serializable {
+public class FpsManager {
     
     private double timesPerUpdate;
     private double delta;

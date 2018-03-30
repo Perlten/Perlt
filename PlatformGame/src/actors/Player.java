@@ -6,14 +6,10 @@
 package actors;
 
 import display.Camera;
-import display.FpsManager;
 import handler.Handler;
 import input.KeyInput;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import util.Util;
 import world.World;
 
 public class Player extends Actor {

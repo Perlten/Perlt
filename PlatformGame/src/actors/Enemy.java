@@ -6,12 +6,9 @@
 package actors;
 
 import display.Camera;
-import display.FpsManager;
-import handler.Handler;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import util.Util;
+import java.util.Random;
 import world.World;
 
 /**
@@ -20,10 +17,11 @@ import world.World;
  */
 public class Enemy extends Actor {
     
-    private boolean goingLeft = false;
+    private boolean goingLeft;
 
     public Enemy(int x, int y, int speed, World world) {
         super(x, y, speed, "resources/textures/enemyAnimation.png", 6, 2, 9, new Rectangle(), world, false);
+        goingLeft = new Random().nextBoolean();
     }
 
     @Override
@@ -35,10 +33,6 @@ public class Enemy extends Actor {
 
     @Override
     public void render(Graphics g) {
-//        if(texture == null){
-//            texture = Util.getImage(path);
-//        }
-//        g.drawImage(texture, x - Camera.xOffset, y, null);
             g.drawImage(animation[animationDirection][animationFrame % 6], x - Camera.xOffset, y, null);
             if(animationLock.check()){
                 animationFrame++;
