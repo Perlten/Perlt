@@ -9,6 +9,7 @@ import actors.Actor;
 import actors.Enemy;
 import actors.Player;
 import entity.Entity;
+import game.Game;
 import game.GameObject;
 import handler.Handler;
 import java.awt.Graphics;
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
-import mapEditor.GameObjectManager;
+import mapEditor.MapEditor;
 import util.EnemyWrapper;
 import util.Util;
 
@@ -32,19 +33,56 @@ public abstract class World {
     protected BufferedImage Background;
 
     protected Player player;
-
+    protected Game game;
     protected Handler handler;
-
+    protected MapEditor mapEditor;
 
     public World(Handler handler, String backgroundPath) {
         this.handler = handler;
+        game = handler.getState().getGame();
         Background = Util.getImage(backgroundPath);
         player = new Player(100, 100, 3, handler, this);
     }
 
-    public abstract void update();
+    public void update() {
+        Tile.editor = handler.getKeyInput().isEditor();
+        for (GameObject tile : tileList) {
+            tile.update();
+        }
+        for (GameObject enemy : enemyList) {
+            enemy.update();
+        }
+        for (GameObject entity : entityList) {
+            entity.update();
+        }
+        player.update();
+        mapEditor.update();
+    }
 
-    public abstract void render(Graphics g);
+    public void render(Graphics g) {
+        renderWorld(g);
+}
+
+    private void renderWorld(Graphics g) {
+        g.drawImage(Background, 0, 0, null);
+        for (GameObject tile : tileList) {
+            if (tile.getX() >= player.getX() - (game.getWidth() + 32) / 2 && tile.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
+                tile.render(g);
+            }
+        }
+        for (GameObject enemy : enemyList) {
+            if (enemy.getX() >= player.getX() - (game.getWidth() + 32) / 2 && enemy.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
+                enemy.render(g);
+            }
+        }
+        for (GameObject entity : entityList) {
+            if (entity.getX() >= player.getX() - (game.getWidth() + 32) / 2 && entity.getX() <= player.getX() + (game.getWidth() + 32) / 2) {
+                entity.render(g);
+            }
+        }
+        player.render(g);
+        mapEditor.render(g);
+    }
 
     protected List<Actor> converToEnemyFile(String path) {
         List<EnemyWrapper> list = Util.readWorld(path);

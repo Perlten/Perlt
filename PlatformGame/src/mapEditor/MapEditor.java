@@ -34,13 +34,15 @@ public class MapEditor {
 
     private MouseInput mouse;
     private KeyInput key;
-
-    public MapEditor(Handler handler, List<Tile> tileList, List<Actor> enemyList,List<Entity> entityList, World world) {
+    private String path;
+    
+    public MapEditor(Handler handler, List<Tile> tileList, List<Actor> enemyList,List<Entity> entityList, World world, String path) {
         this.tileList = tileList;
         this.enemyList = enemyList;
         this.entityList = entityList;
         this.world = world;
         this.handler = handler;
+        this.path = path;
         mouse = handler.getMouseInput();
         key = handler.getKeyInput();
     }
@@ -66,9 +68,9 @@ public class MapEditor {
         removeLast();
         if (key.isSave()) {
             System.out.println("saved");
-            Util.saveToFile("resources/worlds/world1/tileFile", tileList);
-            Util.saveToFile("resources/worlds/world1/enemyFile", createEnemySaveList());
-            Util.saveToFile("resources/worlds/world1/entityFile", entityList);
+            Util.saveToFile(path + "/tileFile", tileList);
+            Util.saveToFile(path + "/enemyFile", createEnemySaveList());
+            Util.saveToFile(path + "/entityFile", entityList);
             key.setSaveFalse();
         }
         if (key.isDelete()) {
