@@ -4,13 +4,19 @@ import game.GameObject;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import tile.Tile;
 
 
@@ -64,5 +70,16 @@ public class Util {
             return new ArrayList<>();
         }
     }
-
+    
+    public static AudioStream getSound(String path){
+        try {
+            InputStream in = new FileInputStream(path);
+            return new AudioStream(in);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

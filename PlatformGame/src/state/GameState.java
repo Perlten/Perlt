@@ -1,6 +1,8 @@
 package state;
 
 import display.Camera;
+import entity.Entity;
+import entity.WinHeart;
 import game.Game;
 import handler.Handler;
 import java.awt.Graphics;
@@ -17,9 +19,9 @@ public class GameState implements State {
     private World currentWorld;
     private Handler handler;
     private Game game;
-
     private Camera cam;
     
+    private int level = 1;
     private Map<String, World> worlds = new HashMap<>();
 
     public GameState(Game game) {
@@ -39,13 +41,11 @@ public class GameState implements State {
     @Override
     public void update() {
         cam.focusOnActor(currentWorld.getPlayer());
+        checkLevel();
         currentWorld.update();
         if (!Tile.editor) {
             playerDead();
-        }
-        if (handler.getKeyInput().isTest()) {
-            currentWorld = worlds.get("world2");
-        }
+        }   
     }
 
     @Override
@@ -57,6 +57,14 @@ public class GameState implements State {
         Rectangle col = currentWorld.getPlayer().getCollisionBox();
         if (col.y + col.height > game.getHeight() || currentWorld.getPlayer().getHealth() <= 0) {
             System.exit(0);
+        }
+    }
+    private void checkLevel(){
+        Entity entity = currentWorld.getPlayer().getCollision().collisionWithEntity();
+        if(entity instanceof WinHeart || handler.getKeyInput().isNextLevel()){
+            level ++;
+            currentWorld = worlds.get("world" + level);
+            handler.getKeyInput().setNextLevelFalse();
         }
     }
 

@@ -5,20 +5,17 @@
  */
 package mapEditor;
 
-import actors.Actor;
-import actors.Enemy;
+import actors.*;
 import display.Camera;
 import entity.Entity;
 import game.GameObject;
 import handler.Handler;
-import input.KeyInput;
-import input.MouseInput;
+import input.*;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
-import util.EnemyWrapper;
-import util.Util;
+import util.*;
 import world.World;
 
 public class MapEditor {

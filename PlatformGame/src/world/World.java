@@ -41,7 +41,7 @@ public abstract class World {
         this.handler = handler;
         game = handler.getState().getGame();
         Background = Util.getImage(backgroundPath);
-        player = new Player(100, 100, 3, handler, this);
+        player = new Player(100, 150, 3, handler, this);
     }
 
     public void update() {

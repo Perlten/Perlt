@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import mapEditor.GameObjectManager;
 
-/**
- *
- * @author Perlt
- */
 public class KeyInput implements KeyListener {
 
     private boolean[] keys;
     private boolean up, down, left, right, editor, save, delete, removeLast;
     private int tileId = 1;
-    private boolean test;
+    private boolean nextLevel;
     
     public KeyInput() {
         keys = new boolean[256];
@@ -30,7 +21,6 @@ public class KeyInput implements KeyListener {
         left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
         delete = keys[KeyEvent.VK_L];
-        test = keys[KeyEvent.VK_B];
     }
 
     @Override
@@ -62,6 +52,10 @@ public class KeyInput implements KeyListener {
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
             removeLast = true;
         }
+        if (ke.getKeyCode() == KeyEvent.VK_B) {
+            nextLevel = true;
+        }
+        
 
     }
 
@@ -83,6 +77,10 @@ public class KeyInput implements KeyListener {
 
     public void setSaveFalse() {
         this.save = false;
+    }
+    
+    public void setNextLevelFalse(){
+        nextLevel = false;
     }
 
     public void setRemoveLastFalse() {
@@ -113,8 +111,8 @@ public class KeyInput implements KeyListener {
         return removeLast;
     }
 
-    public boolean isTest() {
-        return test;
+    public boolean isNextLevel() {
+        return nextLevel;
     }
     
 }

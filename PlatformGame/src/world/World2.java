@@ -8,7 +8,7 @@ import util.Util;
 public class World2 extends World {
 
     public World2(Handler handler) {
-        super(handler, "resources/textures/background.png");
+        super(handler, "resources/textures/background2.png");
         tileList = Util.readWorld("resources/worlds/world2/tileFile");
         enemyList = converToEnemyFile("resources/worlds/world2/enemyFile");
         entityList = Util.readWorld("resources/worlds/world2/entityFile");
