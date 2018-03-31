@@ -14,22 +14,21 @@ public class Coin extends Entity {
 
     @Override
     public void update() {
-        updateCollisionBox(7 ,0 ,18 ,20);
+        if (animationLock == null) {
+            animationLock = new FpsManager(9);
+        }
+        updateCollisionBox(7, 0, 18, 20);
+        updateAnimationFrame();
     }
 
     @Override
     public void render(Graphics g) {
-        if(animation == null){
+        if (animation == null) {
             animation = Util.getImageArray(path, 8, 1);
         }
-        if(animationLock == null){
-            animationLock = new FpsManager(9);
-        }
-        if (animationLock.check()) {
-            animationFrame++;
-        }
+
         g.drawImage(animation[0][animationFrame % 7], x - Camera.xOffset, y, null);
 //        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // drawsHitBox
     }
-    
+
 }

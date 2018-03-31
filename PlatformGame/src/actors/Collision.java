@@ -8,7 +8,6 @@ package actors;
 import entity.Entity;
 import game.GameObject;
 import java.awt.Rectangle;
-import java.util.List;
 import tile.TransparentTile;
 import world.World;
 
@@ -89,7 +88,6 @@ public class Collision {
     public Actor collisionWithEnemy() {
         for (Actor actor : world.getEnemyList()) {
             if (checkCorners(actor)) {
-                System.out.println("Hit");
                 return actor;
             }
         }

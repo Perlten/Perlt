@@ -6,11 +6,12 @@ import handler.Handler;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import world.GameWorld;
+import world.TestWorld;
 import world.World;
 
 public class GameState implements State {
     
-    private World world;
+    private World currentWorld;
     private Handler handler;
     private Game game;
     
@@ -20,32 +21,35 @@ public class GameState implements State {
         this.game = game;
         cam = new Camera(game);
         handler = new Handler(game.getKeyInput(), game.getMouseInput(), this);
-        world = new GameWorld(handler);
-        handler.setActor(world.getPlayer());
+        currentWorld = new GameWorld(handler);
+        handler.setActor(currentWorld.getPlayer());
     }
 
     @Override
     public void update() {
-        cam.focusOnActor(world.getPlayer());
-        world.update();
+        cam.focusOnActor(currentWorld.getPlayer());
+        currentWorld.update();
         playerDead();
+        if(handler.getKeyInput().isTest()){
+            currentWorld = new TestWorld(handler);
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        world.render(g);
+        currentWorld.render(g);
     }
     
     private void playerDead(){
-        Rectangle col = world.getPlayer().getCollisionBox();
-        if(col.y + col.height > game.getHeight() || world.getPlayer().getHealth() <= 0){
+        Rectangle col = currentWorld.getPlayer().getCollisionBox();
+        if(col.y + col.height > game.getHeight() || currentWorld.getPlayer().getHealth() <= 0){
             System.exit(0);
         }
     }
 
     @Override
     public World getWorld() {
-        return world;
+        return currentWorld;
     }
     
     @Override

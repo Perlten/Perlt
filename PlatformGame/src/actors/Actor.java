@@ -35,6 +35,12 @@ public abstract class Actor extends GameObject {
         collision = new Collision(this, world, ignoreTrans);
     }
 
+    protected void updateAnimationFrame(){
+        if (animationLock.check()) {
+            animationFrame++;
+        }
+    }
+    
     public Collision getCollision() {
         return collision;
     }

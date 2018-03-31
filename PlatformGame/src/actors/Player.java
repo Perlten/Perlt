@@ -9,6 +9,8 @@ import display.Camera;
 import entity.Entity;
 import handler.Handler;
 import input.KeyInput;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import tile.Tile;
@@ -30,6 +32,7 @@ public class Player extends Actor {
 
     @Override
     public void update() {
+        updateAnimationFrame();
         updateCollisionBox(7, 0, 17, 31);
         updateCollisionWithEnemy();
         updateCollisionWithEntity();
@@ -100,9 +103,6 @@ public class Player extends Actor {
     }
 
     private void renderPlayer(Graphics g) {
-        if (animationLock.check()) {
-            animationFrame++;
-        }
         g.drawImage(animation[animationDirection][animationFrame % 5], x - Camera.xOffset, y, null);
 //        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
     }
@@ -116,11 +116,9 @@ public class Player extends Actor {
     }
 
     private void RenderPoints(Graphics g) {
-        g.drawString(String.valueOf(points), 10, 50);
-    }
-
-    public Collision getCollision() {
-        return collision;
+        g.setColor(Color.red);
+//        g.setFont(new Font("", 1, 20));
+        g.drawString(String.valueOf(points), 10, 60);
     }
 
     public boolean isJumping() {

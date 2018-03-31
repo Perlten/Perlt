@@ -15,7 +15,7 @@ import world.World;
  * @author Perlt
  */
 public class Enemy extends Actor {
-    
+
     private boolean goingLeft;
 
     public Enemy(int x, int y, int speed, World world) {
@@ -25,34 +25,32 @@ public class Enemy extends Actor {
 
     @Override
     public void update() {
-        updateCollisionBox(0, 4 ,23 ,24);
+        updateAnimationFrame();
+        updateCollisionBox(6, 4, 23, 24);
         physics.update(false);
         move();
     }
 
     @Override
     public void render(Graphics g) {
-            g.drawImage(animation[animationDirection][animationFrame % 6], x - Camera.xOffset, y, null);
-            if(animationLock.check()){
-                animationFrame++;
-            }
+        g.drawImage(animation[animationDirection][animationFrame % 6], x - Camera.xOffset, y, null);
 //             g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height); // draws collision box
     }
-    
-    private void move(){
-        if(collision.collisionWithSolidTile(speed, "right")){
+
+    private void move() {
+        if (collision.collisionWithSolidTile(speed, "right")) {
             goingLeft = true;
         }
-        if(collision.collisionWithSolidTile(speed, "left")){
+        if (collision.collisionWithSolidTile(speed, "left")) {
             goingLeft = false;
         }
-        if(goingLeft){
+        if (goingLeft) {
             x -= speed;
             animationDirection = 0;
-        }else{
+        } else {
             x += speed;
             animationDirection = 1;
         }
     }
-    
+
 }

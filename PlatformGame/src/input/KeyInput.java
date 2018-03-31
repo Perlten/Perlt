@@ -18,7 +18,8 @@ public class KeyInput implements KeyListener {
     private boolean[] keys;
     private boolean up, down, left, right, editor, save, delete, removeLast;
     private int tileId = 1;
-
+    private boolean test;
+    
     public KeyInput() {
         keys = new boolean[256];
     }
@@ -29,6 +30,7 @@ public class KeyInput implements KeyListener {
         left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
         delete = keys[KeyEvent.VK_L];
+        test = keys[KeyEvent.VK_B];
     }
 
     @Override
@@ -110,4 +112,9 @@ public class KeyInput implements KeyListener {
     public boolean isRemoveLast() {
         return removeLast;
     }
+
+    public boolean isTest() {
+        return test;
+    }
+    
 }

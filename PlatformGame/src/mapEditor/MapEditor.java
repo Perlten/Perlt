@@ -70,7 +70,6 @@ public class MapEditor {
             Util.saveToFile("resources/worlds/world1/enemyFile", createEnemySaveList());
             Util.saveToFile("resources/worlds/world1/entityFile", entityList);
             key.setSaveFalse();
-            tempList.clear();
         }
         if (key.isDelete()) {
             tileList.clear();
