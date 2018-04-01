@@ -1,5 +1,6 @@
 package state;
 
+import actors.Player;
 import display.Camera;
 import entity.Entity;
 import entity.WinHeart;
@@ -10,9 +11,7 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
 import tile.Tile;
-import world.World1;
-import world.World2;
-import world.World;
+import world.*;
 
 public class GameState implements State {
 
@@ -20,7 +19,9 @@ public class GameState implements State {
     private Handler handler;
     private Game game;
     private Camera cam;
-    
+
+    private String stateChange;
+
     private int level = 1;
     private Map<String, World> worlds = new HashMap<>();
 
@@ -32,8 +33,8 @@ public class GameState implements State {
         handler.setActor(currentWorld.getPlayer());
         initWorlds();
     }
-    
-    private void initWorlds(){
+
+    private void initWorlds() {
         worlds.put("world1", new World1(handler));
         worlds.put("world2", new World2(handler));
     }
@@ -41,11 +42,9 @@ public class GameState implements State {
     @Override
     public void update() {
         cam.focusOnActor(currentWorld.getPlayer());
-        checkLevel();
+        playerDead();
         currentWorld.update();
-        if (!Tile.editor) {
-            playerDead();
-        }   
+        checkLevel();
     }
 
     @Override
@@ -53,19 +52,33 @@ public class GameState implements State {
         currentWorld.render(g);
     }
 
-    private void playerDead() {
-        Rectangle col = currentWorld.getPlayer().getCollisionBox();
-        if (col.y + col.height > game.getHeight() || currentWorld.getPlayer().getHealth() <= 0) {
-            System.exit(0);
+    private String playerDead() {
+        if (!Tile.editor) {
+            Rectangle col = currentWorld.getPlayer().getCollisionBox();
+            if (col.y + col.height > game.getHeight() || Player.health <= 0) {
+                stateChange = "endGameState";
+                Player.health = 0;
+            }
         }
+        return null;
     }
-    private void checkLevel(){
+
+    private void checkLevel() {
         Entity entity = currentWorld.getPlayer().getCollision().collisionWithEntity();
-        if(entity instanceof WinHeart || handler.getKeyInput().isNextLevel()){
-            level ++;
+        if (entity instanceof WinHeart || handler.getKeyInput().isNextLevel()) {
+            currentWorld.getPlayer().addToHealth(1);
+            level++;
             currentWorld = worlds.get("world" + level);
             handler.getKeyInput().setNextLevelFalse();
+            if(currentWorld == null){
+                stateChange = "EndGameState";
+            }
         }
+    }
+
+    @Override
+    public String nextState() {
+        return stateChange;
     }
 
     @Override

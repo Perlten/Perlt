@@ -23,9 +23,9 @@ public class Player extends Actor {
     private KeyInput key;
     private boolean jumping;
     private double time = 0;
-    private static int health = 3;
-    private static int points = 0;
-    
+    public static int health = 3;
+    public static int points = 0;
+
     public Player(int x, int y, int speed, Handler handler, World world) {
         super(x, y, speed, "resources/textures/playerAnimation.png", 5, 4, 9, world, true);
         this.key = handler.getKeyInput();
@@ -96,12 +96,14 @@ public class Player extends Actor {
     }
 
     private void updateCollisionWithEntity() {
-        Entity entity = collision.collisionWithEntity();
-        if (entity != null) {
-            if (!(entity instanceof WinHeart)) {
-                points += entity.getPoints();
-                world.getEntityList().remove(entity);
-                AudioPlayer.player.start(Util.getSound("resources/sounds/coin.wav"));
+        if (!Tile.editor) {
+            Entity entity = collision.collisionWithEntity();
+            if (entity != null) {
+                if (!(entity instanceof WinHeart)) {
+                    points += entity.getPoints();
+                    world.getEntityList().remove(entity);
+                    AudioPlayer.player.start(Util.getSound("resources/sounds/coin.wav"));
+                }
             }
         }
     }
@@ -136,4 +138,9 @@ public class Player extends Actor {
     public int getPoints() {
         return points;
     }
+    
+    public void addToHealth(int amount){
+        health += amount;
+    }
+     
 }

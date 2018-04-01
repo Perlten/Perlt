@@ -1,25 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import display.Display;
 import display.FpsManager;
-import handler.Handler;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import state.GameState;
 import state.State;
-import mapEditor.GameObjectManager;
+import state.StateManager;
 
-/**
- *
- * @author Perlt
- */
 public class Game implements Runnable {
 
     private int width, height;
@@ -45,7 +34,6 @@ public class Game implements Runnable {
         fps = new FpsManager(60);
         keyInput = new KeyInput();
         mouseInput = new MouseInput();
-        currentState = new GameState(this);
         init();
     }
 
@@ -55,11 +43,21 @@ public class Game implements Runnable {
         display.getFrame().addMouseMotionListener(mouseInput);
         display.getCanvas().addMouseListener(mouseInput);
         display.getCanvas().addMouseMotionListener(mouseInput);
+        
+        currentState = StateManager.getState("mainMenuState", this);
     }
 
     public void update() {
         keyInput.update();
         currentState.update();
+        NextState();
+    }
+    
+    private void NextState(){
+        String newState = currentState.nextState();
+        if(newState != null){
+            currentState = StateManager.getState(newState, this);
+        }
     }
 
     public void render() {

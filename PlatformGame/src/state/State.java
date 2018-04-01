@@ -17,6 +17,7 @@ public interface State {
     
     public void update();
     public void render(Graphics g);
+    public String nextState();
     public World getWorld();
     public Game getGame();
 

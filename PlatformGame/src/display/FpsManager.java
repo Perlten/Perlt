@@ -35,7 +35,7 @@ public class FpsManager implements Serializable{
         
         if(delta >= 1){
             tick++;
-            delta--;
+            delta = 0;
             return true;
         }
         return false;
