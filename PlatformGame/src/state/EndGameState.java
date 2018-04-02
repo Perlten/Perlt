@@ -46,6 +46,7 @@ public class EndGameState implements State {
 
     @Override
     public void render(Graphics g) {
+        g.fillRect(0, 0, game.getWidth(), game.getHeight());
         g.setColor(Color.red);
         g.setFont(new Font("", 0, 25));
         g.drawString("Total Points: " + String.valueOf(playerPoints), 115, 75);

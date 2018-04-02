@@ -23,6 +23,10 @@ public class StateManager {
         if (name.equalsIgnoreCase("endgameState")) {
             return new EndGameState(game);
         }
+        if(name.equalsIgnoreCase("highScoreState")){
+            return new HighScoreState(game);
+        }
+        
         return null;
     }
 

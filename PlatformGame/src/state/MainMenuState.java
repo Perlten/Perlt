@@ -16,20 +16,22 @@ public class MainMenuState implements State {
     public MainMenuState(Game game) {
         this.game = game;
         menuItemList.add(new MenuItem("resources/textures/startButton.png", "gameState", game.getMouseInput(), 110, 100));
+        menuItemList.add(new MenuItem("resources/textures/startButton.png", "highScoreState", game.getMouseInput(), 110, 150));
     }
     
     @Override
     public void update() {
       for(MenuItem item : menuItemList){
-          String string = item.clicked();
-            if(string != null){
-            stateChange = string;
+          String nextState = item.clicked();
+            if(nextState != null){
+            stateChange = nextState;
         }
       }
     }
 
     @Override
     public void render(Graphics g) {
+        g.fillRect(0, 0, game.getWidth(), game.getHeight());
         for(MenuItem item : menuItemList){
             item.render(g);
         }

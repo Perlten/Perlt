@@ -24,7 +24,6 @@ public class MenuItem {
     }
 
     public String clicked() {
-        
         if (hitBox.contains(mouse.getX(), mouse.getY())) {
             if (mouse.isLeftMouseClicked()) {
                 return stateChange;

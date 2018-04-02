@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package actors;
 
 import display.Camera;
@@ -23,6 +18,7 @@ public class Player extends Actor {
     private KeyInput key;
     private boolean jumping;
     private double time = 0;
+  
     public static int health = 3;
     public static int points = 0;
 
@@ -102,7 +98,7 @@ public class Player extends Actor {
                 if (!(entity instanceof WinHeart)) {
                     points += entity.getPoints();
                     world.getEntityList().remove(entity);
-                    AudioPlayer.player.start(Util.getSound("resources/sounds/coin.wav"));
+//                    AudioPlayer.player.start(Util.getSound("resources/sounds/coin.wav"));
                 }
             }
         }
