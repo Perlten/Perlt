@@ -16,7 +16,7 @@ public class MainMenuState implements State {
     public MainMenuState(Game game) {
         this.game = game;
         menuItemList.add(new MenuItem("resources/textures/startButton.png", "gameState", game.getMouseInput(), 110, 100));
-        menuItemList.add(new MenuItem("resources/textures/startButton.png", "highScoreState", game.getMouseInput(), 110, 150));
+        menuItemList.add(new MenuItem("resources/textures/highScore.png", "highScoreState", game.getMouseInput(), 110, 175));
     }
     
     @Override
