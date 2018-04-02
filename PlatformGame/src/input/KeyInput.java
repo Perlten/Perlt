@@ -9,6 +9,7 @@ public class KeyInput implements KeyListener {
     private boolean[] keys;
     private boolean up, down, left, right, editor, save, delete, removeLast;
     private int tileId = 1;
+    private char charEntered;
     private boolean nextLevel;
     
     public KeyInput() {
@@ -55,10 +56,14 @@ public class KeyInput implements KeyListener {
         if (ke.getKeyCode() == KeyEvent.VK_B) {
             nextLevel = true;
         }
-        
+        charEntered = ke.getKeyChar();
 
     }
 
+    public void setCharEmpty(){
+        charEntered = ' ';
+    }
+    
     public boolean[] getKeys() {
         return keys;
     }

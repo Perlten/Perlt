@@ -18,7 +18,7 @@ public class HighScoreState implements State{
     
     public HighScoreState(Game game) {
         this.game = game;
-        buttonList.add(new MenuItem("resources/textures/backButton.png", "mainMenuState", game.getMouseInput(), 25, 225));
+        buttonList.add(new MenuItem("resources/textures/backButton.png", "mainMenuState", game.getMouseInput(), 0, 225));
         scoreList = new DataMapper().getSortedScoreList();
     }
     
@@ -51,7 +51,7 @@ public class HighScoreState implements State{
     }
 
     @Override
-    public String nextState() {
+    public String getStageChange() {
         return stateChange;
     }
 

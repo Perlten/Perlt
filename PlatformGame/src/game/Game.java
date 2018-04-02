@@ -54,7 +54,7 @@ public class Game implements Runnable {
     }
     
     private void NextState(){
-        String newState = currentState.nextState();
+        String newState = currentState.getStageChange();
         if(newState != null){
             currentState = StateManager.getState(newState, this);
         }

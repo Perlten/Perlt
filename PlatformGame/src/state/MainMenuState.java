@@ -38,7 +38,7 @@ public class MainMenuState implements State {
     }
 
     @Override
-    public String nextState() {
+    public String getStageChange() {
         return stateChange;
     }
 
