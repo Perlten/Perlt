@@ -73,6 +73,8 @@ public class MapEditor {
         if (key.isDelete()) {
             tileList.clear();
             tempList.clear();
+            enemyList.clear();
+            entityList.clear();
         }
     }
 
