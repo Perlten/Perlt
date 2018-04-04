@@ -20,7 +20,7 @@ public class Enemy extends Actor {
 
     public Enemy(int x, int y, int speed, World world) {
         super(x, y, speed, "resources/textures/enemyAnimation.png", 6, 2, 9, world, false);
-        goingLeft = new Random().nextBoolean();
+//        goingLeft = new Random().nextBoolean(); //Uncomment if the enemy should start in a random direction
     }
 
     @Override
