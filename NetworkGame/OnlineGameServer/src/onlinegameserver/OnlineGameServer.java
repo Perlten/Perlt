@@ -42,12 +42,12 @@ public class OnlineGameServer {
         //Loop to send data
         while (true) {            
             //Read client object.
-            PlayerPacket clientPlayerPacket = NetworkUtil.readPlayerPacket(client);
-            NetworkUtil.sendPlayerPacket(host, clientPlayerPacket);
+            byte[] clientBuffer = NetworkUtil.readBuffer(client);
+            NetworkUtil.sendBuffer(host, clientBuffer);
             
              //Read host object.
-            PlayerPacket hostPlayerPacket = NetworkUtil.readPlayerPacket(host);
-            NetworkUtil.sendPlayerPacket(client, hostPlayerPacket);
+            byte[] hostBuffer = NetworkUtil.readBuffer(host);
+            NetworkUtil.sendBuffer(client, hostBuffer);
         }
         
     }

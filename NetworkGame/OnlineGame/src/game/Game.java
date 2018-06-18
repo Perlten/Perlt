@@ -108,7 +108,6 @@ public class Game implements Runnable {
     }
 
     public static void main(String[] args) {
-        System.out.println("JAAAASS!!!");
         Game game = new Game(300, 300, "Test", true);
         game.start();
     }

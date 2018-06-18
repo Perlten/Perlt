@@ -44,10 +44,24 @@ public class NetworkUtil {
         int bufferSize = dis.read();
         byte[] reveiveBuffer = new byte[bufferSize];
         dis.read(reveiveBuffer);
-        
+
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(reveiveBuffer));
         PlayerPacket playerPacket = (PlayerPacket) oi.readObject();
         return playerPacket;
     }
 
+    public static void sendBuffer(Socket socket, byte[] buffer) throws IOException {
+        BufferedOutputStream dos = new BufferedOutputStream(socket.getOutputStream());
+        dos.write(buffer.length);
+        dos.write(buffer);
+        dos.flush();
+    }
+
+    public static byte[] readBuffer(Socket socket) throws IOException {
+        BufferedInputStream dis = new BufferedInputStream(socket.getInputStream());
+        int bufferSize = dis.read();
+        byte[] buffer = new byte[bufferSize];
+        dis.read(buffer);
+        return buffer;
+    }
 }
