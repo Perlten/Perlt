@@ -2,6 +2,7 @@ package player;
 
 import gameNetwork.HostNetwork;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import onlinegamecommen.PlayerPacket;
@@ -16,9 +17,12 @@ public class Client implements Player {
     private List<Integer> cordinateListX;
     private List<Integer> cordinateListY;
 
+    private Rectangle hitbox;
+    
     public Client(HostNetwork network) {
-        this.x = 0;
-        this.y = 0;
+        this.x = 275;
+        this.y = 275;
+        hitbox = new Rectangle(x, y, 25, 25);
         this.cordinateListX = new ArrayList<>();
         this.cordinateListY = new ArrayList<>();
         this.network = network;
@@ -41,6 +45,7 @@ public class Client implements Player {
         } else {
             predict();
         }
+        hitbox.setLocation(x, y);
     }
 
     @Override
@@ -67,4 +72,7 @@ public class Client implements Player {
         }
     }
 
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
 }

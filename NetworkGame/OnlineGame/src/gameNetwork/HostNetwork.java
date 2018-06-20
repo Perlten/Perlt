@@ -56,7 +56,7 @@ public class HostNetwork implements Runnable {
         }
     }
 
-    public PlayerPacket getReceivedPlayerPacket() {
+    public synchronized PlayerPacket getReceivedPlayerPacket() {
         return receivedPlayerPacket;
     }
 }

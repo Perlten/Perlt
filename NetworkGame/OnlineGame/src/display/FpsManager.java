@@ -43,7 +43,7 @@ public class FpsManager implements Serializable{
     
     public void printFps(){
         if(timer >= 1e9){
-            System.out.println(tick);
+            System.out.println("FPS: " + tick);
             tick = 0;
             timer = 0;
         }
