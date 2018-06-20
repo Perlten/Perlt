@@ -28,16 +28,10 @@ public class HostNetwork implements Runnable {
         //Send and read data
         while (true) {
             if (fps.check()) {
-                long timeNow = System.nanoTime();
                 PlayerPacket sendPlayerPacket = new PlayerPacket(player.getX(), player.getY());
                 NetworkUtil.sendPlayerPacket(socket, sendPlayerPacket);
-                
-//                System.out.println("SendTime: " + (System.nanoTime() - timeNow));
-                timeNow = System.nanoTime();
-                
+//                Thread.sleep(50);
                 receivedPlayerPacket = NetworkUtil.readPlayerPacket(socket);
-                
-//                System.out.println("ReceivedTime: " + (System.nanoTime() - timeNow));
                 fps.printFps();
             }
         }
