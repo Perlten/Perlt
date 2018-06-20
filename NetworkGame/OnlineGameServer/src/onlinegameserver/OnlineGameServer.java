@@ -26,12 +26,14 @@ public class OnlineGameServer {
         
         System.out.println("Waiting on host");
         host = serverSocket.accept();
+        host.setTcpNoDelay(true);
         System.out.println("Host connected");
         hostName = new BufferedReader(new InputStreamReader(host.getInputStream())).readLine();
         System.out.println("Host name: " + hostName);
         
         System.out.println("Waiting on client");
         client = serverSocket.accept();
+        client.setTcpNoDelay(true);
         System.out.println("Client connected");
         clientName = new BufferedReader(new InputStreamReader(client.getInputStream())).readLine();
         System.out.println("Client name: " + clientName);

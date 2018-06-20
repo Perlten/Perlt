@@ -32,12 +32,12 @@ public class HostNetwork implements Runnable {
                 PlayerPacket sendPlayerPacket = new PlayerPacket(player.getX(), player.getY());
                 NetworkUtil.sendPlayerPacket(socket, sendPlayerPacket);
                 
-                System.out.println("SendTime: " + (System.nanoTime() - timeNow));
+//                System.out.println("SendTime: " + (System.nanoTime() - timeNow));
                 timeNow = System.nanoTime();
                 
                 receivedPlayerPacket = NetworkUtil.readPlayerPacket(socket);
                 
-                System.out.println("ReceivedTime: " + (System.nanoTime() - timeNow));
+//                System.out.println("ReceivedTime: " + (System.nanoTime() - timeNow));
                 fps.printFps();
             }
         }
@@ -45,6 +45,7 @@ public class HostNetwork implements Runnable {
 
     private void connecToServer() throws IOException {
         socket = new Socket("159.89.99.250", 5000);
+        socket.setTcpNoDelay(true);
         System.out.println("Enter name");
         name = scanner.nextLine();
         NetworkUtil.writeString(socket, name);
