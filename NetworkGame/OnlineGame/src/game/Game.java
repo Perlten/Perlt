@@ -56,10 +56,6 @@ public class Game implements Runnable {
         keyInput.update();
         host.update();
         client.update();
-        if(host.getHitbox().contains(client.getHitbox())){
-            System.out.println("Done");
-            System.exit(0);
-        }
     }
 
     public void render() {
