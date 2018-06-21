@@ -45,7 +45,7 @@ public class OnlineGameServer {
                         thread.start();
                     } else {
                         System.out.println("Game not startet");
-                        new PrintWriter(connection.getOutputStream()).println("Error could not find a host");
+                        NetworkUtil.writeString(connection, "Could not find a host");
                     }
                 }
             }

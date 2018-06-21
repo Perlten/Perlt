@@ -17,8 +17,7 @@ public class HostNetwork implements Runnable {
     private Host player;
     private PlayerPacket receivedPlayerPacket;
     private boolean isHost;
-    
-    
+
     FpsManager fps = new FpsManager(60);
 
     public HostNetwork(Host player, boolean isHost) {
@@ -48,7 +47,14 @@ public class HostNetwork implements Runnable {
         System.out.println("Enter name");
         name = scanner.nextLine();
         NetworkUtil.writeString(socket, name);
-        System.out.println(NetworkUtil.readString(socket));
+        if (isHost) {
+            System.out.println("Waiting for client");
+        }
+        String serverMessage = NetworkUtil.readString(socket);
+        System.out.println(serverMessage);
+        if (serverMessage.equals("Could not find a host")) {
+            System.exit(0);
+        }
     }
 
     @Override
