@@ -2,7 +2,7 @@ package game;
 
 import display.Display;
 import display.FpsManager;
-import gameNetwork.HostNetwork;
+import gameNetwork.Network;
 import input.KeyInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -29,7 +29,7 @@ public class Game implements Runnable {
     private KeyInput keyInput;
 
     //network
-    private HostNetwork network;
+    private Network network;
 
     public Game(int width, int height, String title, boolean host) {
         this.hostGame = host;
@@ -45,7 +45,7 @@ public class Game implements Runnable {
     private void init() {
         display.getFrame().addKeyListener(keyInput);
         host = new Host(keyInput);
-        this.network = new HostNetwork(host, hostGame);
+        this.network = new Network(host, hostGame);
         client = new Client(network);
 
         Thread networkThread = new Thread(network);

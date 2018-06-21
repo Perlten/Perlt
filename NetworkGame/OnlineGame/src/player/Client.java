@@ -1,6 +1,6 @@
 package player;
 
-import gameNetwork.HostNetwork;
+import gameNetwork.Network;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -11,14 +11,14 @@ public class Client implements Player {
 
     private int x, y;
 
-    private HostNetwork network;
+    private Network network;
 
     private PlayerPacket lastPP;
     private List<PlayerPacket> packetList;
 
     private Rectangle hitbox;
     
-    public Client(HostNetwork network) {
+    public Client(Network network) {
         this.x = 275;
         this.y = 275;
         hitbox = new Rectangle(x, y, 25, 25);

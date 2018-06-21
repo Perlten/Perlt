@@ -21,6 +21,7 @@ public class OnlineGameServer {
 
     public OnlineGameServer() {
         hostMap = new HashMap<>();
+       
         connectHost();
     }
 

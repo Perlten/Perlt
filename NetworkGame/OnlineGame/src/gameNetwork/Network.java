@@ -9,7 +9,7 @@ import onlinegamecommen.NetworkUtil;
 import onlinegamecommen.PlayerPacket;
 import player.Host;
 
-public class HostNetwork implements Runnable {
+public class Network implements Runnable {
 
     private Socket socket;
     private String name;
@@ -20,7 +20,7 @@ public class HostNetwork implements Runnable {
 
     FpsManager fps = new FpsManager(60);
 
-    public HostNetwork(Host player, boolean isHost) {
+    public Network(Host player, boolean isHost) {
         this.player = player;
         this.isHost = isHost;
     }
