@@ -14,8 +14,7 @@ public class Client implements Player {
     private HostNetwork network;
 
     private PlayerPacket lastPP;
-    private List<Integer> cordinateListX;
-    private List<Integer> cordinateListY;
+    private List<PlayerPacket> packetList;
 
     private Rectangle hitbox;
     
@@ -23,8 +22,7 @@ public class Client implements Player {
         this.x = 275;
         this.y = 275;
         hitbox = new Rectangle(x, y, 25, 25);
-        this.cordinateListX = new ArrayList<>();
-        this.cordinateListY = new ArrayList<>();
+        this.packetList = new ArrayList<>();
         this.network = network;
     }
 
@@ -40,8 +38,7 @@ public class Client implements Player {
             x = newPP.getX();
             y = newPP.getY();
 
-            cordinateListX.add(x);
-            cordinateListY.add(y);
+            packetList.add(newPP);
         } else {
             predict();
         }
@@ -54,11 +51,11 @@ public class Client implements Player {
     }
 
     private void predict() {
-        if (cordinateListX.size() < 2) {
+        if (packetList.size() < 2) {
             return;
         }
-        int vertical = y - cordinateListY.get(cordinateListY.size() - 2);
-        int hori = x - cordinateListX.get(cordinateListX.size() - 2);
+        int vertical = y - packetList.get(packetList.size() - 2).getY();
+        int hori = x - packetList.get(packetList.size() - 2).getX();
 
         if (vertical > 0) {
             y += 3;

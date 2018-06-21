@@ -7,6 +7,8 @@ package onlinegameserver;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import onlinegamecommen.NetworkUtil;
 
 /**
@@ -29,7 +31,7 @@ public class RunGameThread implements Runnable {
 
             NetworkUtil.writeString(host, "Client connected");
             NetworkUtil.writeString(client, "Host connected");
-            
+
             //Loop to send data
             while (true) {
                 //Read client packet.
@@ -41,7 +43,13 @@ public class RunGameThread implements Runnable {
                 NetworkUtil.sendBuffer(client, hostBuffer);
             }
         } catch (IOException ex) {
-            System.out.println("Server Exception: " + ex.getMessage());
+            try {
+                System.out.println("Game disconnect");
+                client.close();
+                host.close();
+            } catch (IOException ex1) {
+                System.out.println("Could not close connection");
+            }
         }
     }
 
