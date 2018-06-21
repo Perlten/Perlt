@@ -6,9 +6,9 @@ import gameNetwork.HostNetwork;
 import input.KeyInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Scanner;
 import player.Client;
 import player.Host;
-import player.Player;
 
 public class Game implements Runnable {
 
@@ -45,7 +45,7 @@ public class Game implements Runnable {
     private void init() {
         display.getFrame().addKeyListener(keyInput);
         host = new Host(keyInput);
-        this.network = new HostNetwork(host);
+        this.network = new HostNetwork(host, hostGame);
         client = new Client(network);
 
         Thread networkThread = new Thread(network);
@@ -108,7 +108,10 @@ public class Game implements Runnable {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(300, 300, "Test", true);
+        System.out.println("Do you whanna host a game");
+        boolean host = new Scanner(System.in).nextBoolean();
+        System.out.println(host);
+        Game game = new Game(300, 300, "Test", host);
         game.start();
     }
 

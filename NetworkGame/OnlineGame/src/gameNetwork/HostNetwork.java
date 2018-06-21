@@ -1,6 +1,7 @@
 package gameNetwork;
 
 import display.FpsManager;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
@@ -15,11 +16,14 @@ public class HostNetwork implements Runnable {
     private Scanner scanner = new Scanner(System.in);
     private Host player;
     private PlayerPacket receivedPlayerPacket;
-
+    private boolean isHost;
+    
+    
     FpsManager fps = new FpsManager(60);
 
-    public HostNetwork(Host player) {
+    public HostNetwork(Host player, boolean isHost) {
         this.player = player;
+        this.isHost = isHost;
     }
 
     public void networking() throws Exception {
@@ -39,6 +43,7 @@ public class HostNetwork implements Runnable {
 
     private void connecToServer() throws IOException {
         socket = new Socket("159.89.99.250", 5000);
+        new DataOutputStream(socket.getOutputStream()).writeBoolean(isHost);
         socket.setTcpNoDelay(true);
         System.out.println("Enter name");
         name = scanner.nextLine();

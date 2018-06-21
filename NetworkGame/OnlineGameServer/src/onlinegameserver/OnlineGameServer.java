@@ -1,56 +1,62 @@
 package onlinegameserver;
 
+import java.io.BufferedInputStream;
 import onlinegamecommen.PlayerPacket;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import onlinegamecommen.NetworkUtil;
 
 public class OnlineGameServer {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        
-        //Host
-        Socket host;
-        String hostName;
-        
-        //Client
-        Socket client;
-        String clientName;
-        
-        //Connect to host and client
-        ServerSocket serverSocket = new ServerSocket(5000);
-        
-        System.out.println("Waiting on host");
-        host = serverSocket.accept();
-        host.setTcpNoDelay(true);
-        System.out.println("Host connected");
-        hostName = new BufferedReader(new InputStreamReader(host.getInputStream())).readLine();
-        System.out.println("Host name: " + hostName);
-        
-        System.out.println("Waiting on client");
-        client = serverSocket.accept();
-        client.setTcpNoDelay(true);
-        System.out.println("Client connected");
-        clientName = new BufferedReader(new InputStreamReader(client.getInputStream())).readLine();
-        System.out.println("Client name: " + clientName);
-        
-        new PrintWriter(host.getOutputStream(), true).println(clientName + " connected");
-        new PrintWriter(client.getOutputStream(), true).println(hostName + " connected");
-        
-        //Loop to send data
-        while (true) {            
-            //Read client object.
-            byte[] clientBuffer = NetworkUtil.readBuffer(client);
-            NetworkUtil.sendBuffer(host, clientBuffer);
-            
-             //Read host object.
-            byte[] hostBuffer = NetworkUtil.readBuffer(host);
-            NetworkUtil.sendBuffer(client, hostBuffer);
+    private HashMap<String, Socket> hostMap;
+
+    public OnlineGameServer() {
+        hostMap = new HashMap<>();
+        connectHost();
+    }
+
+    private void connectHost() {
+        try {
+            //Connect to host and client
+            ServerSocket serverSocket = new ServerSocket(5000);
+
+            while (true) {
+                System.out.println("Waiting on host");
+                Socket connection = serverSocket.accept();
+                boolean isHost = new DataInputStream(connection.getInputStream()).readBoolean();
+                String key = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
+                System.out.println(key + " is hosting: " + isHost);
+                if (isHost) {
+                    hostMap.put(key, connection);
+                    System.out.println("Host added to map");
+                } else {
+                    if (hostMap.containsKey(key)) {
+                        System.out.println("Game startet");
+                        RunGameThread rgt = new RunGameThread(connection, hostMap.get(key));
+                        Thread thread = new Thread(rgt);
+                        thread.start();
+                    } else {
+                        System.out.println("Game not startet");
+                        new PrintWriter(connection.getOutputStream()).println("Error could not find a host");
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Server error: " + ex.getMessage());
+            System.exit(0);
         }
-        
+
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        OnlineGameServer ogs = new OnlineGameServer();
     }
 }
