@@ -32,7 +32,6 @@ public class Client implements Player {
         if (newPP == null) {
             return;
         }
-
         if (lastPP == null || lastPP.getId() != newPP.getId()) {
             lastPP = newPP;
             x = newPP.getX();
@@ -43,6 +42,13 @@ public class Client implements Player {
             predict();
         }
         hitbox.setLocation(x, y);
+        if(packetList.size() >= 100){
+            PlayerPacket temp1 = packetList.get(packetList.size() - 1);
+            PlayerPacket temp2 = packetList.get(packetList.size() - 2);
+            packetList.clear();
+            packetList.add(temp1);
+            packetList.add(temp2);
+        }
     }
 
     @Override

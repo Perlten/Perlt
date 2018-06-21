@@ -33,7 +33,6 @@ public class Network implements Runnable {
             if (fps.check()) {
                 PlayerPacket sendPlayerPacket = new PlayerPacket(player.getX(), player.getY());
                 NetworkUtil.sendPlayerPacket(socket, sendPlayerPacket);
-//                Thread.sleep(50);
                 receivedPlayerPacket = NetworkUtil.readPlayerPacket(socket);
                 fps.printFps();
             }

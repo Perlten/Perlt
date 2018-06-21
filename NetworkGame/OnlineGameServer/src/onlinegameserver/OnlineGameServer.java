@@ -33,6 +33,7 @@ public class OnlineGameServer {
             while (true) {
                 System.out.println("Waiting on host");
                 Socket connection = serverSocket.accept();
+                connection.setTcpNoDelay(true);
                 boolean isHost = new DataInputStream(connection.getInputStream()).readBoolean();
                 String key = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
                 System.out.println(key + " is hosting: " + isHost);
