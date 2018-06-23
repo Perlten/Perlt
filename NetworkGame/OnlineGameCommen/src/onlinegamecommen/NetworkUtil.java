@@ -16,7 +16,10 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.nio.file.Files;
 import javax.imageio.ImageIO;
+import sun.misc.IOUtils;
+import sun.nio.ch.IOUtil;
 
 public class NetworkUtil {
 
@@ -46,7 +49,7 @@ public class NetworkUtil {
         int bufferSize = dis.read();
         byte[] reveiveBuffer = new byte[bufferSize];
         dis.read(reveiveBuffer);
-        
+
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(reveiveBuffer));
         PlayerPacket playerPacket = (PlayerPacket) oi.readObject();
         return playerPacket;
@@ -66,18 +69,28 @@ public class NetworkUtil {
         dis.read(buffer);
         return buffer;
     }
-    
-    
+
     public static void main(String[] args) throws MalformedURLException, IOException {
         BufferedImage bi = ImageIO.read(new File("C:/Users/Perlt/Desktop/pic.jpg"));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bi, "jpg", baos);
         byte[] byteArr = baos.toByteArray();
-        
+
         System.out.println(byteArr.length);
 
         BufferedImage newImage = ImageIO.read(new ByteArrayInputStream(byteArr));
         File file = new File("testImage.jpg");
         ImageIO.write(newImage, "jpg", file);
+        
+//        test();
+    }
+
+    public static void test() throws IOException {
+        File file = new File("C:/Program Files (x86)/GOG Galaxy/Games/Fallout 2/master.dat");
+        byte[] byteArr = Files.readAllBytes(file.toPath());
+        System.out.println(byteArr.length);
+        for (int i = 0; i < byteArr.length; i++) {
+            System.out.println(byteArr[i]);
+        }
     }
 }
