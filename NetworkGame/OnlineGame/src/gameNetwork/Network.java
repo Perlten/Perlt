@@ -41,8 +41,8 @@ public class Network implements Runnable {
 
     private void connecToServer() throws IOException {
         socket = new Socket("159.89.99.250", 5000);
-        new DataOutputStream(socket.getOutputStream()).writeBoolean(isHost);
         socket.setTcpNoDelay(true);
+        new DataOutputStream(socket.getOutputStream()).writeBoolean(isHost);
         System.out.println("Enter name");
         name = scanner.nextLine();
         NetworkUtil.writeString(socket, name);

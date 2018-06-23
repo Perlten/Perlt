@@ -42,7 +42,7 @@ public class NetworkUtil {
         int bufferSize = dis.read();
         byte[] reveiveBuffer = new byte[bufferSize];
         dis.read(reveiveBuffer);
-
+        
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(reveiveBuffer));
         PlayerPacket playerPacket = (PlayerPacket) oi.readObject();
         return playerPacket;
