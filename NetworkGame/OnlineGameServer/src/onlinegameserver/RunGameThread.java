@@ -35,14 +35,13 @@ public class RunGameThread implements Runnable {
             //Loop to send data
             while (true) {
                 //Read client packet.
-                byte[] clientBuffer = NetworkUtil.readBuffer(client);
-                NetworkUtil.sendBuffer(host, clientBuffer);
 
+                NetworkUtil.sendPlayerPacket(host, NetworkUtil.readPlayerPacket(client));
+
+                NetworkUtil.sendPlayerPacket(client, NetworkUtil.readPlayerPacket(host));
                 //Read host packet.
-                byte[] hostBuffer = NetworkUtil.readBuffer(host);
-                NetworkUtil.sendBuffer(client, hostBuffer);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             try {
                 System.out.println("Game disconnect");
                 client.close();
