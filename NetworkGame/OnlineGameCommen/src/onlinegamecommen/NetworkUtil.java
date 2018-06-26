@@ -7,6 +7,9 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInput;
@@ -71,6 +74,33 @@ public class NetworkUtil {
     }
 
     public static void main(String[] args) throws MalformedURLException, IOException {
+        testFileToByte();
+//        testImageToByte();
+    }
+
+    public static void testFileToByte() throws IOException {
+        File file = new File("C:/Program Files (x86)/GOG Galaxy/Games/Fallout 2/master.dat");
+        byte[] byteArr = Files.readAllBytes(file.toPath());
+        System.out.println(byteArr.length);
+
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File("byte.dat"), false));
+        bos.write(byteArr);
+
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File("byte.dat")));
+
+        byte[] arr = new byte[bis.available()];
+        bis.read(arr);
+        System.out.println(arr.length);
+
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("test"));
+        objectOutputStream.writeObject(new PlayerPacket(0, 0));
+        objectOutputStream.flush();
+        
+        
+        objectOutputStream.writeInt(1000);
+    }
+
+    public static void testImageToByte() throws IOException {
         BufferedImage bi = ImageIO.read(new File("C:/Users/Perlt/Desktop/pic.jpg"));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bi, "jpg", baos);
@@ -81,16 +111,6 @@ public class NetworkUtil {
         BufferedImage newImage = ImageIO.read(new ByteArrayInputStream(byteArr));
         File file = new File("testImage.jpg");
         ImageIO.write(newImage, "jpg", file);
-        
-//        test();
     }
 
-    public static void test() throws IOException {
-        File file = new File("C:/Program Files (x86)/GOG Galaxy/Games/Fallout 2/master.dat");
-        byte[] byteArr = Files.readAllBytes(file.toPath());
-        System.out.println(byteArr.length);
-        for (int i = 0; i < byteArr.length; i++) {
-            System.out.println(byteArr[i]);
-        }
-    }
 }
