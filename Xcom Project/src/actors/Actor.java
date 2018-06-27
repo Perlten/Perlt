@@ -11,16 +11,17 @@ public abstract class Actor implements GameObject {
 
     protected int x, y;
     protected Rectangle hitbox;
-    protected BufferedImage texture;
+    protected BufferedImage[][] texture;
     protected String texturePath;
     protected int movementSpeed;
     protected Collision collision;
-    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world) {
+
+    public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
         this.x = x;
         this.y = y;
         this.collision = new Collision(this, world);
         this.movementSpeed = movementSpeed;
-        this.texture = TextureUtil.getBufferedImage(texturePath);
+        this.texture = texture;
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);
         } else {
@@ -28,17 +29,17 @@ public abstract class Actor implements GameObject {
         }
     }
 
-    protected void updateHitbox(){
+    protected void updateHitbox() {
         int width = hitbox.width;
         int height = hitbox.height;
-        
+
         hitbox.setBounds(x, y, width, height);
     }
-    
-    protected void updateCollision(){
+
+    protected void updateCollision() {
         collision.update();
     }
-    
+
     public Rectangle getHitbox() {
         return hitbox;
     }

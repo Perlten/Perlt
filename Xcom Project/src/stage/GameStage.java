@@ -19,7 +19,7 @@ public class GameStage implements Stage {
     public GameStage(KeyInput keyInput) {
         worldList.add(new World0());
         this.currentWorld = worldList.get(0);
-        this.player = new Player(0, 0, "resources/texture/player/playerTexture.png", keyInput, 3, currentWorld);
+        this.player = new Player(0, 0, keyInput, 3, currentWorld);
     }
 
     @Override
