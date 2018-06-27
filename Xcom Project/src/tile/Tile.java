@@ -1,25 +1,20 @@
-package actors;
+package tile;
 
 import game.GameObject;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import physics.Collision;
 import util.TextureUtil;
 
-public abstract class Actor implements GameObject {
+public abstract class Tile implements GameObject {
 
     protected int x, y;
-    protected Rectangle hitbox;
-    protected BufferedImage texture;
     protected String texturePath;
-    protected int movementSpeed;
-    protected Collision collision;
+    protected BufferedImage texture;
+    protected Rectangle hitbox;
 
-    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, Collision collision) {
+    public Tile(int x, int y, Rectangle hitbox, String texturePath) {
         this.x = x;
         this.y = y;
-        this.collision = collision;
-        this.movementSpeed = movementSpeed;
         this.texture = TextureUtil.getBufferedImage(texturePath);
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);
@@ -28,15 +23,19 @@ public abstract class Actor implements GameObject {
         }
     }
 
-    protected void updateHitbox(){
+    protected void updateHitbox() {
         int width = hitbox.width;
         int height = hitbox.height;
-        
+
         hitbox.setBounds(x, y, width, height);
     }
-    
+
     public Rectangle getHitbox() {
         return hitbox;
+    }
+
+    public BufferedImage getTexture() {
+        return texture;
     }
 
     public int getX() {
@@ -45,9 +44,5 @@ public abstract class Actor implements GameObject {
 
     public int getY() {
         return y;
-    }
-
-    public int getMovementSpeed() {
-        return movementSpeed;
     }
 }
