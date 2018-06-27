@@ -21,8 +21,8 @@ public class ViewLine {
         updatePolygon();
     }
 
-    public boolean canSeePlayer(int side) {
-        List<Point> pointList = world.getPlayer().getCollision().getPoints();
+    public boolean canSeeActor(int side, Actor actor) {
+        List<Point> pointList = actor.getCollision().getPoints();
 
         Polygon poly = getPolygon(side);
 

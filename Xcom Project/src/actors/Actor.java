@@ -4,7 +4,6 @@ import game.GameObject;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import physics.Collision;
-import util.TextureUtil;
 import world.World;
 
 public abstract class Actor implements GameObject {
@@ -20,6 +19,7 @@ public abstract class Actor implements GameObject {
     public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
         this.x = x;
         this.y = y;
+        this.world = world;
         this.collision = new Collision(this, world);
         this.movementSpeed = movementSpeed;
         this.texture = texture;

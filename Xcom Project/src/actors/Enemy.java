@@ -2,9 +2,7 @@ package actors;
 
 import display.FpsLock;
 import java.awt.Graphics;
-import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
@@ -28,7 +26,7 @@ public class Enemy extends Actor {
 
     @Override
     public void update() {
-        if(viewLine.canSeePlayer(direction)){
+        if(viewLine.canSeeActor(direction, world.getPlayer())){
             System.out.println("SEEEE!!!");
         }
     }
