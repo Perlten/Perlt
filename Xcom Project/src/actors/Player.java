@@ -4,13 +4,14 @@ import input.KeyInput;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import physics.Collision;
+import world.World;
 
 public class Player extends Actor {
 
     private KeyInput keyInput;
 
-    public Player(int x, int y, String texturePath, KeyInput keyInput, int movementSpeed, Collision collision) {
-        super(x, y, new Rectangle(32, 32), texturePath, movementSpeed, collision);
+    public Player(int x, int y, String texturePath, KeyInput keyInput, int movementSpeed, World world) {
+        super(x, y, new Rectangle(32, 32), texturePath, movementSpeed, world);
         this.keyInput = keyInput;
     }
 
@@ -23,10 +24,11 @@ public class Player extends Actor {
     @Override
     public void render(Graphics g) {
         g.drawImage(texture, x, y, null);
-        g.fillRect(x, y, hitbox.width, hitbox.height);
+//        g.fillRect(x, y, hitbox.width, hitbox.height); //Draw hitbox
     }
 
     private void movement() {
+        updateCollision();
         if (keyInput.isUp() && !collision.isPlayerCollisionUp()) {
             y -= movementSpeed;
         } else if (keyInput.isDown() && !collision.isPlayerCollisionDown()) {
@@ -37,9 +39,4 @@ public class Player extends Actor {
             x += movementSpeed;
         }
     }
-
-    public void setCollision(Collision collision) {
-        this.collision = collision;
-    }
-
 }

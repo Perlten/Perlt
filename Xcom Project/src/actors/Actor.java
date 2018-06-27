@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import physics.Collision;
 import util.TextureUtil;
+import world.World;
 
 public abstract class Actor implements GameObject {
 
@@ -14,11 +15,10 @@ public abstract class Actor implements GameObject {
     protected String texturePath;
     protected int movementSpeed;
     protected Collision collision;
-
-    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, Collision collision) {
+    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world) {
         this.x = x;
         this.y = y;
-        this.collision = collision;
+        this.collision = new Collision(this, world);
         this.movementSpeed = movementSpeed;
         this.texture = TextureUtil.getBufferedImage(texturePath);
         if (hitbox != null) {
@@ -33,6 +33,10 @@ public abstract class Actor implements GameObject {
         int height = hitbox.height;
         
         hitbox.setBounds(x, y, width, height);
+    }
+    
+    protected void updateCollision(){
+        collision.update();
     }
     
     public Rectangle getHitbox() {

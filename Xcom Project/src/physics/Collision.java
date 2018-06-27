@@ -1,5 +1,6 @@
 package physics;
 
+import actors.Actor;
 import actors.Player;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -9,7 +10,7 @@ import world.World;
 
 public class Collision {
 
-    private Player player;
+    private Actor actor;
     private World world;
 
     private boolean playerCollisionUp;
@@ -17,49 +18,52 @@ public class Collision {
     private boolean playerCollisionLeft;
     private boolean playerCollisionRight;
 
-    public Collision(Player player, World world) {
-        this.player = player;
+    public Collision(Actor actor, World world) {
+        this.actor = actor;
         this.world = world;
     }
 
     public void update() {
-        playerCollision();
+        actorCollision();
     }
 
-    private void playerCollision() {
+    private void actorCollision() {
         List<Tile> tileList = world.getTileList();
-        Rectangle playerHB = player.getHitbox();
         playerCollisionUp = false;
         playerCollisionDown = false;
         playerCollisionLeft = false;
         playerCollisionRight = false;
-        
-        for (Tile tile : tileList) {
-            int tileHbX = tile.getHitbox().x;
-            int tileHbY = tile.getHitbox().y;
-            int tileHbWidth = tile.getHitbox().width;
-            int tileHbHeight = tile.getHitbox().height;
 
-            Point tileUpperLeft = tile.getHitbox().getLocation();
-            Point tileUpperRight = new Point((tileHbX + tileHbWidth), tileHbY);
-            Point tileButtomLeft = new Point(tileHbX, (tileHbY + tileHbHeight));
-            Point tileButtonRight = new Point(tileHbX + tileHbWidth, (tileHbY + tileHbHeight));
+        int ms = actor.getMovementSpeed();
+
+        for (Tile tile : tileList) {
+            Rectangle tileHb = tile.getHitbox();
+
+            int actorHbX = actor.getHitbox().x;
+            int actorHbY = actor.getHitbox().y;
+            int actorHbWidth = actor.getHitbox().width;
+            int actorHbHeight = actor.getHitbox().height;
+            
+            Point actorUpperLeft = actor.getHitbox().getLocation();
+            Point actorUpperRight = new Point((actorHbX + actorHbWidth), actorHbY);
+            Point actorButtomLeft = new Point(actorHbX, (actorHbY + actorHbHeight));
+            Point actorButtonRight = new Point(actorHbX + actorHbWidth, (actorHbY + actorHbHeight));
+
             //Up
-            if (playerHB.contains(tileUpperLeft) || playerHB.contains(tileUpperRight)) {
+            if (tileHb.contains(actorUpperLeft.x, actorUpperLeft.y - ms) || tileHb.contains(actorUpperRight.x, actorUpperRight.y - ms)) {
                 playerCollisionUp = true;
             }
-            //Down
-            if (playerHB.contains(tileButtomLeft) || playerHB.contains(tileButtonRight)) {
+            // Down
+            if (tileHb.contains(actorButtomLeft.x, actorButtomLeft.y + ms) || tileHb.contains(actorButtonRight.x, actorButtonRight.y + ms)) {
                 playerCollisionDown = true;
             }
             //Left
-            if (playerHB.contains(tileUpperLeft) || playerHB.contains(tileButtomLeft)) {
+            if (tileHb.contains(actorUpperLeft.x - ms, actorUpperLeft.y) || tileHb.contains(actorButtomLeft.x - ms, actorButtomLeft.y)) {
                 playerCollisionLeft = true;
             }
             //Right
-            if (playerHB.contains(tileUpperRight) || playerHB.contains(tileButtonRight)) {
+            if (tileHb.contains(actorUpperRight.x + ms, actorUpperRight.y) || tileHb.contains(actorButtonRight.x + ms, actorButtonRight.y)) {
                 playerCollisionRight = true;
-                System.out.println("ture");
             }
         }
     }

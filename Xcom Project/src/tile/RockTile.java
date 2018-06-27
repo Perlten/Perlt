@@ -16,8 +16,8 @@ public class RockTile extends Tile {
 
     @Override
     public void render(Graphics g) {
-        g.fillRect(x, y, hitbox.width, hitbox.height);
-//        g.drawImage(texture, x, y, null);
+//        g.fillRect(x, y, hitbox.width, hitbox.height); //draw hitbox
+        g.drawImage(texture, x, y, null); 
     }
     
 }
