@@ -1,5 +1,6 @@
 package actors;
 
+import camera.Camera;
 import game.GameObject;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;

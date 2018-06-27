@@ -1,5 +1,6 @@
 package actors;
 
+import camera.Camera;
 import display.FpsLock;
 import input.KeyInput;
 import java.awt.Graphics;
@@ -41,9 +42,9 @@ public class Player extends Actor {
 
     private void animate(Graphics g) {
         if (animationLock.check()) {
-            frame = ++frame % NUMOFFRAMES;
+            frame++;
         }
-        g.drawImage(texture[direction][frame], x, y, null);
+        g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
     }
 
     private void movement() {

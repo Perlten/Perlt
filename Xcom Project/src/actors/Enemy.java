@@ -1,5 +1,6 @@
 package actors;
 
+import camera.Camera;
 import display.FpsLock;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -8,6 +9,7 @@ import util.TextureUtil;
 import world.World;
 
 public class Enemy extends Actor {
+
     //Animation
     private static final String TEXTUREPATH = "resources/texture/player/playerTexturePack.png";
     private static final int NUMOFANIMATIONS = 4;
@@ -15,9 +17,8 @@ public class Enemy extends Actor {
     private int direction;
     private int frame;
     private FpsLock animationLock = new FpsLock(5);
-    
+
     private ViewLine viewLine;
-    
 
     public Enemy(int x, int y, int movementSpeed, World world) {
         super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), movementSpeed, world);
@@ -26,7 +27,7 @@ public class Enemy extends Actor {
 
     @Override
     public void update() {
-        if(viewLine.canSeeActor(direction, world.getPlayer())){
+        if (viewLine.canSeeActor(direction, world.getPlayer())) {
             System.out.println("SEEEE!!!");
         }
     }
@@ -39,9 +40,9 @@ public class Enemy extends Actor {
 
     private void animate(Graphics g) {
         if (animationLock.check()) {
-            frame = ++frame % NUMOFFRAMES;
+            frame++;
         }
-        g.drawImage(texture[direction][frame], x, y, null);
+        g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
     }
 
 }

@@ -3,14 +3,15 @@ package world;
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
+import input.MouseInput;
 import java.awt.Graphics;
 import tile.RockTile;
 import tile.Tile;
 
 public class World0 extends World {
 
-    public World0(Player player) {
-        super(player);
+    public World0(Player player, MouseInput mouseInput) {
+        super(player, mouseInput);
         init();
     }
 

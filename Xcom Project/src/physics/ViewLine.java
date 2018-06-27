@@ -1,6 +1,7 @@
 package physics;
 
 import actors.Actor;
+import camera.Camera;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.util.List;

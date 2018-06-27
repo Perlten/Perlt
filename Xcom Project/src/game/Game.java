@@ -8,6 +8,7 @@ package game;
 import display.Display;
 import display.FpsLock;
 import input.KeyInput;
+import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import stage.GameStage;
@@ -26,6 +27,8 @@ public class Game {
     private Graphics g;
 
     private KeyInput keyInput = new KeyInput();
+    private MouseInput mouseInput = new MouseInput();
+
     private FpsLock fpsLock = new FpsLock(60);
 
     private Stage currentStage;
@@ -36,8 +39,12 @@ public class Game {
     }
 
     private void init() {
-        currentStage = new GameStage(keyInput);
+        currentStage = new GameStage(keyInput, mouseInput, display.getWidth(), display.getHeight());
         display.getFrame().addKeyListener(keyInput);
+        display.getFrame().addMouseListener(mouseInput);
+        display.getFrame().addMouseMotionListener(mouseInput);
+        display.getCanvas().addMouseListener(mouseInput);
+        display.getCanvas().addMouseMotionListener(mouseInput);
     }
 
     private void update() {

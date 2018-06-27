@@ -3,6 +3,7 @@ package world;
 import actors.Actor;
 import actors.Player;
 import game.GameObject;
+import input.MouseInput;
 import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
@@ -13,8 +14,9 @@ public abstract class World implements GameObject{
     
     protected List<Tile> tileList = new ArrayList<>();
     protected List<Actor> enemyList = new ArrayList<>();
-
-    public World(Player player) {
+    protected MouseInput mouseInput;
+    
+    public World(Player player, MouseInput mouseInput) {
         this.player = player;
     }
     
