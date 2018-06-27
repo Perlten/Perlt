@@ -12,9 +12,10 @@ public abstract class Actor implements GameObject {
     protected int x, y;
     protected Rectangle hitbox;
     protected BufferedImage[][] texture;
-    protected String texturePath;
     protected int movementSpeed;
     protected Collision collision;
+    
+    protected World world;
 
     public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
         this.x = x;
@@ -55,4 +56,14 @@ public abstract class Actor implements GameObject {
     public int getMovementSpeed() {
         return movementSpeed;
     }
+
+    public Collision getCollision() {
+        return collision;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+        collision.setWorld(world);
+    }
+    
 }

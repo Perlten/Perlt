@@ -15,11 +15,11 @@ public class GameStage implements Stage {
     private World currentWorld;
     
     
-    
     public GameStage(KeyInput keyInput) {
-        worldList.add(new World0());
-        this.currentWorld = worldList.get(0);
         this.player = new Player(0, 0, keyInput, 3, currentWorld);
+        worldList.add(new World0(player));
+        this.currentWorld = worldList.get(0);
+        player.setWorld(currentWorld);
     }
 
     @Override

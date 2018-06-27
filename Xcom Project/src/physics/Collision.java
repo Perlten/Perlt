@@ -4,6 +4,7 @@ import actors.Actor;
 import actors.Player;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
 import world.World;
@@ -43,7 +44,7 @@ public class Collision {
             int actorHbY = actor.getHitbox().y;
             int actorHbWidth = actor.getHitbox().width;
             int actorHbHeight = actor.getHitbox().height;
-            
+
             Point actorUpperLeft = actor.getHitbox().getLocation();
             Point actorUpperRight = new Point((actorHbX + actorHbWidth), actorHbY);
             Point actorButtomLeft = new Point(actorHbX, (actorHbY + actorHbHeight));
@@ -68,6 +69,21 @@ public class Collision {
         }
     }
 
+    public List<Point> getPoints() {
+        List<Point> list = new ArrayList<>();
+
+        int actorHbX = actor.getHitbox().x;
+        int actorHbY = actor.getHitbox().y;
+        int actorHbWidth = actor.getHitbox().width;
+        int actorHbHeight = actor.getHitbox().height;
+
+        list.add(actor.getHitbox().getLocation());
+        list.add(new Point((actorHbX + actorHbWidth), actorHbY));
+        list.add(new Point(actorHbX, (actorHbY + actorHbHeight)));
+        list.add(new Point(actorHbX + actorHbWidth, (actorHbY + actorHbHeight)));
+        return list;
+    }
+
     public boolean isPlayerCollisionDown() {
         return playerCollisionDown;
     }
@@ -82,6 +98,10 @@ public class Collision {
 
     public boolean isPlayerCollisionUp() {
         return playerCollisionUp;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
 }

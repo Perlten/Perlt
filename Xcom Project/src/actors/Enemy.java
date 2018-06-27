@@ -1,17 +1,15 @@
 package actors;
 
 import display.FpsLock;
-import input.KeyInput;
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
 
-public class Player extends Actor {
-
-    private KeyInput keyInput;
-
+public class Enemy extends Actor {
     //Animation
     private static final String TEXTUREPATH = "resources/texture/player/playerTexturePack.png";
     private static final int NUMOFANIMATIONS = 4;
@@ -20,23 +18,25 @@ public class Player extends Actor {
     private int frame;
     private FpsLock animationLock = new FpsLock(5);
     
+    private ViewLine viewLine;
     
 
-    public Player(int x, int y, KeyInput keyInput, int movementSpeed, World world) {
+    public Enemy(int x, int y, int movementSpeed, World world) {
         super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), movementSpeed, world);
-        this.keyInput = keyInput;
+        viewLine = new ViewLine(this, world);
     }
 
     @Override
     public void update() {
-        updateHitbox();
-        movement();
+        if(viewLine.canSeePlayer(direction)){
+            System.out.println("SEEEE!!!");
+        }
     }
 
     @Override
     public void render(Graphics g) {
         animate(g);
-//        g.fillRect(x, y, hitbox.width, hitbox.height); //Draw hitbox
+        g.drawPolygon(viewLine.getPolygon(direction));
     }
 
     private void animate(Graphics g) {
@@ -46,20 +46,4 @@ public class Player extends Actor {
         g.drawImage(texture[direction][frame], x, y, null);
     }
 
-    private void movement() {
-        updateCollision();
-        if (keyInput.isUp() && !collision.isPlayerCollisionUp()) {
-            y -= movementSpeed;
-            direction = 1;
-        } else if (keyInput.isDown() && !collision.isPlayerCollisionDown()) {
-            y += movementSpeed;
-            direction = 0;
-        } else if (keyInput.isLeft() && !collision.isPlayerCollisionLeft()) {
-            x -= movementSpeed;
-            direction = 2;
-        } else if (keyInput.isRight() && !collision.isPlayerCollisionRight()) {
-            x += movementSpeed;
-            direction = 3;
-        }
-    }
 }
