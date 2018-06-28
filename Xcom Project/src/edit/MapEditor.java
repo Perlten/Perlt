@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +74,9 @@ public class MapEditor {
             }
             if (mouseInput.isRightMouse()) {
                 findHighlightedObject();
+            }
+            if(keyInput.isL()){
+                deleteObject();
             }
         }
     }
@@ -201,6 +205,39 @@ public class MapEditor {
                 }
             }
         }
+    }
+
+    private void deleteObject() {
+        Point mouse = mouseInput.getMousePoint();
+
+        Enemy enemy;
+        PathTile pathTile;
+        Iterator<Enemy> enemyIter = world.getEnemyList().iterator();
+        while (enemyIter.hasNext()) {
+            enemy = enemyIter.next();
+            if (enemy.getHitbox().contains(mouse)) {
+                enemyIter.remove();
+            } else {
+                Iterator<PathTile> pathIter = enemy.getPathTiles().iterator();
+                while (pathIter.hasNext()) {
+                    pathTile = pathIter.next();
+                    if (pathTile.getHitbox().contains(mouse)) {
+                        pathIter.remove();
+                        enemy.removePathTile();
+                    }
+                }
+            }
+        }
+
+        Tile tile;
+        Iterator<Tile> tileIter = world.getTileList().iterator();
+        while (tileIter.hasNext()) {
+            tile = tileIter.next();
+            if (tile.getHitbox().contains(mouse)) {
+                tileIter.remove();
+            }
+        }
+
     }
 
 }

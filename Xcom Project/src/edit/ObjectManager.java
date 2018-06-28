@@ -36,7 +36,7 @@ public class ObjectManager {
         }
     }
 
-    public Actor getEnemy(int index, int x, int y) {
+    public Enemy getEnemy(int index, int x, int y) {
         x += Camera.xOffset;
         y += Camera.yOffset;
 

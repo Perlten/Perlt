@@ -59,7 +59,6 @@ public class Enemy extends Actor {
     }
 
     private void move() {
-//        System.out.println("Move");
         Point point = ai.move();
         x += point.getX();
         y += point.getY();
@@ -76,6 +75,13 @@ public class Enemy extends Actor {
             frame++;
         }
         g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
+    }
+    
+    public void removePathTile(){
+        for(int i = 0; i < pathTiles.size(); i++){
+            pathTiles.get(i).setNum(i);
+        }
+        ai.reset();
     }
 
     public List<PathTile> getPathTiles() {

@@ -17,7 +17,6 @@ public class PathFollowAI implements AI, Serializable {
     @Override
     public Point move() {
         for (PathTile tile : enemy.getPathTiles()) {
-//            System.out.println(num);
             if (tile.getNum() == num) {
 
                 if (tile.getHitbox().contains(enemy.getX(), enemy.getY())) {
@@ -50,6 +49,11 @@ public class PathFollowAI implements AI, Serializable {
             }
         }
         return new Point(0, 0);
+    }
+
+    @Override
+    public void reset() {
+        num = 0;
     }
 
 }

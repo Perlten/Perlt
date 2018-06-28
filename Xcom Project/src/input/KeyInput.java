@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener {
 
     private boolean up, down, left, right, space;
-    private boolean u, i, n;
+    private boolean u, i, n, l;
     private boolean[] keysPressed = new boolean[256];
     private boolean[] keysReleased = new boolean[256];
 
@@ -40,6 +40,9 @@ public class KeyInput implements KeyListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_N){
             n = true;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            l = true;
         }
     }
 
@@ -89,6 +92,13 @@ public class KeyInput implements KeyListener {
         n = false;
         return temp;
     }
+
+    public boolean isL() {
+        boolean temp = l;
+        l = false;
+        return temp;
+    }
+    
     
     public int lastestNumKey() {
         if (keysReleased[KeyEvent.VK_0]) {

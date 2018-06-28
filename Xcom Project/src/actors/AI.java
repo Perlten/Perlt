@@ -6,4 +6,6 @@ public interface AI {
     
     public Point move();
     
+    public void reset();
+    
 }
