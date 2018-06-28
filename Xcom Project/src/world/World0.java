@@ -6,6 +6,7 @@ import actors.Player;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import tile.PathTile;
 import tile.RockTile;
 import tile.Tile;
 
@@ -17,7 +18,7 @@ public class World0 extends World {
     }
 
     private void init() {
-        
+       
     }
 
     @Override

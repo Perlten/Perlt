@@ -23,7 +23,7 @@ public class RockTile extends Tile {
 
     @Override
     public void updateFromLoad() {
-            texture = TextureUtil.getBufferedImage(texturePath);
+           texture = TextureUtil.getBufferedImage(texturePath);
     }
 
 }

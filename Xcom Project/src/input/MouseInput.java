@@ -1,5 +1,6 @@
 package input;
 
+import camera.Camera;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,7 +12,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     private int x;
     private int y;
 
-    private boolean leftMouse;
+    private boolean leftMouse, rightMouse;
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -26,6 +27,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mouseReleased(MouseEvent me) {
         if (me.getButton() == MouseEvent.BUTTON1) {
             leftMouse = true;
+        }
+        if (me.getButton() == MouseEvent.BUTTON3) {
+            rightMouse = true;
         }
     }
 
@@ -43,7 +47,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent me) {
-        mousePoint = me.getPoint();
+        mousePoint = new Point(me.getX() + Camera.xOffset, me.getY() + Camera.yOffset);
         x = me.getX();
         y = me.getY();
     }
@@ -55,6 +59,12 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public boolean isLeftMouse() {
         boolean temp = leftMouse;
         leftMouse = false;
+        return temp;
+    }
+
+    public boolean isRightMouse() {
+        boolean temp = rightMouse;
+        rightMouse = false;
         return temp;
     }
 

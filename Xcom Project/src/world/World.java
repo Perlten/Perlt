@@ -1,6 +1,7 @@
 package world;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 import edit.MapEditor;
 import input.KeyInput;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import tile.PathTile;
 import tile.Tile;
 
 public abstract class World {
@@ -62,7 +64,7 @@ public abstract class World {
                     for (Actor enemy : enemyList) {
                         enemy.updateFromLoad(this);
                     }
-                }else{
+                } else {
                     enemyList = new ArrayList<>();
                     System.out.println("Could not find enemy file");
                 }

@@ -42,9 +42,6 @@ public abstract class Actor implements GameObject, Serializable {
     }
 
     protected void updateCollision() {
-        if (collision == null) {
-            collision = new Collision(this, world);
-        }
         collision.update();
     }
 

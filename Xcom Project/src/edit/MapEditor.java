@@ -1,11 +1,13 @@
 package edit;
 
 import actors.Actor;
+import actors.Enemy;
 import camera.Camera;
 import game.GameObject;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tile.PathTile;
 import tile.Tile;
 import world.World;
 
@@ -32,6 +35,8 @@ public class MapEditor {
 
     private List<String> objectTypeList;
     private int currnetObjectType;
+
+    private GameObject highlightedObject;
 
     private final int gridSize = 16;
 
@@ -55,27 +60,36 @@ public class MapEditor {
         if (keyInput.isU()) {
             edit = !edit;
         }
+
         if (edit) {
             updateObjectId();
             updateSelectedObject();
-            if (keyInput.isI()) {
-                currnetObjectType = ++currnetObjectType % objectTypeList.size();
-            }
+
             if (mouseInput.isLeftMouse()) {
                 addObject();
             }
-            if(keyInput.isN()){
+            if (keyInput.isN()) {
                 saveWorld();
+            }
+            if (mouseInput.isRightMouse()) {
+                findHighlightedObject();
             }
         }
     }
 
     private void updateSelectedObject() {
-        String type = objectTypeList.get(currnetObjectType);
-        if (type.equals("tile")) {
-            selectedObject = mgo.getTile(objectId, 0, 0);
-        } else if (type.equals("enemy")) {
-            selectedObject = mgo.getEnemy(objectId, 0, 0);
+        if (highlightedObject == null) {
+            if (keyInput.isI()) {
+                currnetObjectType = ++currnetObjectType % objectTypeList.size();
+            }
+
+            String type = objectTypeList.get(currnetObjectType);
+
+            if (type.equals("tile")) {
+                selectedObject = mgo.getTile(objectId, 0, 0);
+            } else if (type.equals("enemy")) {
+                selectedObject = mgo.getEnemy(objectId, 0, 0);
+            }
         }
     }
 
@@ -95,7 +109,6 @@ public class MapEditor {
                 g.drawImage(tileList.get(i).getTexture(), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
-            selectedObject = mgo.getTile(objectId, 0, 0);
         } else if (type.equals("enemy")) {
             List<Actor> enemyList = mgo.allEnemyList();
             for (int i = 0; i < enemyList.size(); i++) {
@@ -103,24 +116,32 @@ public class MapEditor {
                 g.drawImage(enemyList.get(i).getTexture(), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
-            selectedObject = mgo.getEnemy(objectId, 0, 0);
         }
     }
 
     public void render(Graphics g) {
         if (edit) {
+            renderHighlightedObject(g);
+
             g.translate(Camera.xOffset, Camera.yOffset);
             renderChoices(g);
-            g.drawImage(selectedObject.getTexture(), (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize, null);
+            g.drawImage(selectedObject.getTexture(), getXGrid(), getYGrid(), null);
             g.translate(-Camera.xOffset, -Camera.yOffset);
         }
     }
 
     private void addObject() {
-        if (selectedObject instanceof Tile) {
-            world.getTileList().add(mgo.getTile(objectId, (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize));
-        } else if (selectedObject instanceof Actor) {
-            world.getEnemyList().add(mgo.getEnemy(objectId, (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize));
+        if (highlightedObject == null) {
+            if (selectedObject instanceof Tile) {
+                world.getTileList().add(mgo.getTile(objectId, getXGrid(), getYGrid()));
+            } else if (selectedObject instanceof Actor) {
+                world.getEnemyList().add(mgo.getEnemy(objectId, getXGrid(), getYGrid()));
+            }
+        } else {
+            if (highlightedObject instanceof Enemy) {
+                Enemy enemy = (Enemy) highlightedObject;
+                enemy.getPathTiles().add(mgo.getPathTile(0, getXGrid(), getYGrid(), enemy.getPathTiles().size()));
+            }
         }
     }
 
@@ -135,11 +156,50 @@ public class MapEditor {
             oos.writeObject(world.getEnemyList());
             oos.close();
             System.out.println("Saved");
-
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private int getXGrid() {
+        return mouseInput.getX() / gridSize * gridSize;
+    }
+
+    private int getYGrid() {
+        return mouseInput.getY() / gridSize * gridSize;
+    }
+
+    private void findHighlightedObject() {
+        Point mouse = mouseInput.getMousePoint();
+        for (Actor enemy : world.getEnemyList()) {
+            if (enemy.getHitbox().contains(mouse)) {
+                System.out.println("Found enemy");
+                highlightedObject = enemy;
+                selectedObject = new PathTile(0, 0, -1);
+                return;
+            }
+        }
+
+        for (Tile tile : world.getTileList()) {
+            if (tile.getHitbox().contains(mouse)) {
+                System.out.println("Found tile");
+                highlightedObject = tile;
+                return;
+            }
+        }
+        highlightedObject = null;
+    }
+
+    private void renderHighlightedObject(Graphics g) {
+        if (highlightedObject != null) {
+            if (highlightedObject instanceof Enemy) {
+                Enemy enemy = (Enemy) highlightedObject;
+                for (PathTile tile : enemy.getPathTiles()) {
+                    tile.render(g);
+                }
+            }
         }
     }
 
