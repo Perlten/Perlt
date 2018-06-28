@@ -3,18 +3,22 @@ package tile;
 import game.GameObject;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import util.TextureUtil;
 
-public abstract class Tile implements GameObject {
+public abstract class Tile implements GameObject, Serializable {
 
     protected int x, y;
     protected String texturePath;
-    protected BufferedImage texture;
+    protected transient BufferedImage texture;
     protected Rectangle hitbox;
 
+    protected boolean loaded;
+    
     public Tile(int x, int y, Rectangle hitbox, String texturePath) {
         this.x = x;
         this.y = y;
+        this.texturePath = texturePath;
         this.texture = TextureUtil.getBufferedImage(texturePath);
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);
@@ -23,6 +27,8 @@ public abstract class Tile implements GameObject {
         }
     }
 
+    public abstract void updateFromLoad();
+    
     protected void updateHitbox() {
         int width = hitbox.width;
         int height = hitbox.height;

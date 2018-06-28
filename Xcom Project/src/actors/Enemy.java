@@ -4,6 +4,7 @@ import camera.Camera;
 import display.FpsLock;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import physics.Collision;
 import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
@@ -18,11 +19,19 @@ public class Enemy extends Actor {
     private int frame;
     private FpsLock animationLock = new FpsLock(5);
 
-    private ViewLine viewLine;
+    private transient ViewLine viewLine;
 
     public Enemy(int x, int y, World world) {
         super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), 3, world);
         viewLine = new ViewLine(this, world);
+    }
+        
+    @Override
+    public void updateFromLoad(World world) {
+            texture = TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES);
+            viewLine = new ViewLine(this, world);
+            collision = new Collision(this, world);
+            this.world = world;
     }
 
     @Override

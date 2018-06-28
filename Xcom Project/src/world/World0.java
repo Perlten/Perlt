@@ -12,19 +12,17 @@ import tile.Tile;
 public class World0 extends World {
 
     public World0(Player player, MouseInput mouseInput, KeyInput keyInput) {
-        super(player, mouseInput, keyInput);
+        super(player, mouseInput, keyInput, 0);
         init();
     }
 
     private void init() {
-        tileList.add(new RockTile(100, 100));
-        tileList.add(new RockTile(150, 100));
-        tileList.add(new RockTile(200, 200));
-        enemyList.add(new Enemy(300, 300, this));
+        
     }
 
     @Override
     public void update() {
+        loadWorld();
         mapEditor.update();
         for (Tile tile : tileList) {
             tile.update();

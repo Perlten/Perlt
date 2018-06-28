@@ -1,10 +1,12 @@
 package display;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Perlt
  */
-public class FpsLock {
+public class FpsLock implements Serializable{
     
     private double timePerUpdate;
     private double delta = 0;

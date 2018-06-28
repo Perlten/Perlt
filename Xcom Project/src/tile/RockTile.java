@@ -2,6 +2,7 @@ package tile;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import util.TextureUtil;
 
 public class RockTile extends Tile {
 
@@ -17,7 +18,12 @@ public class RockTile extends Tile {
     @Override
     public void render(Graphics g) {
 //        g.fillRect(x, y, hitbox.width, hitbox.height); //draw hitbox
-        g.drawImage(texture, x, y, null); 
+        g.drawImage(texture, x, y, null);
     }
-    
+
+    @Override
+    public void updateFromLoad() {
+            texture = TextureUtil.getBufferedImage(texturePath);
+    }
+
 }

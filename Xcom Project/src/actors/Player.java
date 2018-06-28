@@ -64,4 +64,8 @@ public class Player extends Actor {
             moveing = false;
         }
     }
+
+    @Override
+    public void updateFromLoad(World world) {
+    }
 }

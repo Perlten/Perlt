@@ -45,7 +45,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent me) {
-        mousePoint = me.getLocationOnScreen();
+        mousePoint = me.getPoint();
         x = me.getX();
         y = me.getY();
     }
@@ -58,12 +58,11 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         return leftMouse;
     }
     
-    public int getMouseX(){
+    public int getX(){
         return x;
     }
     
-    public int getMouseY(){
+    public int getY(){
         return y;
     }
-
 }

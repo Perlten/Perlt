@@ -4,18 +4,19 @@ import camera.Camera;
 import game.GameObject;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import physics.Collision;
 import world.World;
 
-public abstract class Actor implements GameObject {
+public abstract class Actor implements GameObject, Serializable {
 
     protected int x, y;
     protected Rectangle hitbox;
-    protected BufferedImage[][] texture;
+    protected transient BufferedImage[][] texture;
     protected int movementSpeed;
-    protected Collision collision;
-    
-    protected World world;
+    protected transient Collision collision;
+
+    protected transient World world;
 
     public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
         this.x = x;
@@ -31,6 +32,8 @@ public abstract class Actor implements GameObject {
         }
     }
 
+    public abstract void updateFromLoad(World world);
+
     protected void updateHitbox() {
         int width = hitbox.width;
         int height = hitbox.height;
@@ -39,6 +42,9 @@ public abstract class Actor implements GameObject {
     }
 
     protected void updateCollision() {
+        if (collision == null) {
+            collision = new Collision(this, world);
+        }
         collision.update();
     }
 
@@ -71,6 +77,5 @@ public abstract class Actor implements GameObject {
     public BufferedImage getTexture() {
         return texture[0][0];
     }
-    
-    
+
 }

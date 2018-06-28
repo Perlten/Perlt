@@ -6,8 +6,15 @@ import game.GameObject;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tile.Tile;
 import world.World;
 
@@ -16,6 +23,7 @@ public class MapEditor {
     private World world;
     private KeyInput keyInput;
     private MouseInput mouseInput;
+    private String worldPath;
 
     private ObjectManager mgo;
 
@@ -25,10 +33,13 @@ public class MapEditor {
     private List<String> objectTypeList;
     private int currnetObjectType;
 
+    private final int gridSize = 16;
+
     public static boolean edit = false;
 
-    public MapEditor(World world, KeyInput keyInput, MouseInput mouseInput) {
+    public MapEditor(World world, KeyInput keyInput, MouseInput mouseInput, String worldPath) {
         this.world = world;
+        this.worldPath = worldPath;
         this.mgo = new ObjectManager(world);
         this.keyInput = keyInput;
         this.mouseInput = mouseInput;
@@ -70,7 +81,6 @@ public class MapEditor {
         if (temp != -1) {
             objectId = temp;
         }
-        System.out.println(objectId);
     }
 
     private void renderChoices(Graphics g) {
@@ -98,16 +108,36 @@ public class MapEditor {
         if (edit) {
             g.translate(Camera.xOffset, Camera.yOffset);
             renderChoices(g);
-            g.drawImage(selectedObject.getTexture(), mouseInput.getMouseX(), mouseInput.getMouseY(), null);
+            g.drawImage(selectedObject.getTexture(), (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize, null);
             g.translate(-Camera.xOffset, -Camera.yOffset);
         }
     }
 
     private void addObject() {
         if (selectedObject instanceof Tile) {
-            world.getTileList().add(mgo.getTile(objectId, mouseInput.getMouseX(), mouseInput.getMouseY()));
+            world.getTileList().add(mgo.getTile(objectId, (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize));
         } else if (selectedObject instanceof Actor) {
-            world.getEnemyList().add(mgo.getEnemy(objectId, mouseInput.getMouseX(), mouseInput.getMouseY()));
+            world.getEnemyList().add(mgo.getEnemy(objectId, (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize));
+        }
+        saveWorld();
+    }
+
+    private void saveWorld() {
+        try {
+            //Save tile list
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(worldPath + "tile")));
+            oos.writeObject(world.getTileList());
+            oos.close();
+            //Save enemy list.
+            oos = new ObjectOutputStream(new FileOutputStream(new File(worldPath + "enemy")));
+            oos.writeObject(world.getEnemyList());
+            oos.close();
+            System.out.println("Saved");
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
