@@ -8,13 +8,10 @@ import input.MouseInput;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tile.Tile;
 
 public abstract class World {

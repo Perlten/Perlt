@@ -29,6 +29,9 @@ public class FpsLock implements Serializable{
         return false;
     }
     
+    public void reset(){
+        last = System.nanoTime();
+    }
     
     
     

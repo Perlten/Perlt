@@ -64,6 +64,9 @@ public class MapEditor {
             if (mouseInput.isLeftMouse()) {
                 addObject();
             }
+            if(keyInput.isN()){
+                saveWorld();
+            }
         }
     }
 
@@ -119,7 +122,6 @@ public class MapEditor {
         } else if (selectedObject instanceof Actor) {
             world.getEnemyList().add(mgo.getEnemy(objectId, (mouseInput.getX() / gridSize) * gridSize, (mouseInput.getY() / gridSize) * gridSize));
         }
-        saveWorld();
     }
 
     private void saveWorld() {

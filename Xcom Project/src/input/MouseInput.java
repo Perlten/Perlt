@@ -19,15 +19,13 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent me) {
-        if (me.getButton() == MouseEvent.BUTTON1) {
-            leftMouse = true;
-        }
+
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
         if (me.getButton() == MouseEvent.BUTTON1) {
-            leftMouse = false;
+            leftMouse = true;
         }
     }
 
@@ -55,14 +53,16 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     }
 
     public boolean isLeftMouse() {
-        return leftMouse;
+        boolean temp = leftMouse;
+        leftMouse = false;
+        return temp;
     }
-    
-    public int getX(){
+
+    public int getX() {
         return x;
     }
-    
-    public int getY(){
+
+    public int getY() {
         return y;
     }
 }

@@ -25,13 +25,14 @@ public class Enemy extends Actor {
         super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), 3, world);
         viewLine = new ViewLine(this, world);
     }
-        
+
     @Override
     public void updateFromLoad(World world) {
-            texture = TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES);
-            viewLine = new ViewLine(this, world);
-            collision = new Collision(this, world);
-            this.world = world;
+        texture = TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES);
+        viewLine = new ViewLine(this, world);
+        collision = new Collision(this, world);
+        this.world = world;
+        animationLock.reset();
     }
 
     @Override

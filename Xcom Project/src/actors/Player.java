@@ -4,6 +4,7 @@ import display.FpsLock;
 import input.KeyInput;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
 
