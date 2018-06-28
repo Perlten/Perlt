@@ -34,10 +34,6 @@ public abstract class Tile implements GameObject {
         return hitbox;
     }
 
-    public BufferedImage getTexture() {
-        return texture;
-    }
-
     public int getX() {
         return x;
     }
@@ -45,4 +41,10 @@ public abstract class Tile implements GameObject {
     public int getY() {
         return y;
     }
+
+    @Override
+    public BufferedImage getTexture() {
+        return texture;
+    }
+
 }

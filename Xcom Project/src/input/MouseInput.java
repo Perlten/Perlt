@@ -8,6 +8,8 @@ import java.awt.event.MouseMotionListener;
 public class MouseInput implements MouseListener, MouseMotionListener {
 
     private Point mousePoint;
+    private int x;
+    private int y;
 
     private boolean leftMouse;
 
@@ -44,6 +46,8 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     @Override
     public void mouseMoved(MouseEvent me) {
         mousePoint = me.getLocationOnScreen();
+        x = me.getX();
+        y = me.getY();
     }
 
     public Point getMousePoint() {
@@ -52,6 +56,14 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     public boolean isLeftMouse() {
         return leftMouse;
+    }
+    
+    public int getMouseX(){
+        return x;
+    }
+    
+    public int getMouseY(){
+        return y;
     }
 
 }

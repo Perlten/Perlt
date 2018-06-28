@@ -2,23 +2,28 @@ package world;
 
 import actors.Actor;
 import actors.Player;
-import game.GameObject;
+import edit.MapEditor;
+import input.KeyInput;
 import input.MouseInput;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import tile.Tile;
 
-public abstract class World implements GameObject{
+public abstract class World{
 
     protected Player player;
     
     protected List<Tile> tileList = new ArrayList<>();
     protected List<Actor> enemyList = new ArrayList<>();
-    protected MouseInput mouseInput;
     
-    public World(Player player, MouseInput mouseInput) {
+    protected MapEditor mapEditor;
+    
+    public World(Player player, MouseInput mouseInput, KeyInput keyInput) {
         this.player = player;
+        this.mapEditor = new MapEditor(this, keyInput, mouseInput);
     }
+    
     
     public List<Tile> getTileList() {
         return tileList;
@@ -31,4 +36,7 @@ public abstract class World implements GameObject{
     public Player getPlayer() {
         return player;
     }
+    
+    public abstract void update();
+    public abstract void render(Graphics g);
 }

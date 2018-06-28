@@ -40,15 +40,12 @@ public class Collision {
         for (Tile tile : tileList) {
             Rectangle tileHb = tile.getHitbox();
 
-            int actorHbX = actor.getHitbox().x;
-            int actorHbY = actor.getHitbox().y;
-            int actorHbWidth = actor.getHitbox().width;
-            int actorHbHeight = actor.getHitbox().height;
-
-            Point actorUpperLeft = actor.getHitbox().getLocation();
-            Point actorUpperRight = new Point((actorHbX + actorHbWidth), actorHbY);
-            Point actorButtomLeft = new Point(actorHbX, (actorHbY + actorHbHeight));
-            Point actorButtonRight = new Point(actorHbX + actorHbWidth, (actorHbY + actorHbHeight));
+            List<Point> pointList = getPoints();
+            
+            Point actorUpperLeft = pointList.get(0);
+            Point actorUpperRight = pointList.get(1);
+            Point actorButtomLeft = pointList.get(2);
+            Point actorButtonRight = pointList.get(3);
 
             //Up
             if (tileHb.contains(actorUpperLeft.x, actorUpperLeft.y - ms) || tileHb.contains(actorUpperRight.x, actorUpperRight.y - ms)) {

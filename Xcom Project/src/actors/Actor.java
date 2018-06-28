@@ -66,5 +66,11 @@ public abstract class Actor implements GameObject {
         this.world = world;
         collision.setWorld(world);
     }
+
+    @Override
+    public BufferedImage getTexture() {
+        return texture[0][0];
+    }
+    
     
 }

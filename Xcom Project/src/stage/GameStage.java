@@ -22,7 +22,7 @@ public class GameStage implements Stage {
     public GameStage(KeyInput keyInput, MouseInput mouseInput, int gameWidth, int gameHeight) {
         this.player = new Player(0, 0, keyInput, 3, currentWorld);
         this.camera = new Camera(player, gameWidth, gameHeight);
-        worldList.add(new World0(player, mouseInput));
+        worldList.add(new World0(player, mouseInput, keyInput));
         this.currentWorld = worldList.get(0);
         player.setWorld(currentWorld);
     }

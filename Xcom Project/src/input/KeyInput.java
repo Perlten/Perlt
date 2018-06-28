@@ -15,7 +15,9 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener {
 
     private boolean up, down, left, right, space;
-    private boolean[] keysTyped = new boolean[256];
+    private boolean u, i;
+    private boolean[] keysPressed = new boolean[256];
+    private boolean[] keysReleased = new boolean[256];
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -23,20 +25,28 @@ public class KeyInput implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keysTyped[e.getKeyCode()] = true;
+        keysPressed[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keysTyped[e.getKeyCode()] = false;
+        keysPressed[e.getKeyCode()] = false;
+        keysReleased[e.getKeyCode()] = true;
+        if (e.getKeyCode() == KeyEvent.VK_U) {
+            u = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_I) {
+            i = true;
+        }
     }
 
     public void update() {
-        up = keysTyped[KeyEvent.VK_W];
-        down = keysTyped[KeyEvent.VK_S];
-        left = keysTyped[KeyEvent.VK_A];
-        right = keysTyped[KeyEvent.VK_D];
-        space = keysTyped[KeyEvent.VK_SPACE];
+        up = keysPressed[KeyEvent.VK_W];
+        down = keysPressed[KeyEvent.VK_S];
+        left = keysPressed[KeyEvent.VK_A];
+        right = keysPressed[KeyEvent.VK_D];
+        space = keysPressed[KeyEvent.VK_SPACE];
+
     }
 
     public boolean isDown() {
@@ -58,4 +68,41 @@ public class KeyInput implements KeyListener {
     public boolean isSpace() {
         return space;
     }
+
+    public boolean isU() {
+        boolean temp = u;
+        u = false;
+        return temp;
+    }
+
+    public boolean isI() {
+        boolean temp = i;
+        i = false;
+        return temp;
+    }
+
+    public int lastestNumKey() {
+        if (keysReleased[KeyEvent.VK_0]) {
+            keysReleased[KeyEvent.VK_0] = false;
+            return 0;
+        }
+        if (keysReleased[KeyEvent.VK_1]) {
+            keysReleased[KeyEvent.VK_1] = false;
+            return 1;
+        }
+        if (keysReleased[KeyEvent.VK_2]) {
+            keysReleased[KeyEvent.VK_2] = false;
+            return 2;
+        }
+        if (keysReleased[KeyEvent.VK_3]) {
+            keysReleased[KeyEvent.VK_3] = false;
+            return 3;
+        }
+        if (keysReleased[KeyEvent.VK_4]) {
+            keysReleased[KeyEvent.VK_4] = false;
+            return 4;
+        }
+        return -1;
+    }
+
 }

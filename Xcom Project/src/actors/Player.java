@@ -1,11 +1,9 @@
 package actors;
 
-import camera.Camera;
 import display.FpsLock;
 import input.KeyInput;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
 
@@ -19,9 +17,9 @@ public class Player extends Actor {
     private static final int NUMOFFRAMES = 7;
     private int direction;
     private int frame;
-    private FpsLock animationLock = new FpsLock(5);
+    private FpsLock animationLock = new FpsLock(10);
     
-    
+    private boolean moveing;
 
     public Player(int x, int y, KeyInput keyInput, int movementSpeed, World world) {
         super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), movementSpeed, world);
@@ -41,7 +39,7 @@ public class Player extends Actor {
     }
 
     private void animate(Graphics g) {
-        if (animationLock.check()) {
+        if (animationLock.check() && moveing) {
             frame++;
         }
         g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
@@ -49,6 +47,7 @@ public class Player extends Actor {
 
     private void movement() {
         updateCollision();
+        moveing = true;
         if (keyInput.isUp() && !collision.isPlayerCollisionUp()) {
             y -= movementSpeed;
             direction = 1;
@@ -61,6 +60,8 @@ public class Player extends Actor {
         } else if (keyInput.isRight() && !collision.isPlayerCollisionRight()) {
             x += movementSpeed;
             direction = 3;
+        }else{
+            moveing = false;
         }
     }
 }

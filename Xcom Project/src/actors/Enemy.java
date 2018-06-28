@@ -20,15 +20,15 @@ public class Enemy extends Actor {
 
     private ViewLine viewLine;
 
-    public Enemy(int x, int y, int movementSpeed, World world) {
-        super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), movementSpeed, world);
+    public Enemy(int x, int y, World world) {
+        super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), 3, world);
         viewLine = new ViewLine(this, world);
     }
 
     @Override
     public void update() {
         if (viewLine.canSeeActor(direction, world.getPlayer())) {
-            System.out.println("SEEEE!!!");
+            //TODO add code
         }
     }
 
