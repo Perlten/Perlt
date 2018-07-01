@@ -10,16 +10,16 @@ import world.World;
 public abstract class Tile implements GameObject, Serializable {
 
     protected int x, y;
-    protected String texturePath;
+    protected String texturePath = "resources/texture/tile/";
     protected transient BufferedImage texture;
     protected Rectangle hitbox;
 
     protected boolean loaded;
     
-    public Tile(int x, int y, Rectangle hitbox, String texturePath) {
+    public Tile(int x, int y, Rectangle hitbox, String texturePathEnd) {
         this.x = x;
         this.y = y;
-        this.texturePath = texturePath;
+        this.texturePath += texturePathEnd;
         this.texture = TextureUtil.getBufferedImage(texturePath);
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);

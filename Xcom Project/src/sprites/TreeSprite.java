@@ -3,10 +3,10 @@ package sprites;
 import java.awt.Graphics;
 import util.TextureUtil;
 
-public class HouseSprite extends Sprite {
+public class TreeSprite extends Sprite {
 
-    public HouseSprite(int x, int y) {
-        super(x, y, "house.png");
+    public TreeSprite(int x, int y) {
+        super(x, y, "tree.png");
     }
 
     @Override
@@ -31,5 +31,5 @@ public class HouseSprite extends Sprite {
     @Override
     public void addHighlightedObject(int x, int y) {
     }
-    
+
 }

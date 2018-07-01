@@ -114,19 +114,30 @@ public class MapEditor {
     }
 
     private void renderChoices(Graphics g) {
+        int sizeX = 32;
+        int sizeY = 32;
+        int hint = 0;
+
         String type = objectTypeList.get(currnetObjectType);
         if (type.equals("tile")) {
             List<Tile> tileList = mgo.allTileList();
             for (int i = 0; i < tileList.size(); i++) {
                 int x = i * 64 + 100;
-                g.drawImage(tileList.get(i).getTexture(), x, 1, null);
+                g.drawImage(tileList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
         } else if (type.equals("enemy")) {
             List<Actor> enemyList = mgo.allEnemyList();
             for (int i = 0; i < enemyList.size(); i++) {
                 int x = i * 64 + 100;
-                g.drawImage(enemyList.get(i).getTexture(), x, 1, null);
+                g.drawImage(enemyList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
+                g.drawString(String.valueOf(i), x + 16, 50);
+            }
+        } else if (type.equals("sprite")) {
+            List<Sprite> spriteList = mgo.allSpriteList();
+            for (int i = 0; i < spriteList.size(); i++) {
+                int x = i * 64 + 100;
+                g.drawImage(spriteList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
         }
@@ -251,17 +262,29 @@ public class MapEditor {
                     if (pathTile.getHitbox().contains(mouse)) {
                         pathIter.remove();
                         enemy.removePathTile();
+                        return;
                     }
                 }
             }
         }
         //Removes Tile
+        Tile tile;
+        Iterator<Tile> tileIter = world.getTileList().iterator();
+        while (tileIter.hasNext()) {
+            tile = tileIter.next();
+            if (tile.getHitbox().contains(mouse)) {
+                tileIter.remove();
+                return;
+            }
+        }
+        //Remove Sprite
         Sprite sprite;
         Iterator<Sprite> spriteIter = world.getSpriteList().iterator();
         while (spriteIter.hasNext()) {
             sprite = spriteIter.next();
             if (sprite.getHitbox().contains(mouse)) {
                 spriteIter.remove();
+                return;
             }
         }
 

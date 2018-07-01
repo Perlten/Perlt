@@ -29,16 +29,16 @@ public class GameStage implements Stage {
 
     @Override
     public void update() {
+        player.update();
         camera.update();
         currentWorld.update();
-        player.update();
     }
 
     @Override
     public void render(Graphics g) {
         g.translate(-Camera.xOffset, -Camera.yOffset);
-        currentWorld.render(g);
         player.render(g);
+        currentWorld.render(g);
         g.translate(Camera.xOffset, Camera.yOffset);
         //Draw fixed graphics here
         g.drawRect(0, 0, 32, 32);

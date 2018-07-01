@@ -7,7 +7,7 @@ import util.TextureUtil;
 public class RockTile extends Tile {
 
     public RockTile(int x, int y) {
-        super(x, y, new Rectangle(32, 32), "resources/texture/tile/rockTile.png");
+        super(x, y, new Rectangle(32, 32), "rockTile.png");
     }
 
     @Override

@@ -11,14 +11,14 @@ public abstract class Sprite implements GameObject, Serializable {
 
     protected int x, y;
     protected transient BufferedImage texture;
-    protected String texturePath;
+    protected String texturePath = "resources/texture/sprite/";
 
     protected Rectangle hitbox;
 
-    public Sprite(int x, int y, String texturePath) {
+    public Sprite(int x, int y, String texturePathEnd) {
         this.x = x;
         this.y = y;
-        this.texturePath = texturePath;
+        this.texturePath += texturePathEnd;
         this.texture = TextureUtil.getBufferedImage(texturePath);
         hitbox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
     }

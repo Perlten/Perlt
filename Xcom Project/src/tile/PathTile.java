@@ -9,7 +9,7 @@ public class PathTile extends Tile {
     private int num;
 
     public PathTile(int x, int y, int num) {
-        super(x, y, new Rectangle(32, 32), "resources/texture/tile/test.png");
+        super(x, y, new Rectangle(32, 32), "test.png");
         this.num = num;
     }
 
