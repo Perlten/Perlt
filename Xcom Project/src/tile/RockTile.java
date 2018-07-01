@@ -26,4 +26,12 @@ public class RockTile extends Tile {
            texture = TextureUtil.getBufferedImage(texturePath);
     }
 
+    @Override
+    public void renderHighlight(Graphics g) {
+    }
+
+    @Override
+    public void addHighlightedObject(int x, int y) {
+    }
+
 }

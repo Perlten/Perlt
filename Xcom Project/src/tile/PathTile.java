@@ -35,6 +35,14 @@ public class PathTile extends Tile {
     public void setNum(int num) {
         this.num = num;
     }
+
+    @Override
+    public void renderHighlight(Graphics g) {
+    }
+
+    @Override
+    public void addHighlightedObject(int x, int y) {
+    }
     
 
 }

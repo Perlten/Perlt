@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import util.TextureUtil;
+import world.World;
 
 public abstract class Tile implements GameObject, Serializable {
 
@@ -52,5 +53,23 @@ public abstract class Tile implements GameObject, Serializable {
     public BufferedImage getTexture() {
         return texture;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    
+    @Override
+    public void addGameObject(World world, int x, int y) {
+        world.getTileList().add(this);
+        setX(x);
+        setY(y);
+    }
+    
+    
 
 }

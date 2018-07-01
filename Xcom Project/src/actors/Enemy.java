@@ -91,4 +91,16 @@ public class Enemy extends Actor {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
+    @Override
+    public void renderHighlight(Graphics g) {
+        for(PathTile tile : pathTiles){
+            g.drawImage(tile.getTexture(), tile.getX(), tile.getY(), null);
+        }
+    }
+
+    @Override
+    public void addHighlightedObject(int x, int y) {
+        pathTiles.add(new PathTile(x, y, pathTiles.size()));
+    }
 }

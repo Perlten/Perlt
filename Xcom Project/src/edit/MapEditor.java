@@ -16,8 +16,6 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tile.PathTile;
 import tile.Tile;
 import world.World;
@@ -136,16 +134,9 @@ public class MapEditor {
 
     private void addObject() {
         if (highlightedObject == null) {
-            if (selectedObject instanceof Tile) {
-                world.getTileList().add(mgo.getTile(objectId, getXGrid(), getYGrid()));
-            } else if (selectedObject instanceof Actor) {
-                world.getEnemyList().add(mgo.getEnemy(objectId, getXGrid(), getYGrid()));
-            }
+            selectedObject.addGameObject(world, getXGrid(), getYGrid());
         } else {
-            if (highlightedObject instanceof Enemy) {
-                Enemy enemy = (Enemy) highlightedObject;
-                enemy.getPathTiles().add(mgo.getPathTile(0, getXGrid(), getYGrid(), enemy.getPathTiles().size()));
-            }
+            highlightedObject.addHighlightedObject(getXGrid(), getYGrid());
         }
     }
 
@@ -198,12 +189,7 @@ public class MapEditor {
 
     private void renderHighlightedObject(Graphics g) {
         if (highlightedObject != null) {
-            if (highlightedObject instanceof Enemy) {
-                Enemy enemy = (Enemy) highlightedObject;
-                for (PathTile tile : enemy.getPathTiles()) {
-                    tile.render(g);
-                }
-            }
+            highlightedObject.renderHighlight(g);
         }
     }
 
@@ -212,10 +198,10 @@ public class MapEditor {
 
         Enemy enemy;
         PathTile pathTile;
-        Iterator<Enemy> enemyIter = world.getEnemyList().iterator();
+        Iterator<Actor> enemyIter = world.getEnemyList().iterator();
         //Removes enemy
         while (enemyIter.hasNext()) {
-            enemy = enemyIter.next();
+            enemy = (Enemy) enemyIter.next();
             if (enemy.getHitbox().contains(mouse)) {
                 enemyIter.remove();
                 if (highlightedObject.equals(enemy)) {

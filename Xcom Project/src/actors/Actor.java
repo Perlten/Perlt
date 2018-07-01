@@ -75,4 +75,23 @@ public abstract class Actor implements GameObject, Serializable {
         return texture[0][0];
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    
+    @Override
+    public void addGameObject(World world, int x, int y){
+        world.getEnemyList().add(this);
+        setX(x);
+        setY(y);
+    }
+    
+    
+    
+
 }

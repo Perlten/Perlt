@@ -20,7 +20,7 @@ public abstract class World {
     protected Player player;
 
     protected List<Tile> tileList = new ArrayList<>();
-    protected List<Enemy> enemyList = new ArrayList<>();
+    protected List<Actor> enemyList = new ArrayList<>();
     protected String WorldPath = "resources/world/world";
 
     protected MapEditor mapEditor;
@@ -57,7 +57,7 @@ public abstract class World {
                 //loads enemy
                 if (enemyFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(enemyFile));
-                    enemyList = (List<Enemy>) ois.readObject();
+                    enemyList = (List<Actor>) ois.readObject();
                     ois.close();
 
                     for (Actor enemy : enemyList) {
@@ -79,7 +79,7 @@ public abstract class World {
         return tileList;
     }
 
-    public List<Enemy> getEnemyList() {
+    public List<Actor> getEnemyList() {
         return enemyList;
     }
 
