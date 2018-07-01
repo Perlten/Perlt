@@ -127,27 +127,31 @@ public class MapEditor {
 
             g.translate(Camera.xOffset, Camera.yOffset);
             renderChoices(g);
-            g.drawImage(selectedObject.getTexture(), getXGrid(), getYGrid(), null);
+            g.drawImage(selectedObject.getTexture(), getXGrid(false), getYGrid(false), null);
             g.translate(-Camera.xOffset, -Camera.yOffset);
         }
     }
 
     private void addObject() {
         if (highlightedObject == null) {
-            selectedObject.addGameObject(world, getXGrid(), getYGrid());
+            selectedObject.addGameObject(world, getXGrid(true), getYGrid(true));
         } else {
-            highlightedObject.addHighlightedObject(getXGrid(), getYGrid());
+            highlightedObject.addHighlightedObject(getXGrid(true), getYGrid(true));
         }
     }
 
     private void saveWorld() {
         try {
+            File tileFile = new File(worldPath + "tile");
+            File enemyFile = new File(worldPath + "enemy");
+            tileFile.createNewFile();
+            
             //Save tile list
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(worldPath + "tile")));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tileFile));
             oos.writeObject(world.getTileList());
             oos.close();
             //Save enemy list.
-            oos = new ObjectOutputStream(new FileOutputStream(new File(worldPath + "enemy")));
+            oos = new ObjectOutputStream(new FileOutputStream(enemyFile));
             oos.writeObject(world.getEnemyList());
             oos.close();
             System.out.println("Saved");
@@ -158,12 +162,20 @@ public class MapEditor {
         }
     }
 
-    private int getXGrid() {
-        return mouseInput.getX() / gridSize * gridSize;
+    private int getXGrid(boolean addOffset) {
+        int x = mouseInput.getX() / gridSize * gridSize;
+        if(addOffset){
+            x += Camera.xOffset;
+        }
+        return x;
     }
 
-    private int getYGrid() {
-        return mouseInput.getY() / gridSize * gridSize;
+    private int getYGrid(boolean addOffset) {
+        int y = mouseInput.getY() / gridSize * gridSize;
+        if(addOffset){
+            y += Camera.yOffset;
+        }
+        return y;
     }
 
     private void findHighlightedObject() {

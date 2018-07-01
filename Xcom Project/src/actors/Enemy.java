@@ -96,6 +96,7 @@ public class Enemy extends Actor {
     public void renderHighlight(Graphics g) {
         for(PathTile tile : pathTiles){
             g.drawImage(tile.getTexture(), tile.getX(), tile.getY(), null);
+            g.drawString(String.valueOf(tile.getNum()), tile.getX(), tile.getY());
         }
     }
 
