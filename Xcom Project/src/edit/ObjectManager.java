@@ -5,6 +5,8 @@ import actors.Enemy;
 import camera.Camera;
 import java.util.ArrayList;
 import java.util.List;
+import sprites.HouseSprite;
+import sprites.Sprite;
 import tile.PathTile;
 import tile.RockTile;
 import tile.Tile;
@@ -16,12 +18,15 @@ public class ObjectManager {
 
     private List<Tile> tileList = new ArrayList<>();
     private List<Actor> enemyList = new ArrayList<>();
+    private List<Sprite> spriteList = new ArrayList<>();
 
     public ObjectManager(World world) {
         this.world = world;
         tileList.add(new RockTile(0, 0));
 
         enemyList.add(new Enemy(0, 0, world));
+        
+        spriteList.add(new HouseSprite(0, 0));
     }
 
     public Tile getTile(int index, int x, int y) {
@@ -36,7 +41,7 @@ public class ObjectManager {
         }
     }
 
-    public Enemy getEnemy(int index, int x, int y) {
+    public Actor getEnemy(int index, int x, int y) {
         x += Camera.xOffset;
         y += Camera.yOffset;
 
@@ -46,6 +51,19 @@ public class ObjectManager {
             default:
                 System.out.println("Could not find enemy");
                 return new Enemy(x, y, world);
+        }
+    }
+    
+      public Sprite getSprite(int index, int x, int y) {
+        x += Camera.xOffset;
+        y += Camera.yOffset;
+
+        switch (index) {
+            case 0:
+                return new HouseSprite(x, y);
+            default:
+                System.out.println("Could not find enemy");
+                return new HouseSprite(x, y);
         }
     }
 

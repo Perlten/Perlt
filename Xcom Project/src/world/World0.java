@@ -6,6 +6,7 @@ import actors.Player;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import sprites.Sprite;
 import tile.PathTile;
 import tile.RockTile;
 import tile.Tile;
@@ -18,7 +19,7 @@ public class World0 extends World {
     }
 
     private void init() {
-       
+
     }
 
     @Override
@@ -31,17 +32,20 @@ public class World0 extends World {
         for (Actor enemy : enemyList) {
             enemy.update();
         }
+        for (Sprite sprite : spriteList) {
+            sprite.update();
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        mapEditor.render(g);
-        for (Tile tile : tileList) {
-            tile.render(g);
-        }
         for (Actor enemy : enemyList) {
             enemy.render(g);
         }
+        for (Sprite sprite : spriteList) {
+            sprite.render(g);
+        }
+        mapEditor.render(g);
     }
 
 }

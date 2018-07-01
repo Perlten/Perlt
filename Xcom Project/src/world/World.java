@@ -1,7 +1,6 @@
 package world;
 
 import actors.Actor;
-import actors.Enemy;
 import actors.Player;
 import edit.MapEditor;
 import input.KeyInput;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import sprites.Sprite;
 import tile.Tile;
 
 public abstract class World {
@@ -21,6 +21,8 @@ public abstract class World {
 
     protected List<Tile> tileList = new ArrayList<>();
     protected List<Actor> enemyList = new ArrayList<>();
+    protected List<Sprite> spriteList = new ArrayList<>();
+
     protected String WorldPath = "resources/world/world";
 
     protected MapEditor mapEditor;
@@ -38,6 +40,7 @@ public abstract class World {
             Worldloaded = true;
             File tileFile = new File(WorldPath + "tile");
             File enemyFile = new File(WorldPath + "enemy");
+            File spriteFile = new File(WorldPath + "sprite");
 
             ObjectInputStream ois;
             try {
@@ -68,6 +71,20 @@ public abstract class World {
                     System.out.println("Could not find enemy file");
                 }
 
+                //Load sprite
+                if (spriteFile.exists()) {
+                    ois = new ObjectInputStream(new FileInputStream(spriteFile));
+                    spriteList = (List<Sprite>) ois.readObject();
+                    ois.close();
+
+                    for (Sprite sprite : spriteList) {
+                        sprite.updateFromLoad();
+                    }
+                } else {
+                    spriteList = new ArrayList<>();
+                    System.out.println("Could not find sprite file");
+                }
+
                 System.out.println("Load");
             } catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
@@ -85,6 +102,10 @@ public abstract class World {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public List<Sprite> getSpriteList() {
+        return spriteList;
     }
 
     public abstract void update();

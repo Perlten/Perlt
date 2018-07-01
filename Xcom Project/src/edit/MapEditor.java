@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import sprites.Sprite;
 import tile.PathTile;
 import tile.Tile;
 import world.World;
@@ -39,7 +40,7 @@ public class MapEditor {
 
     private final int gridSize = 16;
 
-    public static boolean edit = false;
+    public boolean edit = false;
 
     public MapEditor(World world, KeyInput keyInput, MouseInput mouseInput, String worldPath) {
         this.world = world;
@@ -52,14 +53,13 @@ public class MapEditor {
 
     private void init() {
         selectedObject = mgo.getTile(0, 0, 0);
-        objectTypeList = Arrays.asList("tile", "enemy");
+        objectTypeList = Arrays.asList("tile", "enemy", "sprite");
     }
 
     public void update() {
         if (keyInput.isU()) {
             edit = !edit;
         }
-
         if (edit) {
             updateObjectId();
             updateSelectedObject();
@@ -79,18 +79,28 @@ public class MapEditor {
         }
     }
 
-    private void updateSelectedObject() {
-        if (highlightedObject == null) {
-            if (keyInput.isI()) {
-                currnetObjectType = ++currnetObjectType % objectTypeList.size();
-            }
+    public void renderMapEditorObject(Graphics g) {
+        renderHighlightedObject(g);
 
+        for (Tile tile : world.getTileList()) {
+            tile.render(g);
+        }
+    }
+
+    private void updateSelectedObject() {
+        if (keyInput.isI()) {
+            currnetObjectType = ++currnetObjectType % objectTypeList.size();
+            highlightedObject = null;
+        }
+        if (highlightedObject == null) {
             String type = objectTypeList.get(currnetObjectType);
 
             if (type.equals("tile")) {
                 selectedObject = mgo.getTile(objectId, 0, 0);
             } else if (type.equals("enemy")) {
                 selectedObject = mgo.getEnemy(objectId, 0, 0);
+            } else if (type.equals("sprite")) {
+                selectedObject = mgo.getSprite(objectId, 0, 0);
             }
         }
     }
@@ -99,6 +109,7 @@ public class MapEditor {
         int temp = keyInput.lastestNumKey();
         if (temp != -1) {
             objectId = temp;
+            highlightedObject = null;
         }
     }
 
@@ -123,8 +134,7 @@ public class MapEditor {
 
     public void render(Graphics g) {
         if (edit) {
-            renderHighlightedObject(g);
-
+            renderMapEditorObject(g);
             g.translate(Camera.xOffset, Camera.yOffset);
             renderChoices(g);
             g.drawImage(selectedObject.getTexture(), getXGrid(false), getYGrid(false), null);
@@ -144,8 +154,9 @@ public class MapEditor {
         try {
             File tileFile = new File(worldPath + "tile");
             File enemyFile = new File(worldPath + "enemy");
+            File spriteFile = new File(worldPath + "sprite");
             tileFile.createNewFile();
-            
+
             //Save tile list
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tileFile));
             oos.writeObject(world.getTileList());
@@ -153,6 +164,10 @@ public class MapEditor {
             //Save enemy list.
             oos = new ObjectOutputStream(new FileOutputStream(enemyFile));
             oos.writeObject(world.getEnemyList());
+            oos.close();
+            //Sprite
+            oos = new ObjectOutputStream(new FileOutputStream(spriteFile));
+            oos.writeObject(world.getSpriteList());
             oos.close();
             System.out.println("Saved");
         } catch (FileNotFoundException ex) {
@@ -164,7 +179,7 @@ public class MapEditor {
 
     private int getXGrid(boolean addOffset) {
         int x = mouseInput.getX() / gridSize * gridSize;
-        if(addOffset){
+        if (addOffset) {
             x += Camera.xOffset;
         }
         return x;
@@ -172,7 +187,7 @@ public class MapEditor {
 
     private int getYGrid(boolean addOffset) {
         int y = mouseInput.getY() / gridSize * gridSize;
-        if(addOffset){
+        if (addOffset) {
             y += Camera.yOffset;
         }
         return y;
@@ -196,6 +211,15 @@ public class MapEditor {
                 return;
             }
         }
+
+        for (Sprite sprite : world.getSpriteList()) {
+            if (sprite.getHitbox().contains(mouse)) {
+                System.out.println("Found sprite");
+                highlightedObject = sprite;
+                return;
+            }
+        }
+
         highlightedObject = null;
     }
 
@@ -232,12 +256,12 @@ public class MapEditor {
             }
         }
         //Removes Tile
-        Tile tile;
-        Iterator<Tile> tileIter = world.getTileList().iterator();
-        while (tileIter.hasNext()) {
-            tile = tileIter.next();
-            if (tile.getHitbox().contains(mouse)) {
-                tileIter.remove();
+        Sprite sprite;
+        Iterator<Sprite> spriteIter = world.getSpriteList().iterator();
+        while (spriteIter.hasNext()) {
+            sprite = spriteIter.next();
+            if (sprite.getHitbox().contains(mouse)) {
+                spriteIter.remove();
             }
         }
 
