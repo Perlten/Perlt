@@ -75,7 +75,7 @@ public class MapEditor {
             if (mouseInput.isRightMouse()) {
                 findHighlightedObject();
             }
-            if(keyInput.isL()){
+            if (keyInput.isL()) {
                 deleteObject();
             }
         }
@@ -213,11 +213,16 @@ public class MapEditor {
         Enemy enemy;
         PathTile pathTile;
         Iterator<Enemy> enemyIter = world.getEnemyList().iterator();
+        //Removes enemy
         while (enemyIter.hasNext()) {
             enemy = enemyIter.next();
             if (enemy.getHitbox().contains(mouse)) {
                 enemyIter.remove();
+                if (highlightedObject.equals(enemy)) {
+                    highlightedObject = null;
+                }
             } else {
+                //removes PathTile
                 Iterator<PathTile> pathIter = enemy.getPathTiles().iterator();
                 while (pathIter.hasNext()) {
                     pathTile = pathIter.next();
@@ -228,7 +233,7 @@ public class MapEditor {
                 }
             }
         }
-
+        //Removes Tile
         Tile tile;
         Iterator<Tile> tileIter = world.getTileList().iterator();
         while (tileIter.hasNext()) {
