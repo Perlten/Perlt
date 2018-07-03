@@ -12,32 +12,25 @@ import world.World0;
 
 public class GameStage implements Stage {
 
-    private Player player;
     private List<World> worldList = new ArrayList<>();
     private World currentWorld;
     
-    private Camera camera;
     
     
     public GameStage(KeyInput keyInput, MouseInput mouseInput, int gameWidth, int gameHeight) {
-        this.player = new Player(0, 0, keyInput, 3, currentWorld);
-        this.camera = new Camera(player, gameWidth, gameHeight);
-        worldList.add(new World0(player, mouseInput, keyInput));
+       
+        worldList.add(new World0(mouseInput, keyInput));
         this.currentWorld = worldList.get(0);
-        player.setWorld(currentWorld);
     }
 
     @Override
     public void update() {
-        player.update();
-        camera.update();
         currentWorld.update();
     }
 
     @Override
     public void render(Graphics g) {
         g.translate(-Camera.xOffset, -Camera.yOffset);
-        player.render(g);
         currentWorld.render(g);
         g.translate(Camera.xOffset, Camera.yOffset);
         //Draw fixed graphics here

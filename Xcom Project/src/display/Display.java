@@ -9,11 +9,11 @@ public class Display {
     private JFrame frame;
     private Canvas canvas;
 
-    private int width, height;
+    public static int width, height;
 
     public Display(int width, int height, String title) {
-        this.width = width;
-        this.height = height;
+        Display.width = width;
+        Display.height = height;
         frame = new JFrame(title);
         
         createDisplay();

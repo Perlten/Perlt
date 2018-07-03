@@ -58,7 +58,6 @@ public class PathFollowAI implements AI, Serializable {
 
     @Override
     public void playerSeen() {
-        System.out.println("Player seen!");
     }
 
 }

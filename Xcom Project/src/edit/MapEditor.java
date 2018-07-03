@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import sprites.Sprite;
+import terrain.Terrain;
 import tile.PathTile;
 import tile.Tile;
 import world.World;
@@ -53,7 +54,7 @@ public class MapEditor {
 
     private void init() {
         selectedObject = mgo.getTile(0, 0, 0);
-        objectTypeList = Arrays.asList("tile", "enemy", "sprite");
+        objectTypeList = Arrays.asList("tile", "enemy", "sprite", "terrain");
     }
 
     public void update() {
@@ -101,6 +102,8 @@ public class MapEditor {
                 selectedObject = mgo.getEnemy(objectId, 0, 0);
             } else if (type.equals("sprite")) {
                 selectedObject = mgo.getSprite(objectId, 0, 0);
+            } else if (type.equals("terrain")) {
+                selectedObject = mgo.getTerrain(objectId, 0, 0);
             }
         }
     }
@@ -120,6 +123,7 @@ public class MapEditor {
 
         String type = objectTypeList.get(currnetObjectType);
         if (type.equals("tile")) {
+            g.drawString("Tile", 50, 15);
             List<Tile> tileList = mgo.allTileList();
             for (int i = 0; i < tileList.size(); i++) {
                 int x = i * 64 + 100;
@@ -127,6 +131,7 @@ public class MapEditor {
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
         } else if (type.equals("enemy")) {
+            g.drawString("Enemy", 50, 15);
             List<Actor> enemyList = mgo.allEnemyList();
             for (int i = 0; i < enemyList.size(); i++) {
                 int x = i * 64 + 100;
@@ -134,10 +139,19 @@ public class MapEditor {
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
         } else if (type.equals("sprite")) {
+            g.drawString("Sprite", 50, 15);
             List<Sprite> spriteList = mgo.allSpriteList();
             for (int i = 0; i < spriteList.size(); i++) {
                 int x = i * 64 + 100;
                 g.drawImage(spriteList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
+                g.drawString(String.valueOf(i), x + 16, 50);
+            }
+        } else if (type.equals("terrain")) {
+            g.drawString("Terrain", 50, 15);
+            List<Terrain> terrainList = mgo.allTerrainList();
+            for (int i = 0; i < terrainList.size(); i++) {
+                int x = i * 64 + 100;
+                g.drawImage(terrainList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
         }
@@ -166,6 +180,7 @@ public class MapEditor {
             File tileFile = new File(worldPath + "tile");
             File enemyFile = new File(worldPath + "enemy");
             File spriteFile = new File(worldPath + "sprite");
+            File terrainFile = new File(worldPath + "terrain");
             tileFile.createNewFile();
 
             //Save tile list
@@ -179,6 +194,11 @@ public class MapEditor {
             //Sprite
             oos = new ObjectOutputStream(new FileOutputStream(spriteFile));
             oos.writeObject(world.getSpriteList());
+            oos.close();
+
+            //Terrain
+            oos = new ObjectOutputStream(new FileOutputStream(terrainFile));
+            oos.writeObject(world.getTerrainList());
             oos.close();
             System.out.println("Saved");
         } catch (FileNotFoundException ex) {
@@ -231,6 +251,14 @@ public class MapEditor {
             }
         }
 
+        for (Terrain terrain : world.getTerrainList()) {
+            if (terrain.getHitbox().contains(mouse)) {
+                System.out.println("Found terrain");
+                highlightedObject = terrain;
+                return;
+            }
+        }
+
         highlightedObject = null;
     }
 
@@ -251,9 +279,10 @@ public class MapEditor {
             enemy = (Enemy) enemyIter.next();
             if (enemy.getHitbox().contains(mouse)) {
                 enemyIter.remove();
-                if (highlightedObject.equals(enemy)) {
+                if (highlightedObject != null && highlightedObject.equals(enemy)) {
                     highlightedObject = null;
                 }
+                return;
             } else {
                 //removes PathTile
                 Iterator<PathTile> pathIter = enemy.getPathTiles().iterator();
@@ -284,6 +313,17 @@ public class MapEditor {
             sprite = spriteIter.next();
             if (sprite.getHitbox().contains(mouse)) {
                 spriteIter.remove();
+                return;
+            }
+        }
+
+        //Remove terrain
+        Terrain terrain;
+        Iterator<Terrain> terrainIter = world.getTerrainList().iterator();
+        while (terrainIter.hasNext()) {
+            terrain = terrainIter.next();
+            if (terrain.getHitbox().contains(mouse)) {
+                terrainIter.remove();
                 return;
             }
         }

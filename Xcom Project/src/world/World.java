@@ -2,6 +2,8 @@ package world;
 
 import actors.Actor;
 import actors.Player;
+import camera.Camera;
+import display.Display;
 import edit.MapEditor;
 import input.KeyInput;
 import input.MouseInput;
@@ -13,15 +15,18 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import sprites.Sprite;
+import terrain.Terrain;
 import tile.Tile;
 
 public abstract class World {
 
     protected Player player;
+    protected Camera camera;
 
     protected List<Tile> tileList = new ArrayList<>();
     protected List<Actor> enemyList = new ArrayList<>();
     protected List<Sprite> spriteList = new ArrayList<>();
+    protected List<Terrain> terrainList = new ArrayList<>();
 
     protected String WorldPath = "resources/world/world";
 
@@ -29,9 +34,8 @@ public abstract class World {
 
     private boolean Worldloaded;
 
-    public World(Player player, MouseInput mouseInput, KeyInput keyInput, int worldNum) {
+    public World(MouseInput mouseInput, KeyInput keyInput, int worldNum) {
         WorldPath += String.valueOf(worldNum) + "/";
-        this.player = player;
         this.mapEditor = new MapEditor(this, keyInput, mouseInput, WorldPath);
     }
 
@@ -41,6 +45,7 @@ public abstract class World {
             File tileFile = new File(WorldPath + "tile");
             File enemyFile = new File(WorldPath + "enemy");
             File spriteFile = new File(WorldPath + "sprite");
+            File terrainFile = new File(WorldPath + "terrain");
 
             ObjectInputStream ois;
             try {
@@ -84,6 +89,20 @@ public abstract class World {
                     spriteList = new ArrayList<>();
                     System.out.println("Could not find sprite file");
                 }
+                
+                 //Load terrain
+                if (terrainFile.exists()) {
+                    ois = new ObjectInputStream(new FileInputStream(terrainFile));
+                    terrainList = (List<Terrain>) ois.readObject();
+                    ois.close();
+
+                    for (Terrain terrain : terrainList) {
+                        terrain.updateFromLoad();
+                    }
+                } else {
+                    terrainList = new ArrayList<>();
+                    System.out.println("Could not find terrain file");
+                }
 
                 System.out.println("Load");
             } catch (IOException | ClassNotFoundException ex) {
@@ -100,12 +119,26 @@ public abstract class World {
         return enemyList;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     public List<Sprite> getSpriteList() {
         return spriteList;
+    }
+
+    public List<Terrain> getTerrainList() {
+        return terrainList;
+    }
+
+    protected boolean checkRenderDistance(int playerX, int playerY, int objectX, int ObjectY, int objectSize) {
+        int width = Display.width / 2 + objectSize;
+        int height = Display.height / 2 + objectSize;
+        if (objectX > playerX - width && objectX < playerX + width
+                && ObjectY > playerY - height && ObjectY < playerY + height) {
+            return true;
+        }
+        return false;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public abstract void update();

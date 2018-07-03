@@ -1,7 +1,6 @@
 package edit;
 
 import actors.Actor;
-import actors.Enemy;
 import actors.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
@@ -9,6 +8,8 @@ import java.util.List;
 import sprites.HouseSprite;
 import sprites.Sprite;
 import sprites.TreeSprite;
+import terrain.Sand;
+import terrain.Terrain;
 import tile.PathTile;
 import tile.RockTile;
 import tile.Tile;
@@ -21,6 +22,7 @@ public class ObjectManager {
     private List<Tile> tileList = new ArrayList<>();
     private List<Actor> enemyList = new ArrayList<>();
     private List<Sprite> spriteList = new ArrayList<>();
+    private List<Terrain> terrainList = new ArrayList<>();
 
     public ObjectManager(World world) {
         this.world = world;
@@ -30,6 +32,8 @@ public class ObjectManager {
 
         spriteList.add(new HouseSprite(0, 0));
         spriteList.add(new TreeSprite(0, 0));
+
+        terrainList.add(new Sand(0, 0));
     }
 
     public Tile getTile(int index, int x, int y) {
@@ -72,6 +76,19 @@ public class ObjectManager {
         }
     }
 
+    public Terrain getTerrain(int index, int x, int y) {
+        x += Camera.xOffset;
+        y += Camera.yOffset;
+
+        switch (index) {
+            case 0:
+                return new Sand(x, y);
+            default:
+                System.out.println("Could not find enemy");
+                return new Sand(x, y);
+        }
+    }
+
     public PathTile getPathTile(int index, int x, int y, int num) {
         x += Camera.xOffset;
         y += Camera.yOffset;
@@ -88,5 +105,9 @@ public class ObjectManager {
 
     public List<Sprite> allSpriteList() {
         return spriteList;
+    }
+
+    public List<Terrain> allTerrainList() {
+        return terrainList;
     }
 }
