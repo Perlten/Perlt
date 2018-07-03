@@ -2,6 +2,7 @@ package edit;
 
 import actors.Actor;
 import actors.Enemy;
+import actors.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ObjectManager {
         this.world = world;
         tileList.add(new RockTile(0, 0));
 
-        enemyList.add(new Enemy(0, 0, world));
+        enemyList.add(new GroundEnemy(0, 0, world));
 
         spriteList.add(new HouseSprite(0, 0));
         spriteList.add(new TreeSprite(0, 0));
@@ -49,10 +50,10 @@ public class ObjectManager {
 
         switch (index) {
             case 0:
-                return new Enemy(x, y, world);
+                return new GroundEnemy(x, y, world);
             default:
                 System.out.println("Could not find enemy");
-                return new Enemy(x, y, world);
+                return new GroundEnemy(x, y, world);
         }
     }
 

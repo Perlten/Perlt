@@ -13,9 +13,6 @@ public class Player extends Actor {
     private KeyInput keyInput;
 
     //Animation
-    private static final String TEXTUREPATH = "resources/texture/player/playerTexturePack.png";
-    private static final int NUMOFANIMATIONS = 4;
-    private static final int NUMOFFRAMES = 7;
     private int direction;
     private int frame;
     private FpsLock animationLock = new FpsLock(10);
@@ -23,7 +20,7 @@ public class Player extends Actor {
     private boolean moveing;
 
     public Player(int x, int y, KeyInput keyInput, int movementSpeed, World world) {
-        super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), movementSpeed, world);
+        super(x, y, new Rectangle(32, 32), "playerTexturePack.png", movementSpeed, world, 4, 7);
         this.keyInput = keyInput;
     }
 
@@ -43,7 +40,7 @@ public class Player extends Actor {
         if (animationLock.check() && moveing) {
             frame++;
         }
-        g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
+        g.drawImage(texture[direction][frame % numOfFrames], x, y, null);
     }
 
     private void movement() {
@@ -68,6 +65,7 @@ public class Player extends Actor {
 
     @Override
     public void updateFromLoad(World world) {
+        
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import physics.Collision;
+import util.TextureUtil;
 import world.World;
 
 public abstract class Actor implements GameObject, Serializable {
@@ -13,18 +14,25 @@ public abstract class Actor implements GameObject, Serializable {
     protected int x, y;
     protected Rectangle hitbox;
     protected transient BufferedImage[][] texture;
+    protected String texturePath = "resources/texture/player/";
+    protected int numOfAnimation;
+    protected int numOfFrames;
+    
     protected int movementSpeed;
     protected transient Collision collision;
 
     protected transient World world;
 
-    public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
+    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world, int numOfAnimation, int numOfFrames) {
         this.x = x;
         this.y = y;
+        this.texturePath += texturePath;
+        this.numOfAnimation = numOfAnimation;
+        this.numOfFrames = numOfFrames;
+        texture = TextureUtil.getBufferedImagePack(this.texturePath, numOfAnimation, numOfFrames);
         this.world = world;
         this.collision = new Collision(this, world);
         this.movementSpeed = movementSpeed;
-        this.texture = texture;
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);
         } else {

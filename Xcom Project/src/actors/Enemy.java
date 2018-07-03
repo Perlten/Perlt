@@ -12,32 +12,25 @@ import tile.PathTile;
 import util.TextureUtil;
 import world.World;
 
-public class Enemy extends Actor {
+public abstract class Enemy extends Actor {
 
     //Animation
-    private static final String TEXTUREPATH = "resources/texture/player/playerTexturePack.png";
-    private static final int NUMOFANIMATIONS = 4;
-    private static final int NUMOFFRAMES = 7;
+    protected int direction;
+    protected int frame;
+    protected FpsLock animationLock = new FpsLock(5);
+    protected transient ViewLine viewLine;
+    protected List<PathTile> pathTiles = new ArrayList<>();
+    protected AI ai;
 
-    private int direction;
-    private int frame;
-    private FpsLock animationLock = new FpsLock(5);
-
-    private transient ViewLine viewLine;
-
-    private List<PathTile> pathTiles = new ArrayList<>();
-
-    private AI ai;
-
-    public Enemy(int x, int y, World world) {
-        super(x, y, new Rectangle(32, 32), TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES), 1, world);
+    public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames) {
+        super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames);
         viewLine = new ViewLine(this, world);
         this.ai = new PathFollowAI(this);
     }
 
     @Override
     public void updateFromLoad(World world) {
-        texture = TextureUtil.getBufferedImagePack(TEXTUREPATH, NUMOFANIMATIONS, NUMOFFRAMES);
+        texture = TextureUtil.getBufferedImagePack(texturePath, numOfAnimation, numOfFrames);
         viewLine = new ViewLine(this, world);
         collision = new Collision(this, world);
         this.world = world;
@@ -48,37 +41,27 @@ public class Enemy extends Actor {
         }
     }
 
-    @Override
-    public void update() {
-        updateHitbox();
-        updateCollision();
-        move();
-        if (viewLine.canSeeActor(direction, world.getPlayer())) {
-            //TODO add code
-        }
-    }
-
-    private void move() {
+    protected void move() {
         Point point = ai.move();
         x += point.getX();
         y += point.getY();
     }
 
-    @Override
-    public void render(Graphics g) {
-        animate(g);
-        
-    }
-
-    private void animate(Graphics g) {
+    protected void animate(Graphics g) {
         if (animationLock.check()) {
             frame++;
         }
-        g.drawImage(texture[direction][frame % NUMOFFRAMES], x, y, null);
+        g.drawImage(texture[direction][frame % numOfFrames], x, y, null);
     }
     
-    public void removePathTile(){
-        for(int i = 0; i < pathTiles.size(); i++){
+    protected void playerSeen(){
+         if (viewLine.canSeeActor(direction, world.getPlayer())) {
+             ai.playerSeen();
+         }
+    }
+
+    public void removePathTile() {
+        for (int i = 0; i < pathTiles.size(); i++) {
             pathTiles.get(i).setNum(i);
         }
         ai.reset();
@@ -92,17 +75,16 @@ public class Enemy extends Actor {
         this.direction = direction;
     }
 
-    @Override
-    public void renderHighlight(Graphics g) {
-        for(PathTile tile : pathTiles){
+    protected void renderPathTile(Graphics g) {
+        for (PathTile tile : pathTiles) {
             g.drawImage(tile.getTexture(), tile.getX(), tile.getY(), null);
             g.drawString(String.valueOf(tile.getNum()), tile.getX(), tile.getY());
         }
         g.drawPolygon(viewLine.getPolygon(direction));
     }
 
-    @Override
-    public void addHighlightedObject(int x, int y) {
+    protected void addPathTile(int x, int y) {
         pathTiles.add(new PathTile(x, y, pathTiles.size()));
     }
+
 }
