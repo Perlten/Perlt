@@ -46,16 +46,16 @@ public class Player extends Actor {
     private void movement() {
         updateCollision();
         moveing = true;
-        if (keyInput.isUp() && !collision.isPlayerCollisionUp()) {
+        if (keyInput.isUp() && !collision.isActorCollisionUp()) {
             y -= movementSpeed;
             direction = 1;
-        } else if (keyInput.isDown() && !collision.isPlayerCollisionDown()) {
+        } else if (keyInput.isDown() && !collision.isActorCollisionDown()) {
             y += movementSpeed;
             direction = 0;
-        } else if (keyInput.isLeft() && !collision.isPlayerCollisionLeft()) {
+        } else if (keyInput.isLeft() && !collision.isActorCollisionLeft()) {
             x -= movementSpeed;
             direction = 2;
-        } else if (keyInput.isRight() && !collision.isPlayerCollisionRight()) {
+        } else if (keyInput.isRight() && !collision.isActorCollisionRight()) {
             x += movementSpeed;
             direction = 3;
         }else{
