@@ -11,7 +11,9 @@ import world.World;
 
 public abstract class Actor implements GameObject, Serializable {
 
-    protected int x, y;
+    protected int startX, startY;
+    
+    protected transient int x, y;
     protected Rectangle hitbox;
     protected transient BufferedImage[][] texture;
     protected String texturePath = "resources/texture/player/";
@@ -39,6 +41,7 @@ public abstract class Actor implements GameObject, Serializable {
             this.hitbox = new Rectangle(x, y, 0, 0);
         }
     }
+    
 
     public abstract void updateFromLoad(World world);
 
@@ -90,16 +93,4 @@ public abstract class Actor implements GameObject, Serializable {
     public void setY(int y) {
         this.y = y;
     }
-
-    
-    @Override
-    public void addGameObject(World world, int x, int y){
-        world.getEnemyList().add(this);
-        setX(x);
-        setY(y);
-    }
-    
-    
-    
-
 }

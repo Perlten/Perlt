@@ -1,6 +1,7 @@
 package world;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 import camera.Camera;
 import display.Display;
@@ -24,7 +25,7 @@ public abstract class World {
     protected Camera camera;
 
     protected List<Tile> tileList = new ArrayList<>();
-    protected List<Actor> enemyList = new ArrayList<>();
+    protected List<Enemy> enemyList = new ArrayList<>();
     protected List<Sprite> spriteList = new ArrayList<>();
     protected List<Terrain> terrainList = new ArrayList<>();
 
@@ -65,10 +66,10 @@ public abstract class World {
                 //loads enemy
                 if (enemyFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(enemyFile));
-                    enemyList = (List<Actor>) ois.readObject();
+                    enemyList = (List<Enemy>) ois.readObject();
                     ois.close();
 
-                    for (Actor enemy : enemyList) {
+                    for (Enemy enemy : enemyList) {
                         enemy.updateFromLoad(this);
                     }
                 } else {
@@ -115,7 +116,7 @@ public abstract class World {
         return tileList;
     }
 
-    public List<Actor> getEnemyList() {
+    public List<Enemy> getEnemyList() {
         return enemyList;
     }
 

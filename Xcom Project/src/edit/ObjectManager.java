@@ -1,6 +1,7 @@
 package edit;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ObjectManager {
     private World world;
 
     private List<Tile> tileList = new ArrayList<>();
-    private List<Actor> enemyList = new ArrayList<>();
+    private List<Enemy> enemyList = new ArrayList<>();
     private List<Sprite> spriteList = new ArrayList<>();
     private List<Terrain> terrainList = new ArrayList<>();
 
@@ -41,8 +42,6 @@ public class ObjectManager {
     }
 
     public Tile getTile(int index, int x, int y) {
-        x += Camera.xOffset;
-        y += Camera.yOffset;
         switch (index) {
             case 0:
                 return new RockTile(x, y);
@@ -52,9 +51,7 @@ public class ObjectManager {
         }
     }
 
-    public Actor getEnemy(int index, int x, int y) {
-        x += Camera.xOffset;
-        y += Camera.yOffset;
+    public Enemy getEnemy(int index, int x, int y) {
 
         switch (index) {
             case 0:
@@ -66,8 +63,6 @@ public class ObjectManager {
     }
 
     public Sprite getSprite(int index, int x, int y) {
-        x += Camera.xOffset;
-        y += Camera.yOffset;
 
         switch (index) {
             case 0:
@@ -83,8 +78,6 @@ public class ObjectManager {
     }
 
     public Terrain getTerrain(int index, int x, int y) {
-        x += Camera.xOffset;
-        y += Camera.yOffset;
 
         switch (index) {
             case 0:
@@ -98,8 +91,6 @@ public class ObjectManager {
     }
 
     public PathTile getPathTile(int index, int x, int y, int num) {
-        x += Camera.xOffset;
-        y += Camera.yOffset;
         return new PathTile(x, y, num);
     }
 
@@ -107,7 +98,7 @@ public class ObjectManager {
         return tileList;
     }
 
-    public List<Actor> allEnemyList() {
+    public List<Enemy> allEnemyList() {
         return enemyList;
     }
 

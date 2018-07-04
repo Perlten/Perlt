@@ -30,6 +30,8 @@ public abstract class Enemy extends Actor {
 
     @Override
     public void updateFromLoad(World world) {
+        x = startX;
+        y = startY;
         texture = TextureUtil.getBufferedImagePack(texturePath, numOfAnimation, numOfFrames);
         viewLine = new ViewLine(this, world);
         collision = new Collision(this, world);
@@ -53,11 +55,11 @@ public abstract class Enemy extends Actor {
         }
         g.drawImage(texture[direction][frame % numOfFrames], x, y, null);
     }
-    
-    protected void playerSeen(){
-         if (viewLine.canSeeActor(direction, world.getPlayer())) {
-             ai.playerSeen();
-         }
+
+    protected void playerSeen() {
+        if (viewLine.canSeeActor(direction, world.getPlayer())) {
+            ai.playerSeen();
+        }
     }
 
     public void removePathTile() {
@@ -87,4 +89,12 @@ public abstract class Enemy extends Actor {
         pathTiles.add(new PathTile(x, y, pathTiles.size()));
     }
 
+    @Override
+    public void addGameObject(World world, int x, int y) {
+        world.getEnemyList().add(this);
+        this.x = x;
+        this.y = y;
+        startX = x;
+        startY = y;
+    }
 }

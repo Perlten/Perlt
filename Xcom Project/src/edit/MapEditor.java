@@ -132,7 +132,7 @@ public class MapEditor {
             }
         } else if (type.equals("enemy")) {
             g.drawString("Enemy", 50, 15);
-            List<Actor> enemyList = mgo.allEnemyList();
+            List<Enemy> enemyList = mgo.allEnemyList();
             for (int i = 0; i < enemyList.size(); i++) {
                 int x = i * 64 + 100;
                 g.drawImage(enemyList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
@@ -224,7 +224,7 @@ public class MapEditor {
 
     private void findHighlightedObject() {
         Point mouse = mouseInput.getMousePoint();
-        for (Actor enemy : world.getEnemyList()) {
+        for (Enemy enemy : world.getEnemyList()) {
             if (enemy.getHitbox().contains(mouse)) {
                 System.out.println("Found enemy");
                 highlightedObject = enemy;
@@ -271,10 +271,10 @@ public class MapEditor {
 
         Enemy enemy;
         PathTile pathTile;
-        Iterator<Actor> enemyIter = world.getEnemyList().iterator();
+        Iterator<Enemy> enemyIter = world.getEnemyList().iterator();
         //Removes enemy
         while (enemyIter.hasNext()) {
-            enemy = (Enemy) enemyIter.next();
+            enemy = enemyIter.next();
             if (enemy.getHitbox().contains(mouse)) {
                 enemyIter.remove();
                 if (highlightedObject != null && highlightedObject.equals(enemy)) {

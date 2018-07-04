@@ -75,4 +75,8 @@ public class Player extends Actor {
     @Override
     public void addHighlightedObject(int x, int y) {
     }
+
+    @Override
+    public void addGameObject(World world, int x, int y) {
+    }
 }
