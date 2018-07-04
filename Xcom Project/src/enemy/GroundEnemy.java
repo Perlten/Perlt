@@ -1,4 +1,4 @@
-package actors;
+package enemy;
 
 import java.awt.Graphics;
 import world.World;

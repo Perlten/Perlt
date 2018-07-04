@@ -1,7 +1,7 @@
 package world;
 
 import actors.Actor;
-import actors.Enemy;
+import enemy.Enemy;
 import actors.Player;
 import camera.Camera;
 import display.Display;

@@ -1,8 +1,8 @@
 package edit;
 
 import actors.Actor;
-import actors.Enemy;
-import actors.GroundEnemy;
+import enemy.Enemy;
+import enemy.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
 import java.util.List;

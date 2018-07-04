@@ -1,5 +1,6 @@
-package actors;
+package enemy;
 
+import enemy.Enemy;
 import java.awt.Point;
 import java.io.Serializable;
 import physics.Collision;
@@ -27,7 +28,7 @@ public class PathFollowAI implements AI, Serializable {
                     num = ++num % enemy.getPathTiles().size();
                     return new Point(0, 0);
                 }
-                
+
                 if (!detour) {
                     if (enemy.getX() > tile.getX() && !enemy.getCollision().isActorCollisionLeft()) {
                         currentDirection = Direction.LEFT;
@@ -42,7 +43,7 @@ public class PathFollowAI implements AI, Serializable {
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() < tile.getY() && !enemy.getCollision().isActorCollisionDown()) {
-                       currentDirection = Direction.DOWN;
+                        currentDirection = Direction.DOWN;
                         return getMovePoint(currentDirection);
                     }
                     detour = true;
@@ -55,24 +56,24 @@ public class PathFollowAI implements AI, Serializable {
         enemy.setMoveing(false);
         return new Point(0, 0);
     }
-    
-    private Point detour(){
-        if(currentDirection == Direction.RIGHT && enemy.getCollision().isActorCollisionRight()){
+
+    private Point detour() {
+        if (currentDirection == Direction.RIGHT && enemy.getCollision().isActorCollisionRight()) {
             return getMovePoint(Direction.DOWN);
         }
-        
-        if(currentDirection == Direction.LEFT && enemy.getCollision().isActorCollisionLeft()){
+
+        if (currentDirection == Direction.LEFT && enemy.getCollision().isActorCollisionLeft()) {
             return getMovePoint(Direction.DOWN);
         }
-        
-        if(currentDirection == Direction.DOWN && enemy.getCollision().isActorCollisionDown()){
+
+        if (currentDirection == Direction.DOWN && enemy.getCollision().isActorCollisionDown()) {
             return getMovePoint(Direction.LEFT);
         }
-        
-        if(currentDirection == Direction.UP && enemy.getCollision().isActorCollisionUp()){
+
+        if (currentDirection == Direction.UP && enemy.getCollision().isActorCollisionUp()) {
             return getMovePoint(Direction.LEFT);
         }
-        
+
         detour = false;
         return getMovePoint(currentDirection);
     }
@@ -82,7 +83,6 @@ public class PathFollowAI implements AI, Serializable {
             //Right
             int x = enemy.getMovementSpeed();
             enemy.setDirection(3);
-            dir = Direction.RIGHT;
             return new Point(x, 0);
 
         }
@@ -90,20 +90,17 @@ public class PathFollowAI implements AI, Serializable {
             //Left
             int x = -enemy.getMovementSpeed();
             enemy.setDirection(2);
-            dir = Direction.LEFT;
             return new Point(x, 0);
         }
         if (dir == Direction.UP) {
             //Up
             int y = -enemy.getMovementSpeed();
             enemy.setDirection(1);
-            dir = Direction.UP;
             return new Point(0, y);
         }
         if (dir == Direction.DOWN) {
             //Down
             int y = enemy.getMovementSpeed();
-            dir = Direction.DOWN;
             enemy.setDirection(0);
             return new Point(0, y);
         }

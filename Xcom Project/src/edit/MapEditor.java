@@ -1,7 +1,7 @@
 package edit;
 
 import actors.Actor;
-import actors.Enemy;
+import enemy.Enemy;
 import camera.Camera;
 import game.GameObject;
 import input.KeyInput;

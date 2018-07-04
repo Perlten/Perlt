@@ -1,5 +1,6 @@
-package actors;
+package enemy;
 
+import actors.Actor;
 import display.FpsLock;
 import java.awt.Graphics;
 import java.awt.Point;
