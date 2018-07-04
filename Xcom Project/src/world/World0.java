@@ -77,6 +77,13 @@ public class World0 extends World {
                 sprite.render(g);
             }
         }
+        
+        //Makes sure that chatbox is always on top
+        for (Npc npc : npcList) {
+            if (checkRenderDistance(playerX, playerY, npc.getX(), npc.getY(), 32)) {
+                npc.renderTextBox(g);
+            }
+        }
         mapEditor.render(g);
     }
 

@@ -48,6 +48,8 @@ public abstract class Npc extends Actor {
         startX = x;
         startY = y;
     }
+    
+    public abstract void renderTextBox(Graphics g);
 
     public ViewLine getViewLine() {
         return viewLine;

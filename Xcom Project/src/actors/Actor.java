@@ -102,4 +102,9 @@ public abstract class Actor implements GameObject, Serializable {
     public void setMoveing(boolean moveing) {
         this.moveing = moveing;
     }
+
+    public World getWorld() {
+        return world;
+    }
+    
 }

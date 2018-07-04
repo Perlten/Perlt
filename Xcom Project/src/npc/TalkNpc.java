@@ -1,9 +1,12 @@
 package npc;
 
 import java.awt.Graphics;
+import ui.NpcTextBox;
 import world.World;
 
 public class TalkNpc extends Npc {
+    
+    private NpcTextBox textBox = new NpcTextBox(this);
 
     public TalkNpc(int x, int y, World world) {
         super(x, y, "playerTexturePack.png", world, 4, 7);
@@ -22,8 +25,13 @@ public class TalkNpc extends Npc {
     }
 
     @Override
+    public void renderTextBox(Graphics g) {
+        textBox.render(g);
+    }
+    
+    @Override
     public void playerInteract() {
-        System.out.println("Test!");
+        textBox.onInteract();
     }
     
     @Override
@@ -35,5 +43,6 @@ public class TalkNpc extends Npc {
     public void addHighlightedObject(int x, int y) {
         
     }
+
 
 }
