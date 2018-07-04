@@ -44,6 +44,9 @@ public class KeyInput implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_L){
             l = true;
         }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            space = true;
+        }
     }
 
     public void update() {
@@ -51,7 +54,6 @@ public class KeyInput implements KeyListener {
         down = keysPressed[KeyEvent.VK_S];
         left = keysPressed[KeyEvent.VK_A];
         right = keysPressed[KeyEvent.VK_D];
-        space = keysPressed[KeyEvent.VK_SPACE];
 
     }
 
@@ -72,7 +74,9 @@ public class KeyInput implements KeyListener {
     }
 
     public boolean isSpace() {
-        return space;
+        boolean temp = space;
+        space = false;
+        return temp;
     }
 
     public boolean isU() {

@@ -13,6 +13,7 @@ public abstract class Actor implements GameObject, Serializable {
 
     protected int startX, startY;
     
+    protected boolean moveing;
     protected transient int x, y;
     protected Rectangle hitbox;
     protected transient BufferedImage[][] texture;
@@ -92,5 +93,13 @@ public abstract class Actor implements GameObject, Serializable {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isMoveing() {
+        return moveing;
+    }
+
+    public void setMoveing(boolean moveing) {
+        this.moveing = moveing;
     }
 }

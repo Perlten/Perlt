@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import npc.Npc;
 import sprites.Sprite;
 import terrain.Terrain;
 import tile.Tile;
@@ -28,16 +29,19 @@ public abstract class World {
     protected List<Enemy> enemyList = new ArrayList<>();
     protected List<Sprite> spriteList = new ArrayList<>();
     protected List<Terrain> terrainList = new ArrayList<>();
+    protected List<Npc> npcList = new ArrayList<>();
 
     protected String WorldPath = "resources/world/world";
 
     protected MapEditor mapEditor;
 
     private boolean Worldloaded;
+    protected KeyInput key;
 
     public World(MouseInput mouseInput, KeyInput keyInput, int worldNum) {
         WorldPath += String.valueOf(worldNum) + "/";
         this.mapEditor = new MapEditor(this, keyInput, mouseInput, WorldPath);
+        this.key = keyInput;
     }
 
     protected void loadWorld() {
@@ -47,6 +51,7 @@ public abstract class World {
             File enemyFile = new File(WorldPath + "enemy");
             File spriteFile = new File(WorldPath + "sprite");
             File terrainFile = new File(WorldPath + "terrain");
+            File npcFile = new File(WorldPath + "npc");
 
             ObjectInputStream ois;
             try {
@@ -104,6 +109,19 @@ public abstract class World {
                     terrainList = new ArrayList<>();
                     System.out.println("Could not find terrain file");
                 }
+                //Load npc
+                if (npcFile.exists()) {
+                    ois = new ObjectInputStream(new FileInputStream(npcFile));
+                    npcList = (List<Npc>) ois.readObject();
+                    ois.close();
+
+                    for (Npc npc : npcList) {
+                        npc.updateFromLoad(this);
+                    }
+                } else {
+                    npcList = new ArrayList<>();
+                    System.out.println("Could not find npc file");
+                }
 
                 System.out.println("Load");
             } catch (IOException | ClassNotFoundException ex) {
@@ -128,15 +146,23 @@ public abstract class World {
         return terrainList;
     }
 
+    public List<Npc> getNpcList() {
+        return npcList;
+    }
+
     protected boolean checkRenderDistance(int playerX, int playerY, int objectX, int ObjectY, int objectSize) {
         int width = Display.width / 2 + objectSize;
         int height = Display.height / 2 + objectSize;
-        return (objectX > playerX - width && objectX < playerX + width 
+        return (objectX > playerX - width && objectX < playerX + width
                 && ObjectY > playerY - height && ObjectY < playerY + height);
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public KeyInput getKey() {
+        return key;
     }
 
     public abstract void update();

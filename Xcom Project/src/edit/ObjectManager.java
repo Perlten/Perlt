@@ -6,6 +6,8 @@ import actors.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
 import java.util.List;
+import npc.Npc;
+import npc.TalkNpc;
 import sprites.BridgeSprite;
 import sprites.HouseSprite;
 import sprites.Sprite;
@@ -26,6 +28,7 @@ public class ObjectManager {
     private List<Enemy> enemyList = new ArrayList<>();
     private List<Sprite> spriteList = new ArrayList<>();
     private List<Terrain> terrainList = new ArrayList<>();
+    private List<Npc> npcList = new ArrayList<>();
 
     public ObjectManager(World world) {
         this.world = world;
@@ -39,6 +42,8 @@ public class ObjectManager {
 
         terrainList.add(new Sand(0, 0));
         terrainList.add(new RockOnSand(0, 0));
+        
+        npcList.add(new TalkNpc(0, 0, world));
     }
 
     public Tile getTile(int index, int x, int y) {
@@ -89,6 +94,16 @@ public class ObjectManager {
                 return new Sand(x, y);
         }
     }
+    
+    public Npc getNpc(int index, int x, int y){
+        switch (index) {
+            case 0:
+                return new TalkNpc(x, y, world);
+            default:
+                System.out.println("Could not find npc");
+                return new TalkNpc(x, y, world);
+        }
+    }
 
     public PathTile getPathTile(int index, int x, int y, int num) {
         return new PathTile(x, y, num);
@@ -109,4 +124,9 @@ public class ObjectManager {
     public List<Terrain> allTerrainList() {
         return terrainList;
     }
+
+    public List<Npc> allNpcList() {
+        return npcList;
+    }
+    
 }

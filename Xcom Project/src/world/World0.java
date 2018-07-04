@@ -7,6 +7,7 @@ import display.Display;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import npc.Npc;
 import sprites.Sprite;
 import terrain.Terrain;
 import tile.Tile;
@@ -32,6 +33,11 @@ public class World0 extends World {
         for (Tile tile : tileList) {
             tile.update();
         }
+
+        for (Npc npc : npcList) {
+            npc.update();
+        }
+
         for (Actor enemy : enemyList) {
             enemy.update();
         }
@@ -53,6 +59,12 @@ public class World0 extends World {
         }
 
         player.render(g);
+
+        for (Npc npc : npcList) {
+            if (checkRenderDistance(playerX, playerY, npc.getX(), npc.getY(), 32)) {
+                npc.render(g);
+            }
+        }
 
         for (Actor enemy : enemyList) {
             if (checkRenderDistance(playerX, playerY, enemy.getX(), enemy.getY(), 32)) {

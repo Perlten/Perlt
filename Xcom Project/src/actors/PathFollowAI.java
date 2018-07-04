@@ -12,7 +12,7 @@ public class PathFollowAI implements AI, Serializable {
 
     private boolean detour;
 
-    private Direction dir;
+    private Direction currentDirection;
 
     public PathFollowAI(Enemy enemy) {
         this.enemy = enemy;
@@ -22,97 +22,90 @@ public class PathFollowAI implements AI, Serializable {
     public Point move() {
         for (PathTile tile : enemy.getPathTiles()) {
             if (tile.getNum() == num) {
-
+                enemy.setMoveing(true);
                 if (tile.getHitbox().contains(enemy.getX(), enemy.getY())) {
                     num = ++num % enemy.getPathTiles().size();
                     return new Point(0, 0);
                 }
-
-                int x = 0;
-                int y = 0;
-
+                
                 if (!detour) {
                     if (enemy.getX() > tile.getX() && !enemy.getCollision().isActorCollisionLeft()) {
-                        //Left
-                        x = -enemy.getMovementSpeed();
-                        enemy.setDirection(2);
-                        dir = Direction.LEFT;
-                        return new Point(x, y);
+                        currentDirection = Direction.LEFT;
+                        return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() > tile.getY() && !enemy.getCollision().isActorCollisionUp()) {
-                        //Up
-                        y = -enemy.getMovementSpeed();
-                        enemy.setDirection(1);
-                        dir = Direction.UP;
-                        return new Point(x, y);
+                        currentDirection = Direction.UP;
+                        return getMovePoint(currentDirection);
                     }
                     if (enemy.getX() < tile.getX() && !enemy.getCollision().isActorCollisionRight()) {
-                        //Right
-                        x = enemy.getMovementSpeed();
-                        enemy.setDirection(3);
-                        dir = Direction.RIGHT;
-                        return new Point(x, y);
+                        currentDirection = Direction.RIGHT;
+                        return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() < tile.getY() && !enemy.getCollision().isActorCollisionDown()) {
-                        //Down
-                        y = enemy.getMovementSpeed();
-                        dir = Direction.DOWN;
-                        enemy.setDirection(0);
-                        return new Point(x, y);
+                       currentDirection = Direction.DOWN;
+                        return getMovePoint(currentDirection);
                     }
                     detour = true;
                 } else {
+                    //TODO:
                     return detour();
                 }
             }
         }
+        enemy.setMoveing(false);
         return new Point(0, 0);
     }
+    
+    private Point detour(){
+        if(currentDirection == Direction.RIGHT && enemy.getCollision().isActorCollisionRight()){
+            return getMovePoint(Direction.DOWN);
+        }
+        
+        if(currentDirection == Direction.LEFT && enemy.getCollision().isActorCollisionLeft()){
+            return getMovePoint(Direction.DOWN);
+        }
+        
+        if(currentDirection == Direction.DOWN && enemy.getCollision().isActorCollisionDown()){
+            return getMovePoint(Direction.LEFT);
+        }
+        
+        if(currentDirection == Direction.UP && enemy.getCollision().isActorCollisionUp()){
+            return getMovePoint(Direction.LEFT);
+        }
+        
+        detour = false;
+        return getMovePoint(currentDirection);
+    }
 
-    private Point detour() {
+    private Point getMovePoint(Direction dir) {
         if (dir == Direction.RIGHT) {
-            if (!enemy.getCollision().isActorCollisionRight()) {
-                detour = false;
-                enemy.setDirection(3);
-                return new Point(enemy.getMovementSpeed(), 0);
-            }
-            if (!enemy.getCollision().isActorCollisionDown()) {
-                enemy.setDirection(0);
-                return new Point(0, enemy.getMovementSpeed());
-            }
+            //Right
+            int x = enemy.getMovementSpeed();
+            enemy.setDirection(3);
+            dir = Direction.RIGHT;
+            return new Point(x, 0);
+
         }
         if (dir == Direction.LEFT) {
-            if (!enemy.getCollision().isActorCollisionLeft()) {
-                detour = false;
-                enemy.setDirection(2);
-                return new Point(-enemy.getMovementSpeed(), 0);
-            }
-            if (!enemy.getCollision().isActorCollisionDown()) {
-                enemy.setDirection(0);
-                return new Point(0, enemy.getMovementSpeed());
-            }
+            //Left
+            int x = -enemy.getMovementSpeed();
+            enemy.setDirection(2);
+            dir = Direction.LEFT;
+            return new Point(x, 0);
         }
         if (dir == Direction.UP) {
-            if (!enemy.getCollision().isActorCollisionUp()) {
-                detour = false;
-                enemy.setDirection(1);
-                return new Point(0, -enemy.getMovementSpeed());
-            }
-            if (!enemy.getCollision().isActorCollisionLeft()) {
-                enemy.setDirection(2);
-                return new Point(-enemy.getMovementSpeed(), 0);
-            }
+            //Up
+            int y = -enemy.getMovementSpeed();
+            enemy.setDirection(1);
+            dir = Direction.UP;
+            return new Point(0, y);
         }
         if (dir == Direction.DOWN) {
-            if (!enemy.getCollision().isActorCollisionDown()) {
-                detour = false;
-                enemy.setDirection(0);
-                return new Point(0, enemy.getMovementSpeed());
-            }
-            if (!enemy.getCollision().isActorCollisionLeft()) {
-                enemy.setDirection(2);
-                return new Point(-enemy.getMovementSpeed(), 0);
-            }
+            //Down
+            int y = enemy.getMovementSpeed();
+            dir = Direction.DOWN;
+            enemy.setDirection(0);
+            return new Point(0, y);
         }
         return new Point(0, 0);
     }

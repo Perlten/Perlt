@@ -3,9 +3,10 @@ package actors;
 import display.FpsLock;
 import input.KeyInput;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
-import physics.ViewLine;
-import util.TextureUtil;
+import java.util.List;
+import npc.Npc;
 import world.World;
 
 public class Player extends Actor {
@@ -17,7 +18,6 @@ public class Player extends Actor {
     private int frame;
     private FpsLock animationLock = new FpsLock(10);
     
-    private boolean moveing;
 
     public Player(int x, int y, KeyInput keyInput, int movementSpeed, World world) {
         super(x, y, new Rectangle(32, 32), "playerTexturePack.png", movementSpeed, world, 4, 7);
@@ -28,6 +28,7 @@ public class Player extends Actor {
     public void update() {
         updateHitbox();
         movement();
+        interactWithNpc();
     }
 
     @Override
@@ -60,6 +61,20 @@ public class Player extends Actor {
             direction = 3;
         }else{
             moveing = false;
+        }
+    }
+    
+    private void interactWithNpc(){
+        if(keyInput.isSpace()){
+            List<Point> pointList = collision.getPoints();
+            for(Npc npc : world.getNpcList()){
+                for(Point point : pointList){
+                    if(npc.getViewLine().getPolygon(npc.getDirection()).contains(point)){
+                        npc.playerInteract();
+                        return;
+                    }
+                }
+            }
         }
     }
 

@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import npc.Npc;
 import sprites.Sprite;
 import terrain.Terrain;
 import tile.PathTile;
@@ -54,7 +55,7 @@ public class MapEditor {
 
     private void init() {
         selectedObject = mgo.getTile(0, 0, 0);
-        objectTypeList = Arrays.asList("tile", "enemy", "sprite", "terrain");
+        objectTypeList = Arrays.asList("tile", "enemy", "sprite", "terrain", "npc");
     }
 
     public void update() {
@@ -104,6 +105,8 @@ public class MapEditor {
                 selectedObject = mgo.getSprite(objectId, 0, 0);
             } else if (type.equals("terrain")) {
                 selectedObject = mgo.getTerrain(objectId, 0, 0);
+            } else if (type.equals("npc")) {
+                selectedObject = mgo.getNpc(objectId, 0, 0);
             }
         }
     }
@@ -154,6 +157,14 @@ public class MapEditor {
                 g.drawImage(terrainList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
                 g.drawString(String.valueOf(i), x + 16, 50);
             }
+        } else if (type.equals("npc")) {
+            g.drawString("npc", 50, 15);
+            List<Npc> npcList = mgo.allNpcList();
+            for (int i = 0; i < npcList.size(); i++) {
+                int x = i * 64 + 100;
+                g.drawImage(npcList.get(i).getTexture().getScaledInstance(sizeX, sizeY, hint), x, 1, null);
+                g.drawString(String.valueOf(i), x + 16, 50);
+            }
         }
     }
 
@@ -181,6 +192,7 @@ public class MapEditor {
             File enemyFile = new File(worldPath + "enemy");
             File spriteFile = new File(worldPath + "sprite");
             File terrainFile = new File(worldPath + "terrain");
+            File npcFile = new File(worldPath + "npc");
 
             //Save tile list
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tileFile));
@@ -197,6 +209,10 @@ public class MapEditor {
             //Terrain
             oos = new ObjectOutputStream(new FileOutputStream(terrainFile));
             oos.writeObject(world.getTerrainList());
+            oos.close();
+            //Npc
+            oos = new ObjectOutputStream(new FileOutputStream(npcFile));
+            oos.writeObject(world.getNpcList());
             oos.close();
             System.out.println("Saved");
         } catch (FileNotFoundException ex) {
@@ -237,6 +253,14 @@ public class MapEditor {
             if (tile.getHitbox().contains(mouse)) {
                 System.out.println("Found tile");
                 highlightedObject = tile;
+                return;
+            }
+        }
+
+        for (Npc npc : world.getNpcList()) {
+            if (npc.getHitbox().contains(mouse)) {
+                System.out.println("Found npc");
+                highlightedObject = npc;
                 return;
             }
         }
@@ -304,6 +328,18 @@ public class MapEditor {
                 return;
             }
         }
+
+        //Remove npc
+        Npc npc;
+        Iterator<Npc> npcIter = world.getNpcList().iterator();
+        while (npcIter.hasNext()) {
+            npc = npcIter.next();
+            if (npc.getHitbox().contains(mouse)) {
+                npcIter.remove();
+                return;
+            }
+        }
+
         //Remove Sprite
         Sprite sprite;
         Iterator<Sprite> spriteIter = world.getSpriteList().iterator();

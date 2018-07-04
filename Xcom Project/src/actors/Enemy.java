@@ -50,12 +50,11 @@ public abstract class Enemy extends Actor {
     }
 
     protected void animate(Graphics g) {
-        if (animationLock.check()) {
+        if (animationLock.check() && moveing) {
             frame++;
         }
         g.drawImage(texture[direction][frame % numOfFrames], x, y, null);
     }
-
     protected void playerSeen() {
         if (viewLine.canSeeActor(direction, world.getPlayer())) {
             ai.playerSeen();
