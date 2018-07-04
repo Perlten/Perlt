@@ -5,9 +5,11 @@ import actors.GroundEnemy;
 import camera.Camera;
 import java.util.ArrayList;
 import java.util.List;
+import sprites.BridgeSprite;
 import sprites.HouseSprite;
 import sprites.Sprite;
 import sprites.TreeSprite;
+import terrain.RockOnSand;
 import terrain.Sand;
 import terrain.Terrain;
 import tile.PathTile;
@@ -32,8 +34,10 @@ public class ObjectManager {
 
         spriteList.add(new HouseSprite(0, 0));
         spriteList.add(new TreeSprite(0, 0));
+        spriteList.add(new BridgeSprite(0, 0));
 
         terrainList.add(new Sand(0, 0));
+        terrainList.add(new RockOnSand(0, 0));
     }
 
     public Tile getTile(int index, int x, int y) {
@@ -43,7 +47,7 @@ public class ObjectManager {
             case 0:
                 return new RockTile(x, y);
             default:
-                System.out.println("Could not find Tile");
+                System.out.println("Could not find tile");
                 return new RockTile(x, y);
         }
     }
@@ -70,8 +74,10 @@ public class ObjectManager {
                 return new HouseSprite(x, y);
             case 1:
                 return new TreeSprite(x, y);
+            case 2:
+                return new BridgeSprite(x, y);
             default:
-                System.out.println("Could not find enemy");
+                System.out.println("Could not find sprite");
                 return new HouseSprite(x, y);
         }
     }
@@ -83,8 +89,10 @@ public class ObjectManager {
         switch (index) {
             case 0:
                 return new Sand(x, y);
+            case 1:
+                return new RockOnSand(x, y);
             default:
-                System.out.println("Could not find enemy");
+                System.out.println("Could not find terrain");
                 return new Sand(x, y);
         }
     }

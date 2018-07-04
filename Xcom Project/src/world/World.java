@@ -89,8 +89,8 @@ public abstract class World {
                     spriteList = new ArrayList<>();
                     System.out.println("Could not find sprite file");
                 }
-                
-                 //Load terrain
+
+                //Load terrain
                 if (terrainFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(terrainFile));
                     terrainList = (List<Terrain>) ois.readObject();
@@ -130,11 +130,8 @@ public abstract class World {
     protected boolean checkRenderDistance(int playerX, int playerY, int objectX, int ObjectY, int objectSize) {
         int width = Display.width / 2 + objectSize;
         int height = Display.height / 2 + objectSize;
-        if (objectX > playerX - width && objectX < playerX + width
-                && ObjectY > playerY - height && ObjectY < playerY + height) {
-            return true;
-        }
-        return false;
+        return (objectX > playerX - width && objectX < playerX + width 
+                && ObjectY > playerY - height && ObjectY < playerY + height);
     }
 
     public Player getPlayer() {

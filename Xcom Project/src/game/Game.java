@@ -90,7 +90,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game("Test", 800, 600);
+        Game game = new Game("Test", 1280, 720);
         game.start();
     }
 }

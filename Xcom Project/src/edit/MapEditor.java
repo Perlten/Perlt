@@ -181,7 +181,6 @@ public class MapEditor {
             File enemyFile = new File(worldPath + "enemy");
             File spriteFile = new File(worldPath + "sprite");
             File terrainFile = new File(worldPath + "terrain");
-            tileFile.createNewFile();
 
             //Save tile list
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tileFile));
@@ -195,7 +194,6 @@ public class MapEditor {
             oos = new ObjectOutputStream(new FileOutputStream(spriteFile));
             oos.writeObject(world.getSpriteList());
             oos.close();
-
             //Terrain
             oos = new ObjectOutputStream(new FileOutputStream(terrainFile));
             oos.writeObject(world.getTerrainList());
