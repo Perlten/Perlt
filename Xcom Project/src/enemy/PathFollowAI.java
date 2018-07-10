@@ -4,6 +4,7 @@ import enemy.Enemy;
 import java.awt.Point;
 import java.io.Serializable;
 import physics.Collision;
+import state.StateType;
 import tile.PathTile;
 
 public class PathFollowAI implements AI, Serializable {
@@ -114,6 +115,7 @@ public class PathFollowAI implements AI, Serializable {
 
     @Override
     public void playerSeen() {
+        enemy.getWorld().getState().changeState(StateType.BATTLE);
     }
 
 }

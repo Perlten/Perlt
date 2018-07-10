@@ -1,6 +1,5 @@
 package world;
 
-import actors.Actor;
 import enemy.Enemy;
 import actors.Player;
 import camera.Camera;
@@ -17,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import npc.Npc;
 import sprites.Sprite;
+import state.State;
 import terrain.Terrain;
 import tile.Tile;
+import util.TextureUtil;
 
 public abstract class World {
 
@@ -31,17 +32,20 @@ public abstract class World {
     protected List<Terrain> terrainList = new ArrayList<>();
     protected List<Npc> npcList = new ArrayList<>();
 
-    protected String WorldPath = "resources/world/world";
+    protected String WorldPath = "resources/world/";
 
     protected MapEditor mapEditor;
 
     private boolean Worldloaded;
     protected KeyInput key;
 
-    public World(MouseInput mouseInput, KeyInput keyInput, int worldNum) {
-        WorldPath += String.valueOf(worldNum) + "/";
+    protected State state;
+    
+    public World(MouseInput mouseInput, KeyInput keyInput, String worldName, State state) {
+        WorldPath += worldName + "/";
         this.mapEditor = new MapEditor(this, keyInput, mouseInput, WorldPath);
         this.key = keyInput;
+        this.state = state;
     }
 
     protected void loadWorld() {
@@ -122,11 +126,17 @@ public abstract class World {
                     npcList = new ArrayList<>();
                     System.out.println("Could not find npc file");
                 }
-
+                Camera.resetCamera();
                 System.out.println("Load");
             } catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+    
+    public void renderLoadingScrenn(Graphics g){
+        if(!Worldloaded){
+             g.drawImage(TextureUtil.getBufferedImage("resources/texture/ui/loading.png").getScaledInstance(Display.width, Display.height, 0), 0, 0, null);
         }
     }
 
@@ -165,6 +175,14 @@ public abstract class World {
         return key;
     }
 
+    public boolean isWorldloaded() {
+        return Worldloaded;
+    }
+
+    public State getState() {
+        return state;
+    }
+    
     public abstract void update();
 
     public abstract void render(Graphics g);

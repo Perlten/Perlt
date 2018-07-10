@@ -30,4 +30,8 @@ public abstract class Button implements UiElement{
 //        g.fillRect(x, x, hitbox.width, hitbox.height);
     }
 
+    protected boolean hitBoxContains(){
+        return(hitbox.contains(mouse.getX(), mouse.getY()) && mouse.isLeftMouse());
+    }
+    
 }

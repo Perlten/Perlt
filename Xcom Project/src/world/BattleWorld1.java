@@ -2,8 +2,6 @@ package world;
 
 import actors.Actor;
 import actors.Player;
-import camera.Camera;
-import display.Display;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -13,11 +11,11 @@ import state.State;
 import terrain.Terrain;
 import tile.Tile;
 
-public class MenuWorld extends World {
+public class BattleWorld1 extends World {
 
-    public MenuWorld(MouseInput mouseInput, KeyInput keyInput, State state) {
-        super(mouseInput, keyInput, "menuWorld", state);
-        this.player = new Player(-400, -400, keyInput, 3, this);
+    public BattleWorld1(MouseInput mouseInput, KeyInput keyInput, State state) {
+        super(mouseInput, keyInput, "battleWorld1", state);
+        this.player = new Player(-99, -99, keyInput, 3, this);
     }
 
     @Override

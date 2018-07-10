@@ -11,6 +11,7 @@ import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import state.BattleState;
 import state.GameState;
 import state.MainMenuState;
 import state.OptionState;
@@ -53,6 +54,7 @@ public class Game {
     private void update() {
         keyInput.update();
         currentState.update();
+        //Has to be below currentState.update();
         changeState();
     }
 
@@ -74,17 +76,25 @@ public class Game {
         g.dispose();
 
     }
-    
-    private void changeState(){
-        if(currentState.getStateType()== StateType.GAMESTATE){
+
+    private void changeState() {
+        if (currentState.getStateType() == StateType.GAMESTATE) {
             currentState = new GameState(keyInput, mouseInput);
+            return;
         }
-        if(currentState.getStateType()== StateType.MENUSTATE){
+        if (currentState.getStateType() == StateType.MENUSTATE) {
             currentState = new MainMenuState(mouseInput, keyInput);
-        }if(currentState.getStateType() == StateType.OPTION){
-            currentState = new OptionState();
+            return;
         }
-        
+        if (currentState.getStateType() == StateType.OPTION) {
+            currentState = new OptionState(mouseInput);
+            return;
+        }
+          if (currentState.getStateType() == StateType.BATTLE) {
+            currentState = new BattleState(mouseInput, keyInput);
+            return;
+        }
+
     }
 
     public void start() {

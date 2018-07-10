@@ -1,27 +1,29 @@
 package state;
 
+import display.Display;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import ui.Button;
-import ui.OptionButton;
-import ui.StartGameButton;
+import ui.ExitButton;
+import ui.StateChangeButton;
 import world.MenuWorld;
 import world.World;
 
-public class MainMenuState implements State{
+public class MainMenuState implements State {
 
     private StateType currentStateType = StateType.VOID;
     private World world;
-    
+
     private List<Button> buttonList = new ArrayList<>();
 
     public MainMenuState(MouseInput mouseInput, KeyInput keyInput) {
-        this.world = new MenuWorld(mouseInput, keyInput);
-        buttonList.add(new StartGameButton(475, 100, this, mouseInput));
-        buttonList.add(new OptionButton(435, 275, this, mouseInput));
+        this.world = new MenuWorld(mouseInput, keyInput, this);
+        buttonList.add(new StateChangeButton(475, 100, this, mouseInput, StateType.GAMESTATE, "start.png"));
+        buttonList.add(new StateChangeButton(435, 275, this, mouseInput, StateType.OPTION, "option.png"));
+        buttonList.add(new ExitButton(0, Display.height - 50, "exit.png", mouseInput));
     }
 
     @Override
@@ -34,10 +36,14 @@ public class MainMenuState implements State{
 
     @Override
     public void render(Graphics g) {
-        world.render(g);
-        for (Button button : buttonList) {
-            button.render(g);
+        if (world.isWorldloaded()) {
+            world.render(g);
+            for (Button button : buttonList) {
+                button.render(g);
+            }
         }
+        world.renderLoadingScrenn(g);
+
     }
 
     @Override
@@ -49,6 +55,5 @@ public class MainMenuState implements State{
     public void changeState(StateType stateType) {
         this.currentStateType = stateType;
     }
-    
 
 }

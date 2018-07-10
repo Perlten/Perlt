@@ -77,7 +77,7 @@ public class Player extends Actor {
             }
         }
     }
-
+    
     @Override
     public void updateFromLoad(World world) {
         

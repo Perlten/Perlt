@@ -9,13 +9,14 @@ import input.MouseInput;
 import java.awt.Graphics;
 import npc.Npc;
 import sprites.Sprite;
+import state.State;
 import terrain.Terrain;
 import tile.Tile;
 
 public class World0 extends World {
 
-    public World0(MouseInput mouseInput, KeyInput keyInput) {
-        super(mouseInput, keyInput, 0);
+    public World0(MouseInput mouseInput, KeyInput keyInput, State state) {
+        super(mouseInput, keyInput, "mainWorld", state);
         this.player = new Player(0, 0, keyInput, 3, this);
         this.camera = new Camera(player, Display.width, Display.height);
     }

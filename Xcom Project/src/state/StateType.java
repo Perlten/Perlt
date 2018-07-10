@@ -10,5 +10,5 @@ package state;
  * @author Perlt
  */
 public enum StateType {
-    GAMESTATE, MENUSTATE, OPTION, VOID;
+    GAMESTATE, MENUSTATE, OPTION, BATTLE, VOID;
 }
