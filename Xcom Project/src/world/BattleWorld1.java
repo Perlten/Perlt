@@ -1,6 +1,8 @@
 package world;
 
 import actors.Actor;
+import actors.BattlePlayer;
+import actors.OverWorldPlayer;
 import actors.Player;
 import input.KeyInput;
 import input.MouseInput;
@@ -15,7 +17,7 @@ public class BattleWorld1 extends World {
 
     public BattleWorld1(MouseInput mouseInput, KeyInput keyInput, State state) {
         super(mouseInput, keyInput, "battleWorld1", state);
-        this.player = new Player(-99, -99, keyInput, 3, this);
+        this.player = new BattlePlayer(20, 200, keyInput, mouseInput, this);
     }
 
     @Override
@@ -26,6 +28,7 @@ public class BattleWorld1 extends World {
         for (Terrain terrain : terrainList) {
             terrain.update();
         }
+        player.update();
         for (Tile tile : tileList) {
             tile.update();
         }
@@ -48,6 +51,8 @@ public class BattleWorld1 extends World {
             terrain.render(g);
         }
 
+        player.render(g);
+        
         for (Npc npc : npcList) {
             npc.render(g);
         }

@@ -1,6 +1,7 @@
 package world;
 
 import actors.Actor;
+import actors.OverWorldPlayer;
 import actors.Player;
 import camera.Camera;
 import display.Display;
@@ -17,7 +18,7 @@ public class MenuWorld extends World {
 
     public MenuWorld(MouseInput mouseInput, KeyInput keyInput, State state) {
         super(mouseInput, keyInput, "menuWorld", state);
-        this.player = new Player(-400, -400, keyInput, 3, this);
+        this.player = new OverWorldPlayer(-400, -400, keyInput, this);
     }
 
     @Override

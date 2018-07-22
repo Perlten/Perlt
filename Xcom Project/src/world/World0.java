@@ -1,6 +1,7 @@
 package world;
 
 import actors.Actor;
+import actors.OverWorldPlayer;
 import actors.Player;
 import camera.Camera;
 import display.Display;
@@ -17,7 +18,7 @@ public class World0 extends World {
 
     public World0(MouseInput mouseInput, KeyInput keyInput, State state) {
         super(mouseInput, keyInput, "mainWorld", state);
-        this.player = new Player(0, 0, keyInput, 3, this);
+        this.player = new OverWorldPlayer(0, 0, keyInput, this);
         this.camera = new Camera(player, Display.width, Display.height);
     }
 
