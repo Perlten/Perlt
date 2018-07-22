@@ -4,6 +4,7 @@ import actors.Actor;
 import enemy.Enemy;
 import enemy.GroundEnemy;
 import camera.Camera;
+import enemy.BattleGroundEnemy;
 import java.util.ArrayList;
 import java.util.List;
 import npc.Npc;
@@ -30,7 +31,10 @@ public class ObjectManager {
     private List<Terrain> terrainList = new ArrayList<>();
     private List<Npc> npcList = new ArrayList<>();
 
-    public ObjectManager(World world) {
+    private boolean BattleWorld;
+
+    public ObjectManager(World world, boolean battleWorld) {
+        this.BattleWorld = battleWorld;
         this.world = world;
         tileList.add(new RockTile(0, 0));
 
@@ -42,7 +46,7 @@ public class ObjectManager {
 
         terrainList.add(new Sand(0, 0));
         terrainList.add(new RockOnSand(0, 0));
-        
+
         npcList.add(new TalkNpc(0, 0, world));
     }
 
@@ -57,13 +61,22 @@ public class ObjectManager {
     }
 
     public Enemy getEnemy(int index, int x, int y) {
-
-        switch (index) {
-            case 0:
-                return new GroundEnemy(x, y, world);
-            default:
-                System.out.println("Could not find enemy");
-                return new GroundEnemy(x, y, world);
+        if (BattleWorld) {
+            switch (index) {
+                case 0:
+                    return new BattleGroundEnemy(x, y, world);
+                default:
+                    System.out.println("Could not find enemy");
+                    return new BattleGroundEnemy(x, y, world);
+            }
+        } else {
+            switch (index) {
+                case 0:
+                    return new GroundEnemy(x, y, world);
+                default:
+                    System.out.println("Could not find enemy");
+                    return new GroundEnemy(x, y, world);
+            }
         }
     }
 
@@ -94,8 +107,8 @@ public class ObjectManager {
                 return new Sand(x, y);
         }
     }
-    
-    public Npc getNpc(int index, int x, int y){
+
+    public Npc getNpc(int index, int x, int y) {
         switch (index) {
             case 0:
                 return new TalkNpc(x, y, world);
@@ -128,5 +141,5 @@ public class ObjectManager {
     public List<Npc> allNpcList() {
         return npcList;
     }
-    
+
 }

@@ -1,5 +1,7 @@
 package state;
 
+import actors.Actor;
+import actors.BattlePlayer;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -11,6 +13,8 @@ public class BattleState implements State {
     private StateType stateType = StateType.VOID;
     private World world;
 
+    private boolean playerTurn = true;
+
     public BattleState(MouseInput mouseInput, KeyInput keyInput) {
         this.world = new BattleWorld1(mouseInput, keyInput, this);
     }
@@ -18,12 +22,24 @@ public class BattleState implements State {
     @Override
     public void update() {
         world.update();
+
+        //Changes turn
+        if (playerTurn) {
+            BattlePlayer p = (BattlePlayer) world.getPlayer();
+            playerTurn = p.isTurnOver();
+            world.getPlayer().update();
+        } else {
+            for (Actor enemy : world.getEnemyList()) {
+                enemy.update();
+            }
+        }
     }
 
     @Override
     public void render(Graphics g) {
         if (world.isWorldloaded()) {
             world.render(g);
+            g.drawString("Player turn: " + playerTurn, 0, 30);
         }
         world.renderLoadingScrenn(g);
     }

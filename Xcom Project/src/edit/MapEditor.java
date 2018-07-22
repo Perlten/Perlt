@@ -43,11 +43,14 @@ public class MapEditor {
     private final int gridSize = 16;
 
     public boolean edit = false;
+    
+    private boolean battleWorld;
 
-    public MapEditor(World world, KeyInput keyInput, MouseInput mouseInput, String worldPath) {
+    public MapEditor(World world, KeyInput keyInput, MouseInput mouseInput, String worldPath, boolean battleWorld) {
+        this.battleWorld = battleWorld;
         this.world = world;
         this.worldPath = worldPath;
-        this.mgo = new ObjectManager(world);
+        this.mgo = new ObjectManager(world, battleWorld);
         this.keyInput = keyInput;
         this.mouseInput = mouseInput;
         init();

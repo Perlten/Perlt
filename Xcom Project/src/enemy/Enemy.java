@@ -1,5 +1,6 @@
 package enemy;
 
+import ai.AI;
 import actors.Actor;
 import display.FpsLock;
 import java.awt.Graphics;
@@ -23,10 +24,11 @@ public abstract class Enemy extends Actor {
     protected List<PathTile> pathTiles = new ArrayList<>();
     protected AI ai;
 
-    public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames) {
+    public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames, AI ai) {
         super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames);
         viewLine = new ViewLine(this, world);
-        this.ai = new PathFollowAI(this);
+        this.ai = ai;
+        this.ai.setEnemy(this);
     }
 
     @Override

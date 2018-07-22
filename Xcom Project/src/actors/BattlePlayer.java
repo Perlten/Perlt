@@ -7,7 +7,7 @@ import java.awt.Point;
 import util.TextureUtil;
 import world.World;
 
-public class BattlePlayer extends Player {
+public class BattlePlayer extends Player implements BattleObject{
 
     private MouseInput mouse;
     private boolean clicked;
@@ -17,6 +17,7 @@ public class BattlePlayer extends Player {
     private int goingY;
 
     private int ap;
+    private boolean playerTurn = true;
 
     public BattlePlayer(int x, int y, KeyInput keyInput, MouseInput mouse, World world) {
         super(x, y, keyInput, world, 3);
@@ -31,10 +32,14 @@ public class BattlePlayer extends Player {
 
     @Override
     public void update() {
+        if(!playerTurn){
+            playerTurn = true;
+        }
+        endTurn();
         updateHitbox();
         move();
     }
-
+    
     @Override
     public void render(Graphics g) {
         animate(g);
@@ -43,6 +48,13 @@ public class BattlePlayer extends Player {
         g.drawString(String.valueOf(ap), x, y - 25);
     }
 
+    private void endTurn(){
+        if(keyInput.isSpace()){
+            playerTurn = false;
+            return;
+        }
+    }
+    
     private void renderGoingToPoint(Graphics g) {
         if (goingTo != null) {
             int renderX = goingTo.x - 8;
@@ -120,6 +132,11 @@ public class BattlePlayer extends Player {
 
     @Override
     public void addHighlightedObject(int x, int y) {
+    }
+
+    @Override
+    public boolean isTurnOver() {
+        return playerTurn;
     }
 
 }

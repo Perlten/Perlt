@@ -1,13 +1,13 @@
 package enemy;
 
-import ai.PathFollowAI;
+import ai.BattleFootEnemyAi;
 import java.awt.Graphics;
 import world.World;
 
-public class GroundEnemy extends Enemy {
+public class BattleGroundEnemy extends Enemy {
 
-    public GroundEnemy(int x, int y, World world) {
-        super(x, y, world, "groundEnemyTexture.png", 4, 3, new PathFollowAI());
+    public BattleGroundEnemy(int x, int y, World world) {
+        super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi());
     }
 
     @Override

@@ -1,5 +1,6 @@
-package enemy;
+package ai;
 
+import enemy.Enemy;
 import enemy.Enemy;
 import java.awt.Point;
 import java.io.Serializable;
@@ -10,23 +11,25 @@ import tile.PathTile;
 public class PathFollowAI implements AI, Serializable {
 
     private Enemy enemy;
-    private int num;
 
+    private int targetTile;
     private boolean detour;
-
     private Direction currentDirection;
 
     public PathFollowAI(Enemy enemy) {
         this.enemy = enemy;
     }
 
+    public PathFollowAI() {
+    }
+
     @Override
     public Point move() {
         for (PathTile tile : enemy.getPathTiles()) {
-            if (tile.getNum() == num) {
+            if (tile.getNum() == targetTile) {
                 enemy.setMoveing(true);
                 if (tile.getHitbox().contains(enemy.getX(), enemy.getY())) {
-                    num = ++num % enemy.getPathTiles().size();
+                    targetTile = ++targetTile % enemy.getPathTiles().size();
                     return new Point(0, 0);
                 }
 
@@ -110,13 +113,19 @@ public class PathFollowAI implements AI, Serializable {
 
     @Override
     public void reset() {
-        num = 0;
+        targetTile = 0;
     }
 
     @Override
     public void playerSeen() {
         enemy.getWorld().getState().changeState(StateType.BATTLE);
     }
+
+    @Override
+    public void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
+    }
+    
 
 }
 

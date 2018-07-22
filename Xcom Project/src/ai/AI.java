@@ -1,5 +1,6 @@
-package enemy;
+package ai;
 
+import enemy.Enemy;
 import java.awt.Point;
 
 public interface AI {
@@ -9,4 +10,6 @@ public interface AI {
     public void reset();
 
     public void playerSeen();
+    
+    public void setEnemy(Enemy enemy);
 }

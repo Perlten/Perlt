@@ -15,9 +15,9 @@ import terrain.Terrain;
 import tile.Tile;
 
 public class World0 extends World {
-
+    
     public World0(MouseInput mouseInput, KeyInput keyInput, State state) {
-        super(mouseInput, keyInput, "mainWorld", state);
+        super(mouseInput, keyInput, "mainWorld", state, false);
         this.player = new OverWorldPlayer(0, 0, keyInput, this);
         this.camera = new Camera(player, Display.width, Display.height);
     }

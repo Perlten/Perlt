@@ -41,9 +41,9 @@ public abstract class World {
 
     protected State state;
     
-    public World(MouseInput mouseInput, KeyInput keyInput, String worldName, State state) {
+    public World(MouseInput mouseInput, KeyInput keyInput, String worldName, State state, boolean battleWorld) {
         WorldPath += worldName + "/";
-        this.mapEditor = new MapEditor(this, keyInput, mouseInput, WorldPath);
+        this.mapEditor = new MapEditor(this, keyInput, mouseInput, WorldPath, battleWorld);
         this.key = keyInput;
         this.state = state;
     }

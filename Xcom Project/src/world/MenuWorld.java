@@ -17,7 +17,7 @@ import tile.Tile;
 public class MenuWorld extends World {
 
     public MenuWorld(MouseInput mouseInput, KeyInput keyInput, State state) {
-        super(mouseInput, keyInput, "menuWorld", state);
+        super(mouseInput, keyInput, "menuWorld", state, false);
         this.player = new OverWorldPlayer(-400, -400, keyInput, this);
     }
 

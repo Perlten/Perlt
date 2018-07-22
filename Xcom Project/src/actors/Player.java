@@ -3,10 +3,7 @@ package actors;
 import display.FpsLock;
 import input.KeyInput;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.List;
-import npc.Npc;
 import world.World;
 
 public abstract class Player extends Actor {
