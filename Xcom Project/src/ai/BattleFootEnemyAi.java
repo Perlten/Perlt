@@ -1,5 +1,6 @@
 package ai;
 
+import enemy.BattleEnemy;
 import enemy.Enemy;
 import java.awt.Point;
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import tile.PathTile;
 
 public class BattleFootEnemyAi implements AI, Serializable {
 
-    private Enemy enemy;
+    private BattleEnemy enemy;
     
     private int targetTile;
     private boolean detour;
@@ -108,12 +109,12 @@ public class BattleFootEnemyAi implements AI, Serializable {
 
     @Override
     public void playerSeen() {
-        System.out.println("Seen");
+        enemy.setEndTurn(true);
     }
 
     @Override
     public void setEnemy(Enemy enemy) {
-        this.enemy = enemy;
+        this.enemy = (BattleEnemy) enemy;
     }
 
 }

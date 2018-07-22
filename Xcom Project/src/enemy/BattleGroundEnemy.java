@@ -4,7 +4,8 @@ import ai.BattleFootEnemyAi;
 import java.awt.Graphics;
 import world.World;
 
-public class BattleGroundEnemy extends Enemy {
+public class BattleGroundEnemy extends BattleEnemy {
+    
 
     public BattleGroundEnemy(int x, int y, World world) {
         super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi());
@@ -12,6 +13,9 @@ public class BattleGroundEnemy extends Enemy {
 
     @Override
     public void update() {
+        if(endTurn){
+            endTurn = false;
+        }
         updateHitbox();
         updateCollision();
         move();
@@ -33,4 +37,12 @@ public class BattleGroundEnemy extends Enemy {
         addPathTile(x, y);
     }
 
+    @Override
+    public boolean endTurn() {
+        return endTurn;
+    }
+
+    public void setEndTurn(boolean endTurn) {
+        this.endTurn = endTurn;
+    }
 }

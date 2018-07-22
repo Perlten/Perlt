@@ -1,7 +1,8 @@
 package state;
 
-import actors.Actor;
 import actors.BattlePlayer;
+import enemy.BattleEnemy;
+import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -29,8 +30,10 @@ public class BattleState implements State {
             playerTurn = p.isTurnOver();
             world.getPlayer().update();
         } else {
-            for (Actor enemy : world.getEnemyList()) {
+            for (Enemy enemy : world.getEnemyList()) {
+                BattleEnemy be = (BattleEnemy) enemy;
                 enemy.update();
+                playerTurn = be.endTurn();
             }
         }
     }

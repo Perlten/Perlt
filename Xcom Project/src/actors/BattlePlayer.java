@@ -34,6 +34,7 @@ public class BattlePlayer extends Player implements BattleObject{
     public void update() {
         if(!playerTurn){
             playerTurn = true;
+            ap = 100;
         }
         endTurn();
         updateHitbox();

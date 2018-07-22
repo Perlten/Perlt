@@ -40,7 +40,9 @@ public abstract class Enemy extends Actor {
         collision = new Collision(this, world);
         this.world = world;
         animationLock.reset();
-
+        updateHitbox();
+        moveing = false;
+        
         for (PathTile pt : pathTiles) {
             pt.updateFromLoad();
         }
@@ -58,6 +60,7 @@ public abstract class Enemy extends Actor {
         }
         g.drawImage(texture[direction][frame % numOfFrames], x, y, null);
     }
+    
     protected void playerSeen() {
         if (viewLine.canSeeActor(direction, world.getPlayer())) {
             ai.playerSeen();

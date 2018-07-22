@@ -4,6 +4,7 @@ import actors.Actor;
 import actors.BattlePlayer;
 import actors.OverWorldPlayer;
 import actors.Player;
+import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -49,7 +50,7 @@ public class BattleWorld1 extends World {
             npc.render(g);
         }
 
-        for (Actor enemy : enemyList) {
+        for (Enemy enemy : enemyList) {
             enemy.render(g);
         }
 
