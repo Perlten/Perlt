@@ -96,10 +96,11 @@ public abstract class Enemy extends Actor {
 
     @Override
     public void addGameObject(World world, int x, int y) {
-        world.getEnemyList().add(this);
+        world.addEnemy(this);
         this.x = x;
         this.y = y;
         startX = x;
         startY = y;
+        updateHitbox();
     }
 }

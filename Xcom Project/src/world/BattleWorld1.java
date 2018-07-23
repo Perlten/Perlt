@@ -4,6 +4,7 @@ import actors.Actor;
 import actors.BattlePlayer;
 import actors.OverWorldPlayer;
 import actors.Player;
+import enemy.BattleEnemy;
 import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
@@ -14,7 +15,7 @@ import state.State;
 import terrain.Terrain;
 import tile.Tile;
 
-public class BattleWorld1 extends World {
+public class BattleWorld1 extends BattleWorld {
 
     
     public BattleWorld1(MouseInput mouseInput, KeyInput keyInput, State state) {
@@ -60,6 +61,8 @@ public class BattleWorld1 extends World {
 
         mapEditor.render(g);
     }
+
+  
 
 
 }

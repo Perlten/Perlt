@@ -32,9 +32,10 @@ public abstract class Terrain implements GameObject, Serializable {
 
     @Override
     public void addGameObject(World world, int x, int y) {
-        world.getTerrainList().add(this);
+        world.addTerrain(this);
         setX(x);
         setY(y);
+        updateHitbox();
     }
 
     protected void updateHitbox() {

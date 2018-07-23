@@ -1,9 +1,10 @@
 package enemy;
 
+import actors.BattleObject;
 import ai.AI;
 import world.World;
 
-public abstract class BattleEnemy extends Enemy{
+public abstract class BattleEnemy extends Enemy implements BattleObject{
     
     protected boolean endTurn;
 
@@ -11,8 +12,6 @@ public abstract class BattleEnemy extends Enemy{
         super(x, y, world, texturePath, numOfAnimation, numOfFrames, ai);
     }
     
-    public abstract boolean endTurn();
-
     public void setEndTurn(boolean endTurn) {
         this.endTurn = endTurn;
     }

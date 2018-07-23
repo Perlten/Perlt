@@ -41,7 +41,7 @@ public class TalkNpc extends Npc {
 
     @Override
     public void addHighlightedObject(int x, int y) {
-        
+        direction = ++direction % 4;
     }
 
 

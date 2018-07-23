@@ -2,17 +2,16 @@ package state;
 
 import actors.BattlePlayer;
 import enemy.BattleEnemy;
-import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
+import world.BattleWorld;
 import world.BattleWorld1;
-import world.World;
 
 public class BattleState implements State {
 
     private StateType stateType = StateType.VOID;
-    private World world;
+    private BattleWorld world;
 
     private boolean playerTurn = true;
 
@@ -26,14 +25,13 @@ public class BattleState implements State {
 
         //Changes turn
         if (playerTurn) {
-            BattlePlayer p = (BattlePlayer) world.getPlayer();
+            BattlePlayer p =  world.getBattlePlayer();
             playerTurn = p.isTurnOver();
-            world.getPlayer().update();
+            p.update();
         } else {
-            for (Enemy enemy : world.getEnemyList()) {
-                BattleEnemy be = (BattleEnemy) enemy;
+            for (BattleEnemy enemy : world.getBattleEnemyList()) {
                 enemy.update();
-                playerTurn = be.endTurn();
+                playerTurn = enemy.isTurnOver();
             }
         }
     }

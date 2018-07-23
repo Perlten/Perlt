@@ -5,6 +5,7 @@ import actors.OverWorldPlayer;
 import actors.Player;
 import camera.Camera;
 import display.Display;
+import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -14,7 +15,7 @@ import state.State;
 import terrain.Terrain;
 import tile.Tile;
 
-public class MenuWorld extends World {
+public class MenuWorld extends OverWorld {
 
     public MenuWorld(MouseInput mouseInput, KeyInput keyInput, State state) {
         super(mouseInput, keyInput, "menuWorld", state, false);
@@ -65,5 +66,6 @@ public class MenuWorld extends World {
 
         mapEditor.render(g);
     }
+
 
 }

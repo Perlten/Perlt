@@ -78,6 +78,8 @@ public class BattlePlayer extends Player implements BattleObject{
                     ap -= apCost;
                 } else {
                     goingTo = null;
+                    clicked = false;
+                    moveing = false;
                 }
 
             }

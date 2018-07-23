@@ -25,11 +25,11 @@ public class OverWorldPlayer extends Player {
         animate(g);
 //        g.fillRect(x, y, hitbox.width, hitbox.height); //Draw hitbox
     }
-    
+
     @Override
     public void updateFromLoad(World world) {
     }
-    
+
     @Override
     public void renderHighlight(Graphics g) {
     }

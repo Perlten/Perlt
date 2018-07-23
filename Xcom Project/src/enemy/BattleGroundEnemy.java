@@ -38,11 +38,7 @@ public class BattleGroundEnemy extends BattleEnemy {
     }
 
     @Override
-    public boolean endTurn() {
+    public boolean isTurnOver() {
         return endTurn;
-    }
-
-    public void setEndTurn(boolean endTurn) {
-        this.endTurn = endTurn;
     }
 }

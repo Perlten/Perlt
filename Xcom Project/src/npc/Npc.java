@@ -42,11 +42,12 @@ public abstract class Npc extends Actor {
 
     @Override
     public void addGameObject(World world, int x, int y) {
-        world.getNpcList().add(this);
+        world.addNpc(this);
         this.x = x;
         this.y = y;
         startX = x;
         startY = y;
+        updateHitbox();
     }
     
     public abstract void renderTextBox(Graphics g);

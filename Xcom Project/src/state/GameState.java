@@ -8,12 +8,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import util.TextureUtil;
+import world.OverWorld;
 import world.World;
 import world.World0;
 
 public class GameState implements State {
 
-    private List<World> worldList = new ArrayList<>();
+    private List<OverWorld> worldList = new ArrayList<>();
     private World currentWorld;
 
     private StateType stateType = StateType.VOID;
