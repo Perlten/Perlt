@@ -46,7 +46,7 @@ public class BattlePlayer extends Player implements BattleObject{
         animate(g);
         renderGoingToPoint(g);
         //TODO: make pretty
-        g.drawString(String.valueOf(ap), x, y - 25);
+        g.drawString(String.valueOf(ap), x, y);
     }
 
     private void endTurn(){
@@ -142,4 +142,11 @@ public class BattlePlayer extends Player implements BattleObject{
         return playerTurn;
     }
 
+    public int getAp() {
+        return ap;
+    }
+    
+    public void changeAp(int ap){
+        this.ap += ap;
+    }
 }

@@ -24,8 +24,8 @@ public abstract class Enemy extends Actor {
     protected List<PathTile> pathTiles = new ArrayList<>();
     protected AI ai;
 
-    public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames, AI ai) {
-        super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames);
+    public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames, AI ai, int movementSpeed) {
+        super(x, y, new Rectangle(32, 32), texturePath, movementSpeed, world, numOfAnimation, numOfFrames);
         viewLine = new ViewLine(this, world);
         this.ai = ai;
         this.ai.setEnemy(this);

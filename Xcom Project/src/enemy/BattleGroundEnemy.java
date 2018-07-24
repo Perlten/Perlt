@@ -8,7 +8,7 @@ public class BattleGroundEnemy extends BattleEnemy {
     
 
     public BattleGroundEnemy(int x, int y, World world) {
-        super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi());
+        super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi(), 100, 1);
     }
 
     @Override
@@ -30,6 +30,7 @@ public class BattleGroundEnemy extends BattleEnemy {
     @Override
     public void renderHighlight(Graphics g) {
         renderPathTile(g);
+        g.drawString(String.valueOf(ap), x, y);
     }
 
     @Override

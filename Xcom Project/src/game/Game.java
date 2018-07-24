@@ -43,7 +43,7 @@ public class Game {
     }
 
     private void init() {
-        currentState = new BattleState(mouseInput, keyInput);
+        currentState = new MainMenuState(mouseInput, keyInput);
         display.getFrame().addKeyListener(keyInput);
         display.getFrame().addMouseListener(mouseInput);
         display.getFrame().addMouseMotionListener(mouseInput);

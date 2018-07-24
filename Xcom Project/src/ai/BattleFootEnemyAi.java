@@ -13,11 +13,18 @@ public class BattleFootEnemyAi implements AI, Serializable {
     private int targetTile;
     private boolean detour;
     private Direction currentDirection;
+    private final int MOVECOST = -1;
 
     @Override
     public Point move() {
+        //TODO: make sure enemy can have any movement speed
         for (PathTile tile : enemy.getPathTiles()) {
             if (tile.getNum() == targetTile) {
+                if(enemy.getAp() <= 0){
+                    enemy.setEndTurn(true);
+                    enemy.setAp(enemy.getMaxAp());
+                    return new Point(0, 0);
+                }
                 enemy.setMoveing(true);
                 if (tile.getHitbox().contains(enemy.getX(), enemy.getY())) {
                     targetTile = ++targetTile % enemy.getPathTiles().size();
@@ -27,18 +34,22 @@ public class BattleFootEnemyAi implements AI, Serializable {
                 if (!detour) {
                     if (enemy.getX() > tile.getX() && !enemy.getCollision().isActorCollisionLeft()) {
                         currentDirection = Direction.LEFT;
+                        enemy.changeAp(MOVECOST);
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() > tile.getY() && !enemy.getCollision().isActorCollisionUp()) {
                         currentDirection = Direction.UP;
+                        enemy.changeAp(MOVECOST);
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getX() < tile.getX() && !enemy.getCollision().isActorCollisionRight()) {
                         currentDirection = Direction.RIGHT;
+                        enemy.changeAp(MOVECOST);
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() < tile.getY() && !enemy.getCollision().isActorCollisionDown()) {
                         currentDirection = Direction.DOWN;
+                        enemy.changeAp(MOVECOST);
                         return getMovePoint(currentDirection);
                     }
                     detour = true;
@@ -54,22 +65,27 @@ public class BattleFootEnemyAi implements AI, Serializable {
 
     private Point detour() {
         if (currentDirection == Direction.RIGHT && enemy.getCollision().isActorCollisionRight()) {
+            enemy.changeAp(MOVECOST);
             return getMovePoint(Direction.DOWN);
         }
 
         if (currentDirection == Direction.LEFT && enemy.getCollision().isActorCollisionLeft()) {
+            enemy.changeAp(MOVECOST);
             return getMovePoint(Direction.DOWN);
         }
 
         if (currentDirection == Direction.DOWN && enemy.getCollision().isActorCollisionDown()) {
+            enemy.changeAp(MOVECOST);
             return getMovePoint(Direction.LEFT);
         }
 
         if (currentDirection == Direction.UP && enemy.getCollision().isActorCollisionUp()) {
+            enemy.changeAp(MOVECOST);
             return getMovePoint(Direction.LEFT);
         }
 
         detour = false;
+        enemy.changeAp(MOVECOST);
         return getMovePoint(currentDirection);
     }
 
@@ -79,7 +95,6 @@ public class BattleFootEnemyAi implements AI, Serializable {
             int x = enemy.getMovementSpeed();
             enemy.setDirection(3);
             return new Point(x, 0);
-
         }
         if (dir == Direction.LEFT) {
             //Left
@@ -109,7 +124,6 @@ public class BattleFootEnemyAi implements AI, Serializable {
 
     @Override
     public void playerSeen() {
-        enemy.setEndTurn(true);
     }
 
     @Override

@@ -7,7 +7,7 @@ import world.World;
 public class GroundEnemy extends Enemy {
 
     public GroundEnemy(int x, int y, World world) {
-        super(x, y, world, "groundEnemyTexture.png", 4, 3, new PathFollowAI());
+        super(x, y, world, "groundEnemyTexture.png", 4, 3, new PathFollowAI(), 1);
     }
 
     @Override
