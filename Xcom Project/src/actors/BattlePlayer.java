@@ -1,5 +1,7 @@
 package actors;
 
+import enemy.BattleEnemy;
+import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -7,7 +9,7 @@ import java.awt.Point;
 import util.TextureUtil;
 import world.World;
 
-public class BattlePlayer extends Player implements BattleObject{
+public class BattlePlayer extends Player implements BattleObject {
 
     private MouseInput mouse;
     private boolean clicked;
@@ -32,15 +34,16 @@ public class BattlePlayer extends Player implements BattleObject{
 
     @Override
     public void update() {
-        if(!playerTurn){
+        if (!playerTurn) {
             playerTurn = true;
             ap = 100;
         }
         endTurn();
         updateHitbox();
         move();
+        attack();
     }
-    
+
     @Override
     public void render(Graphics g) {
         animate(g);
@@ -49,13 +52,13 @@ public class BattlePlayer extends Player implements BattleObject{
         g.drawString(String.valueOf(ap), x, y);
     }
 
-    private void endTurn(){
-        if(keyInput.isSpace()){
+    private void endTurn() {
+        if (keyInput.isSpace()) {
             playerTurn = false;
             return;
         }
     }
-    
+
     private void renderGoingToPoint(Graphics g) {
         if (goingTo != null) {
             int renderX = goingTo.x - 8;
@@ -125,6 +128,24 @@ public class BattlePlayer extends Player implements BattleObject{
         }
     }
 
+    private void attack() {
+        if (ap >= 10) {
+            if (keyInput.isI()) {
+                for (Enemy enemy : world.getEnemyList()) {
+                    if (viewLine.canSeeActor(direction, enemy)) {
+                        if (enemy.getHitbox().contains(mouse.getX(), mouse.getY())) {
+                            BattleEnemy e = (BattleEnemy) enemy;
+                            e.chnageHealth(-25);
+                            System.out.println("Hit");
+                            e.onDeath();
+                            ap -= 10;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void renderHighlight(Graphics g) {
     }
@@ -145,8 +166,8 @@ public class BattlePlayer extends Player implements BattleObject{
     public int getAp() {
         return ap;
     }
-    
-    public void changeAp(int ap){
+
+    public void changeAp(int ap) {
         this.ap += ap;
     }
 }

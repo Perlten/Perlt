@@ -175,4 +175,8 @@ public abstract class OverWorld extends World {
         tileList.add(tile);
     }
 
+    @Override
+    public void removeEnemy(Enemy enemy) {
+        enemyList.remove(enemy);
+    }
 }

@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import physics.Collision;
+import physics.ViewLine;
 import util.TextureUtil;
 import world.World;
 
@@ -17,6 +18,7 @@ public abstract class Actor implements GameObject, Serializable {
     protected transient int x, y;
     protected Rectangle hitbox;
     protected transient BufferedImage[][] texture;
+    protected transient ViewLine viewLine;
     protected String texturePath = "resources/texture/player/";
     protected int numOfAnimation;
     protected int numOfFrames;
@@ -41,6 +43,7 @@ public abstract class Actor implements GameObject, Serializable {
         } else {
             this.hitbox = new Rectangle(x, y, 0, 0);
         }
+        viewLine = new ViewLine(this, world);
     }
     
 
@@ -106,5 +109,8 @@ public abstract class Actor implements GameObject, Serializable {
     public World getWorld() {
         return world;
     }
-    
+
+    public ViewLine getViewLine() {
+        return viewLine;
+    }
 }

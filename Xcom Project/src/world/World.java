@@ -88,4 +88,6 @@ public abstract class World {
     public abstract void addNpc(Npc npc);
 
     public abstract void addSprite(Sprite sprite);
+
+    public abstract void removeEnemy(Enemy enemy);
 }

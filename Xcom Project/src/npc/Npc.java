@@ -14,7 +14,6 @@ public abstract class Npc extends Actor {
     protected int direction;
     protected int frame;
     protected FpsLock animationLock = new FpsLock(5);
-    protected transient ViewLine viewLine;
 
     public Npc(int x, int y, String texturePath, World world, int numOfAnimation, int numOfFrames) {
         super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames);
@@ -51,10 +50,6 @@ public abstract class Npc extends Actor {
     }
     
     public abstract void renderTextBox(Graphics g);
-
-    public ViewLine getViewLine() {
-        return viewLine;
-    }
 
     public int getDirection() {
         return direction;
