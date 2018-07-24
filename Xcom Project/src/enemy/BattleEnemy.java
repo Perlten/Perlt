@@ -20,8 +20,6 @@ public abstract class BattleEnemy extends Enemy implements BattleObject{
         this.health = MaxHealth;
     }
     
-    public abstract void onDeath();
-    
     public void setEndTurn(boolean endTurn) {
         this.endTurn = endTurn;
     }

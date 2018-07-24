@@ -1,5 +1,6 @@
 package ai;
 
+import actors.BattlePlayer;
 import enemy.BattleEnemy;
 import enemy.Enemy;
 import java.awt.Point;
@@ -9,7 +10,7 @@ import tile.PathTile;
 public class BattleFootEnemyAi implements AI, Serializable {
 
     private BattleEnemy enemy;
-    
+
     private int targetTile;
     private boolean detour;
     private Direction currentDirection;
@@ -20,7 +21,7 @@ public class BattleFootEnemyAi implements AI, Serializable {
         //TODO: make sure enemy can have any movement speed
         for (PathTile tile : enemy.getPathTiles()) {
             if (tile.getNum() == targetTile) {
-                if(enemy.getAp() <= 0){
+                if (enemy.getAp() <= 0) {
                     enemy.setEndTurn(true);
                     enemy.setAp(enemy.getMaxAp());
                     return new Point(0, 0);
@@ -119,11 +120,17 @@ public class BattleFootEnemyAi implements AI, Serializable {
 
     @Override
     public void reset() {
-         targetTile = 0;
+        targetTile = 0;
     }
 
     @Override
     public void playerSeen() {
+        if (enemy.getAp() >= 45) {
+            enemy.changeAp(-45);
+            BattlePlayer player = (BattlePlayer)enemy.getWorld().getPlayer();
+            player.changeHealth(-25);
+            player.checkDeath();
+        }
     }
 
     @Override

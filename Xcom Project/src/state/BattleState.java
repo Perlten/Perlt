@@ -29,6 +29,10 @@ public class BattleState implements State {
             playerTurn = p.isTurnOver();
             p.update();
         } else {
+            if(world.getEnemyList().isEmpty()){
+                changeState(StateType.GAMESTATE);
+                return;
+            }
             for (BattleEnemy enemy : world.getBattleEnemyList()) {
                 enemy.update();
                 playerTurn = enemy.isTurnOver();

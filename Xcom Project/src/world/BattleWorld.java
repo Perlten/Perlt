@@ -128,7 +128,7 @@ public abstract class BattleWorld extends World {
 
     @Override
     public List<Enemy> getEnemyList() {
-        return new ArrayList<>(enemyList);
+        return(List<Enemy>) (List<?>) enemyList;
     }
 
     @Override
@@ -178,7 +178,7 @@ public abstract class BattleWorld extends World {
 
     @Override
     public void removeEnemy(Enemy enemy) {
-        enemyList.remove((BattleEnemy)enemy);
+        enemyList.remove((BattleEnemy) enemy);
     }
 
     public List<BattleEnemy> getBattleEnemyList() {

@@ -45,7 +45,7 @@ public class BattleGroundEnemy extends BattleEnemy {
     }
 
     @Override
-    public void onDeath() {
+    public void checkDeath() {
         if (health <= 0) {
             System.out.println("dead");
             world.removeEnemy(this);

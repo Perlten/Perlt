@@ -19,6 +19,8 @@ public class BattlePlayer extends Player implements BattleObject {
     private int goingY;
 
     private int ap;
+    private int health;
+
     private boolean playerTurn = true;
 
     public BattlePlayer(int x, int y, KeyInput keyInput, MouseInput mouse, World world) {
@@ -26,6 +28,7 @@ public class BattlePlayer extends Player implements BattleObject {
         this.mouse = mouse;
 
         this.ap = 100;
+        this.health = 100;
     }
 
     @Override
@@ -42,6 +45,7 @@ public class BattlePlayer extends Player implements BattleObject {
         updateHitbox();
         move();
         attack();
+        changeDirection();
     }
 
     @Override
@@ -49,7 +53,9 @@ public class BattlePlayer extends Player implements BattleObject {
         animate(g);
         renderGoingToPoint(g);
         //TODO: make pretty
-        g.drawString(String.valueOf(ap), x, y);
+        g.drawString("AP: " + ap, x, y + 45);
+        g.drawString("HP: " + health, x, y);
+        
     }
 
     private void endTurn() {
@@ -129,7 +135,8 @@ public class BattlePlayer extends Player implements BattleObject {
     }
 
     private void attack() {
-        if (ap >= 10) {
+        int apCost = 25;
+        if (ap >= apCost) {
             if (keyInput.isI()) {
                 for (Enemy enemy : world.getEnemyList()) {
                     if (viewLine.canSeeActor(direction, enemy)) {
@@ -137,12 +144,27 @@ public class BattlePlayer extends Player implements BattleObject {
                             BattleEnemy e = (BattleEnemy) enemy;
                             e.chnageHealth(-25);
                             System.out.println("Hit");
-                            e.onDeath();
-                            ap -= 10;
+                            e.checkDeath();
+                            ap -= apCost;
+                            return;
                         }
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void checkDeath() {
+        if(health <= 0){
+            System.exit(0);
+        }
+    }
+
+    private void changeDirection() {
+        if (keyInput.isN() && ap >= 5) {
+            direction = ++direction % 4;
+            ap -= 5;
         }
     }
 
@@ -169,5 +191,17 @@ public class BattlePlayer extends Player implements BattleObject {
 
     public void changeAp(int ap) {
         this.ap += ap;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void changeHealth(int amount) {
+        this.health += amount;
     }
 }
