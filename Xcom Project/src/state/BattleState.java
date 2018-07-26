@@ -17,6 +17,16 @@ public class BattleState implements State {
 
     public BattleState(MouseInput mouseInput, KeyInput keyInput) {
         this.world = new BattleWorld1(mouseInput, keyInput, this);
+        battleStart();
+    }
+
+    private void battleStart() {
+        BattlePlayer player = world.getBattlePlayer();
+        player.battleStart();
+
+        for (BattleEnemy battleEnemy : world.getBattleEnemyList()) {
+            battleEnemy.battleStart();
+        }
     }
 
     @Override
@@ -25,12 +35,19 @@ public class BattleState implements State {
 
         //Changes turn
         if (playerTurn) {
-            BattlePlayer p =  world.getBattlePlayer();
+            BattlePlayer p = world.getBattlePlayer();
             playerTurn = p.isTurnOver();
             p.update();
         } else {
-            if(world.getEnemyList().isEmpty()){
+            if (world.getEnemyList().isEmpty()) {
                 changeState(StateType.GAMESTATE);
+                BattlePlayer player = world.getBattlePlayer();
+                player.battleEnd();
+
+                for (BattleEnemy battleEnemy : world.getBattleEnemyList()) {
+                    battleEnemy.battleEnd();
+                }
+
                 return;
             }
             for (BattleEnemy enemy : world.getBattleEnemyList()) {

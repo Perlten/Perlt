@@ -51,4 +51,12 @@ public class BattleGroundEnemy extends BattleEnemy {
             world.removeEnemy(this);
         }
     }
+
+    @Override
+    public void battleStart() {
+    }
+
+    @Override
+    public void battleEnd() {
+    }
 }

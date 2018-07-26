@@ -55,7 +55,6 @@ public class BattlePlayer extends Player implements BattleObject {
         //TODO: make pretty
         g.drawString("AP: " + ap, x, y + 45);
         g.drawString("HP: " + health, x, y);
-        
     }
 
     private void endTurn() {
@@ -166,6 +165,16 @@ public class BattlePlayer extends Player implements BattleObject {
             direction = ++direction % 4;
             ap -= 5;
         }
+    }
+    
+     @Override
+    public void battleStart() {
+         System.out.println("Start");
+    }
+
+    @Override
+    public void battleEnd() {
+        System.out.println("End");
     }
 
     @Override

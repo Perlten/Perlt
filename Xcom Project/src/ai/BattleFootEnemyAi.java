@@ -127,7 +127,7 @@ public class BattleFootEnemyAi implements AI, Serializable {
     public void playerSeen() {
         if (enemy.getAp() >= 45) {
             enemy.changeAp(-45);
-            BattlePlayer player = (BattlePlayer)enemy.getWorld().getPlayer();
+            BattlePlayer player = (BattlePlayer) enemy.getWorld().getPlayer();
             player.changeHealth(-25);
             player.checkDeath();
         }
