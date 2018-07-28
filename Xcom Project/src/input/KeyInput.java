@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyInput implements KeyListener {
 
-    private boolean up, down, left, right, space;
+    private boolean up, down, left, right, space, levelChangeTest;
     private boolean u, i, n, l;
     private boolean[] keysPressed = new boolean[256];
     private boolean[] keysReleased = new boolean[256];
@@ -44,6 +44,9 @@ public class KeyInput implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_L){
             l = true;
         }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            space = true;
+        }
     }
 
     public void update() {
@@ -51,8 +54,7 @@ public class KeyInput implements KeyListener {
         down = keysPressed[KeyEvent.VK_S];
         left = keysPressed[KeyEvent.VK_A];
         right = keysPressed[KeyEvent.VK_D];
-        space = keysPressed[KeyEvent.VK_SPACE];
-
+        levelChangeTest = keysPressed[KeyEvent.VK_H];
     }
 
     public boolean isDown() {
@@ -72,7 +74,9 @@ public class KeyInput implements KeyListener {
     }
 
     public boolean isSpace() {
-        return space;
+        boolean temp = space;
+        space = false;
+        return temp;
     }
 
     public boolean isU() {
@@ -98,7 +102,10 @@ public class KeyInput implements KeyListener {
         l = false;
         return temp;
     }
-    
+
+    public boolean isLevelChangeTest() {
+        return levelChangeTest;
+    }
     
     public int lastestNumKey() {
         if (keysReleased[KeyEvent.VK_0]) {

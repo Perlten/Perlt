@@ -12,4 +12,5 @@ public interface GameObject {
     public void renderHighlight(Graphics g);
     public void addGameObject(World world, int x, int y);
     public void addHighlightedObject(int x, int y);
+    
 }

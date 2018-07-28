@@ -23,7 +23,7 @@ public class FpsLock implements Serializable{
         last = now;
         
         if(delta >= 1){
-            delta--;
+            delta = 0;
             return true;
         }
         return false;

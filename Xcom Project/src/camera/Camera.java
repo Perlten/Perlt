@@ -23,6 +23,11 @@ public class Camera {
          yOffset = actor.getY() - height / 2 + focusSize / 2;
 
     }
+    
+    public static void resetCamera(){
+        xOffset = 0;
+        yOffset = 0;
+    }
 
     public int getX() {
         return xOffset;

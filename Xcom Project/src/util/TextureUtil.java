@@ -37,8 +37,4 @@ public class TextureUtil {
         return imagePack;
     }
 
-    public static void main(String[] args) {
-        BufferedImage[][] test = getBufferedImagePack("resources/texture/player/playerTexturePack.png", 4, 7);
-        System.out.println(test.length);
-    }
 }

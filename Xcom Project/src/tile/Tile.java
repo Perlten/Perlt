@@ -65,9 +65,10 @@ public abstract class Tile implements GameObject, Serializable {
     
     @Override
     public void addGameObject(World world, int x, int y) {
-        world.getTileList().add(this);
+        world.addTile(this);
         setX(x);
         setY(y);
+        updateHitbox();
     }
     
     

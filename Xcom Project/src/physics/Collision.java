@@ -14,10 +14,10 @@ public class Collision {
     private Actor actor;
     private World world;
 
-    private boolean playerCollisionUp;
-    private boolean playerCollisionDown;
-    private boolean playerCollisionLeft;
-    private boolean playerCollisionRight;
+    private boolean actorCollisionUp;
+    private boolean actorCollisionDown;
+    private boolean actorCollisionLeft;
+    private boolean actorCollisionRight;
 
     public Collision(Actor actor, World world) {
         this.actor = actor;
@@ -30,10 +30,10 @@ public class Collision {
 
     private void actorCollision() {
         List<Tile> tileList = world.getTileList();
-        playerCollisionUp = false;
-        playerCollisionDown = false;
-        playerCollisionLeft = false;
-        playerCollisionRight = false;
+        actorCollisionUp = false;
+        actorCollisionDown = false;
+        actorCollisionLeft = false;
+        actorCollisionRight = false;
 
         int ms = actor.getMovementSpeed();
 
@@ -49,19 +49,19 @@ public class Collision {
 
             //Up
             if (tileHb.contains(actorUpperLeft.x, actorUpperLeft.y - ms) || tileHb.contains(actorUpperRight.x, actorUpperRight.y - ms)) {
-                playerCollisionUp = true;
+                actorCollisionUp = true;
             }
             // Down
             if (tileHb.contains(actorButtomLeft.x, actorButtomLeft.y + ms) || tileHb.contains(actorButtonRight.x, actorButtonRight.y + ms)) {
-                playerCollisionDown = true;
+                actorCollisionDown = true;
             }
             //Left
             if (tileHb.contains(actorUpperLeft.x - ms, actorUpperLeft.y) || tileHb.contains(actorButtomLeft.x - ms, actorButtomLeft.y)) {
-                playerCollisionLeft = true;
+                actorCollisionLeft = true;
             }
             //Right
             if (tileHb.contains(actorUpperRight.x + ms, actorUpperRight.y) || tileHb.contains(actorButtonRight.x + ms, actorButtonRight.y)) {
-                playerCollisionRight = true;
+                actorCollisionRight = true;
             }
         }
     }
@@ -81,20 +81,20 @@ public class Collision {
         return list;
     }
 
-    public boolean isPlayerCollisionDown() {
-        return playerCollisionDown;
+    public boolean isActorCollisionDown() {
+        return actorCollisionDown;
     }
 
-    public boolean isPlayerCollisionLeft() {
-        return playerCollisionLeft;
+    public boolean isActorCollisionLeft() {
+        return actorCollisionLeft;
     }
 
-    public boolean isPlayerCollisionRight() {
-        return playerCollisionRight;
+    public boolean isActorCollisionRight() {
+        return actorCollisionRight;
     }
 
-    public boolean isPlayerCollisionUp() {
-        return playerCollisionUp;
+    public boolean isActorCollisionUp() {
+        return actorCollisionUp;
     }
 
     public void setWorld(World world) {

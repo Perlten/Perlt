@@ -32,6 +32,7 @@ public class RockTile extends Tile {
 
     @Override
     public void addHighlightedObject(int x, int y) {
+        
     }
 
 }

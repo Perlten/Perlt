@@ -6,31 +6,46 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import physics.Collision;
+import physics.ViewLine;
+import util.TextureUtil;
 import world.World;
 
 public abstract class Actor implements GameObject, Serializable {
 
-    protected int x, y;
+    protected int startX, startY;
+    
+    protected boolean moveing;
+    protected transient int x, y;
     protected Rectangle hitbox;
     protected transient BufferedImage[][] texture;
+    protected transient ViewLine viewLine;
+    protected String texturePath = "resources/texture/player/";
+    protected int numOfAnimation;
+    protected int numOfFrames;
+    
     protected int movementSpeed;
     protected transient Collision collision;
 
     protected transient World world;
 
-    public Actor(int x, int y, Rectangle hitbox, BufferedImage[][] texture, int movementSpeed, World world) {
+    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world, int numOfAnimation, int numOfFrames) {
         this.x = x;
         this.y = y;
+        this.texturePath += texturePath;
+        this.numOfAnimation = numOfAnimation;
+        this.numOfFrames = numOfFrames;
+        texture = TextureUtil.getBufferedImagePack(this.texturePath, numOfAnimation, numOfFrames);
         this.world = world;
         this.collision = new Collision(this, world);
         this.movementSpeed = movementSpeed;
-        this.texture = texture;
         if (hitbox != null) {
             this.hitbox = new Rectangle(x, y, hitbox.width, hitbox.height);
         } else {
             this.hitbox = new Rectangle(x, y, 0, 0);
         }
+        viewLine = new ViewLine(this, world);
     }
+    
 
     public abstract void updateFromLoad(World world);
 
@@ -83,15 +98,19 @@ public abstract class Actor implements GameObject, Serializable {
         this.y = y;
     }
 
-    
-    @Override
-    public void addGameObject(World world, int x, int y){
-        world.getEnemyList().add(this);
-        setX(x);
-        setY(y);
+    public boolean isMoveing() {
+        return moveing;
     }
-    
-    
-    
 
+    public void setMoveing(boolean moveing) {
+        this.moveing = moveing;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public ViewLine getViewLine() {
+        return viewLine;
+    }
 }

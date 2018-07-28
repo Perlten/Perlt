@@ -11,8 +11,12 @@ import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import stage.GameStage;
-import stage.Stage;
+import state.BattleState;
+import state.GameState;
+import state.MainMenuState;
+import state.OptionState;
+import state.State;
+import state.StateType;
 
 /**
  *
@@ -31,7 +35,7 @@ public class Game {
 
     private FpsLock fpsLock = new FpsLock(60);
 
-    private Stage currentStage;
+    private State currentState;
 
     public Game(String title, int width, int height) {
         this.display = new Display(width, height, title);
@@ -39,7 +43,7 @@ public class Game {
     }
 
     private void init() {
-        currentStage = new GameStage(keyInput, mouseInput, display.getWidth(), display.getHeight());
+        currentState = new MainMenuState(mouseInput, keyInput);
         display.getFrame().addKeyListener(keyInput);
         display.getFrame().addMouseListener(mouseInput);
         display.getFrame().addMouseMotionListener(mouseInput);
@@ -49,7 +53,9 @@ public class Game {
 
     private void update() {
         keyInput.update();
-        currentStage.update();
+        currentState.update();
+        //Has to be below currentState.update();
+        changeState();
     }
 
     private void render() {
@@ -63,11 +69,31 @@ public class Game {
         g.clearRect(0, 0, display.getWidth(), display.getHeight());
 
         //Draw start
-        currentStage.render(g);
+        currentState.render(g);
 
         //Draw end
         bs.show();
         g.dispose();
+
+    }
+
+    private void changeState() {
+        if (currentState.getStateType() == StateType.GAMESTATE) {
+            currentState = new GameState(keyInput, mouseInput);
+            return;
+        }
+        if (currentState.getStateType() == StateType.MENUSTATE) {
+            currentState = new MainMenuState(mouseInput, keyInput);
+            return;
+        }
+        if (currentState.getStateType() == StateType.OPTION) {
+            currentState = new OptionState(mouseInput);
+            return;
+        }
+          if (currentState.getStateType() == StateType.BATTLE) {
+            currentState = new BattleState(mouseInput, keyInput);
+            return;
+        }
 
     }
 
@@ -90,7 +116,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game("Test", 800, 600);
+        Game game = new Game("Test", 1280, 720);
         game.start();
     }
 }
