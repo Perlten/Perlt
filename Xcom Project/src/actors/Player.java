@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 import world.World;
 
 public abstract class Player extends Actor {
+    
+    private static final int VIEWLINESIZE = 150;
 
     protected KeyInput keyInput;
 
@@ -17,7 +19,7 @@ public abstract class Player extends Actor {
     
 
     public Player(int x, int y, KeyInput keyInput, World world, int movementSpeed) {
-        super(x, y, new Rectangle(32, 32), "playerTexturePack.png", movementSpeed, world, 4, 7);
+        super(x, y, new Rectangle(32, 32), "playerTexturePack.png", movementSpeed, world, 4, 7, VIEWLINESIZE);
         this.keyInput = keyInput;
     }
 

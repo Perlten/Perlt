@@ -11,20 +11,21 @@ import world.World;
 
 public abstract class Npc extends Actor {
 
+    private static final int VIEWLINESIZE = 150;
+    
     protected int direction;
     protected int frame;
     protected FpsLock animationLock = new FpsLock(5);
 
     public Npc(int x, int y, String texturePath, World world, int numOfAnimation, int numOfFrames) {
-        super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames);
-        this.viewLine = new ViewLine(this, world);
+        super(x, y, new Rectangle(32, 32), texturePath, 1, world, numOfAnimation, numOfFrames, VIEWLINESIZE);
     }
 
     @Override
     public void updateFromLoad(World world) {
         x = startX;
         y = startY;
-        viewLine = new ViewLine(this, world);
+        viewLine = new ViewLine(this, world, VIEWLINESIZE);
         texture = TextureUtil.getBufferedImagePack(texturePath, numOfAnimation, numOfFrames);
         this.world = world;
         this.collision = new Collision(this, world);

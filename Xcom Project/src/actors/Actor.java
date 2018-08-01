@@ -28,7 +28,7 @@ public abstract class Actor implements GameObject, Serializable {
 
     protected transient World world;
 
-    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world, int numOfAnimation, int numOfFrames) {
+    public Actor(int x, int y, Rectangle hitbox, String texturePath, int movementSpeed, World world, int numOfAnimation, int numOfFrames, int viewLineSize) {
         this.x = x;
         this.y = y;
         this.texturePath += texturePath;
@@ -43,7 +43,7 @@ public abstract class Actor implements GameObject, Serializable {
         } else {
             this.hitbox = new Rectangle(x, y, 0, 0);
         }
-        viewLine = new ViewLine(this, world);
+        viewLine = new ViewLine(this, world, viewLineSize);
     }
     
 

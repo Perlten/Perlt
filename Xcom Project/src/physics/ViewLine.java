@@ -12,13 +12,14 @@ public class ViewLine {
     private Actor actor;
     private World world;
 
-    private final int SIZE = 200;
+    private final int SIZE;
     private int[][] arrX = new int[4][3];
     private int[][] arrY = new int[4][3];
 
-    public ViewLine(Actor actor, World world) {
+    public ViewLine(Actor actor, World world, int size) {
         this.actor = actor;
         this.world = world;
+        this.SIZE = size;
         updatePolygon();
     }
 

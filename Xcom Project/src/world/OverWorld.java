@@ -57,8 +57,11 @@ public abstract class OverWorld extends World {
                     tileList = new ArrayList<>();
                     System.out.println("Could not find tile file");
                 }
-
-                //loads enemy
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Tile file corrupted");
+            }
+            //loads enemy
+            try {
                 if (enemyFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(enemyFile));
                     enemyList = (List<Enemy>) ois.readObject();
@@ -71,8 +74,12 @@ public abstract class OverWorld extends World {
                     enemyList = new ArrayList<>();
                     System.out.println("Could not find enemy file");
                 }
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Enemy file corrupted");
+            }
 
-                //Load sprite
+            //Load sprite
+            try {
                 if (spriteFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(spriteFile));
                     spriteList = (List<Sprite>) ois.readObject();
@@ -85,8 +92,12 @@ public abstract class OverWorld extends World {
                     spriteList = new ArrayList<>();
                     System.out.println("Could not find sprite file");
                 }
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Sprite file corrupted");
+            }
 
-                //Load terrain
+            //Load terrain
+            try {
                 if (terrainFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(terrainFile));
                     terrainList = (List<Terrain>) ois.readObject();
@@ -99,7 +110,11 @@ public abstract class OverWorld extends World {
                     terrainList = new ArrayList<>();
                     System.out.println("Could not find terrain file");
                 }
-                //Load npc
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Terrain file corrupted");
+            }
+            //Load npc
+            try {
                 if (npcFile.exists()) {
                     ois = new ObjectInputStream(new FileInputStream(npcFile));
                     npcList = (List<Npc>) ois.readObject();
@@ -115,8 +130,9 @@ public abstract class OverWorld extends World {
                 Camera.resetCamera();
                 System.out.println("Load");
             } catch (IOException | ClassNotFoundException ex) {
-                ex.printStackTrace();
+                System.out.println("Npc file corrupted");
             }
+
         }
     }
 

@@ -15,6 +15,8 @@ import util.TextureUtil;
 import world.World;
 
 public abstract class Enemy extends Actor {
+    
+    private static final int VIEWLINESIZE = 200;
 
     //Animation
     protected int direction;
@@ -24,7 +26,7 @@ public abstract class Enemy extends Actor {
     protected AI ai;
 
     public Enemy(int x, int y, World world, String texturePath, int numOfAnimation, int numOfFrames, AI ai, int movementSpeed) {
-        super(x, y, new Rectangle(32, 32), texturePath, movementSpeed, world, numOfAnimation, numOfFrames);
+        super(x, y, new Rectangle(32, 32), texturePath, movementSpeed, world, numOfAnimation, numOfFrames, VIEWLINESIZE);
         this.ai = ai;
         this.ai.setEnemy(this);
     }
@@ -34,7 +36,7 @@ public abstract class Enemy extends Actor {
         x = startX;
         y = startY;
         texture = TextureUtil.getBufferedImagePack(texturePath, numOfAnimation, numOfFrames);
-        viewLine = new ViewLine(this, world);
+        viewLine = new ViewLine(this, world, VIEWLINESIZE);
         collision = new Collision(this, world);
         this.world = world;
         animationLock.reset();
