@@ -46,15 +46,10 @@ public class ViewLine {
     }
 
     private boolean canSeeSolidTile(int side) {
+        boolean foundTile = false;
         Polygon poly = new Polygon(arrX[side], arrY[side], 3);
         for (Tile tile : world.getTileList()) {
             if (poly.contains(tile.getHitbox())) {
-                //check if tile is to the right of actor
-//                int debug1 = tile.getX();
-//                int debug2 = actor.getX();
-//                int debug3 = tile.getY();
-//                int debug4 = actor.getY();
-
                 if (side == 0 || side == 1) {
                     if (tile.getX() >= actor.getX()) {
                         rightSize = tile.getX() - actor.getX() - 32;
@@ -68,8 +63,11 @@ public class ViewLine {
                         rightSize = actor.getY() - tile.getY() - 32;
                     }
                 }
-                return true;
+                foundTile = true;
             }
+        }
+        if(foundTile){
+            return true;
         }
         size = STARTSIZE;
         leftSize = STARTSIZE;
@@ -105,10 +103,10 @@ public class ViewLine {
         arrY[2][0] = y + 16;
 
         arrX[2][1] = x - leftSize;
-        arrY[2][1] = y - leftSize;
+        arrY[2][1] = y + leftSize;
 
         arrX[2][2] = x - rightSize;
-        arrY[2][2] = y + rightSize;
+        arrY[2][2] = y - rightSize;
 
         //Right
         arrX[3][0] = x + 16;
