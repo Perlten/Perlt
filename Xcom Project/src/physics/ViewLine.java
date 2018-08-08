@@ -80,39 +80,39 @@ public class ViewLine {
         arrY[0][0] = y + 16;
 
         arrX[0][1] = x - leftSize;
-        arrY[0][1] = y + leftSize;
+        arrY[0][1] = y + STARTSIZE;
 
         arrX[0][2] = x + rightSize;
-        arrY[0][2] = y + rightSize;
+        arrY[0][2] = y + STARTSIZE;
 
         //Up
         arrX[1][0] = x + 16;
         arrY[1][0] = y + 16;
 
         arrX[1][1] = x - leftSize;
-        arrY[1][1] = y - leftSize;
+        arrY[1][1] = y - STARTSIZE;
 
         arrX[1][2] = x + rightSize;
-        arrY[1][2] = y - rightSize;
+        arrY[1][2] = y - STARTSIZE;
 
         //Left
         arrX[2][0] = x + 16;
         arrY[2][0] = y + 16;
 
-        arrX[2][1] = x - leftSize;
+        arrX[2][1] = x - STARTSIZE;
         arrY[2][1] = y + leftSize;
 
-        arrX[2][2] = x - rightSize;
+        arrX[2][2] = x - STARTSIZE;
         arrY[2][2] = y - rightSize;
 
         //Right
         arrX[3][0] = x + 16;
         arrY[3][0] = y + 16;
 
-        arrX[3][1] = x + rightSize;
+        arrX[3][1] = x + STARTSIZE;
         arrY[3][1] = y - rightSize;
 
-        arrX[3][2] = x + leftSize;
+        arrX[3][2] = x + STARTSIZE;
         arrY[3][2] = y + leftSize;
     }
 
