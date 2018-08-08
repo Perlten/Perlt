@@ -96,31 +96,31 @@ public class BattleFootEnemyAi implements AI, Serializable {
     }
 
     private Point getMovePoint(Direction dir) {
-        int distanceToTileDiff = enemy.getMovementSpeed();
+        int distanceToTravel = enemy.getMovementSpeed();
         if (distanceToTile < enemy.getMovementSpeed()) {
-            distanceToTileDiff = distanceToTile;
+            distanceToTravel = distanceToTile;
         }
         if (dir == Direction.RIGHT) {
             //Right
-            int x = distanceToTileDiff;
+            int x = distanceToTravel;
             enemy.setDirection(3);
             return new Point(x, 0);
         }
         if (dir == Direction.LEFT) {
             //Left
-            int x = -distanceToTileDiff;
+            int x = -distanceToTravel;
             enemy.setDirection(2);
             return new Point(x, 0);
         }
         if (dir == Direction.UP) {
             //Up
-            int y = -distanceToTileDiff;
+            int y = -distanceToTravel;
             enemy.setDirection(1);
             return new Point(0, y);
         }
         if (dir == Direction.DOWN) {
             //Down
-            int y = distanceToTileDiff;
+            int y = distanceToTravel;
             enemy.setDirection(0);
             return new Point(0, y);
         }
