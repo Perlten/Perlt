@@ -14,7 +14,6 @@ public class ViewLine {
     private World world;
 
     private final int STARTSIZE;
-    private int size;
 
     private int leftSize;
     private int rightSize;
@@ -25,7 +24,6 @@ public class ViewLine {
     public ViewLine(Actor actor, World world, int size) {
         this.actor = actor;
         this.world = world;
-        this.size = size;
         this.STARTSIZE = size;
         this.leftSize = size;
         this.rightSize = size;
@@ -69,7 +67,6 @@ public class ViewLine {
         if(foundTile){
             return true;
         }
-        size = STARTSIZE;
         leftSize = STARTSIZE;
         rightSize = STARTSIZE;
         return false;

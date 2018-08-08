@@ -51,7 +51,6 @@ public class World0 extends OverWorld {
 
     @Override
     public void render(Graphics g) {
-        //TODO: make size dynamic
         int playerX = player.getX();
         int playerY = player.getY();
 

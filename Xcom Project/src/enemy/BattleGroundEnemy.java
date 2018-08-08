@@ -7,7 +7,7 @@ import world.World;
 public class BattleGroundEnemy extends BattleEnemy {
 
     public BattleGroundEnemy(int x, int y, World world) {
-        super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi(), 100, 1, 100);
+        super(x, y, world, "groundEnemyTexture.png", 4, 3, new BattleFootEnemyAi(), 100, 3, 100);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class BattleFootEnemyAi implements AI, Serializable {
     private int targetTile;
     private boolean detour;
     private Direction currentDirection;
+    private int distanceToTile;
     private final int MOVECOST = -1;
 
     @Override
@@ -36,26 +37,30 @@ public class BattleFootEnemyAi implements AI, Serializable {
                     if (enemy.getX() > tile.getX() && !enemy.getCollision().isActorCollisionLeft()) {
                         currentDirection = Direction.LEFT;
                         enemy.changeAp(MOVECOST);
+                        distanceToTile = Math.abs(enemy.getX() - tile.getX());
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() > tile.getY() && !enemy.getCollision().isActorCollisionUp()) {
                         currentDirection = Direction.UP;
                         enemy.changeAp(MOVECOST);
+                        distanceToTile = Math.abs(enemy.getY() - tile.getX());
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getX() < tile.getX() && !enemy.getCollision().isActorCollisionRight()) {
                         currentDirection = Direction.RIGHT;
                         enemy.changeAp(MOVECOST);
+                        distanceToTile = Math.abs(enemy.getX() - tile.getX());
                         return getMovePoint(currentDirection);
                     }
                     if (enemy.getY() < tile.getY() && !enemy.getCollision().isActorCollisionDown()) {
                         currentDirection = Direction.DOWN;
                         enemy.changeAp(MOVECOST);
+                        distanceToTile = Math.abs(enemy.getY() - tile.getX());
                         return getMovePoint(currentDirection);
                     }
                     detour = true;
                 } else {
-                    //TODO:
+                    //TODO: make sure detour always work
                     return detour();
                 }
             }
@@ -91,27 +96,31 @@ public class BattleFootEnemyAi implements AI, Serializable {
     }
 
     private Point getMovePoint(Direction dir) {
+        int distanceToTileDiff = 0;
+        if (distanceToTile < enemy.getMovementSpeed()) {
+            distanceToTileDiff = distanceToTile;
+        }
         if (dir == Direction.RIGHT) {
             //Right
-            int x = enemy.getMovementSpeed();
+            int x = enemy.getMovementSpeed() - distanceToTileDiff;
             enemy.setDirection(3);
             return new Point(x, 0);
         }
         if (dir == Direction.LEFT) {
             //Left
-            int x = -enemy.getMovementSpeed();
+            int x = -(enemy.getMovementSpeed() + distanceToTileDiff);
             enemy.setDirection(2);
             return new Point(x, 0);
         }
         if (dir == Direction.UP) {
             //Up
-            int y = -enemy.getMovementSpeed();
+            int y = -(enemy.getMovementSpeed() + distanceToTileDiff);
             enemy.setDirection(1);
             return new Point(0, y);
         }
         if (dir == Direction.DOWN) {
             //Down
-            int y = enemy.getMovementSpeed();
+            int y = enemy.getMovementSpeed() - distanceToTileDiff;
             enemy.setDirection(0);
             return new Point(0, y);
         }

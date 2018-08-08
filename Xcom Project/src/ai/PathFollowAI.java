@@ -15,6 +15,7 @@ public class PathFollowAI implements AI, Serializable {
     private int targetTile;
     private boolean detour;
     private Direction currentDirection;
+ 
 
     public PathFollowAI(Enemy enemy) {
         this.enemy = enemy;
@@ -52,7 +53,7 @@ public class PathFollowAI implements AI, Serializable {
                     }
                     detour = true;
                 } else {
-                    //TODO:
+                    //TODO: make sure enemy can always avoid getting stuck 
                     return detour();
                 }
             }
@@ -92,13 +93,13 @@ public class PathFollowAI implements AI, Serializable {
         }
         if (dir == Direction.LEFT) {
             //Left
-            int x = -enemy.getMovementSpeed();
+            int x = -(enemy.getMovementSpeed());
             enemy.setDirection(2);
             return new Point(x, 0);
         }
         if (dir == Direction.UP) {
             //Up
-            int y = -enemy.getMovementSpeed();
+            int y = -(enemy.getMovementSpeed());
             enemy.setDirection(1);
             return new Point(0, y);
         }
