@@ -2,6 +2,7 @@ package state;
 
 import camera.Camera;
 import display.Display;
+import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
@@ -13,6 +14,8 @@ import world.World;
 import world.World0;
 
 public class GameState implements State {
+    
+    public static Enemy lastEnemyToFight;
 
     private List<OverWorld> worldList = new ArrayList<>();
     private World currentWorld;
@@ -26,6 +29,7 @@ public class GameState implements State {
 
     @Override
     public void update() {
+        removeEnemy();
         currentWorld.update();
     }
 
@@ -40,6 +44,15 @@ public class GameState implements State {
             //Draw fixed graphics here
         }
         currentWorld.renderLoadingScrenn(g);
+    }
+    
+    private void removeEnemy(){
+        //Removes enemy from world when player enters a fight
+         if(lastEnemyToFight != null){
+            currentWorld.getEnemyList().remove(lastEnemyToFight);
+            currentWorld.getMapEditor().saveWorld();
+            lastEnemyToFight = null;
+        }
     }
 
     @Override

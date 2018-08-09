@@ -5,6 +5,7 @@ import enemy.Enemy;
 import java.awt.Point;
 import java.io.Serializable;
 import physics.Collision;
+import state.GameState;
 import state.StateType;
 import tile.PathTile;
 
@@ -120,14 +121,13 @@ public class PathFollowAI implements AI, Serializable {
     @Override
     public void playerSeen() {
         enemy.getWorld().getState().changeState(StateType.BATTLE);
+        GameState.lastEnemyToFight = enemy;
     }
 
     @Override
     public void setEnemy(Enemy enemy) {
         this.enemy = enemy;
     }
-    
-
 }
 
 enum Direction {

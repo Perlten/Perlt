@@ -61,6 +61,10 @@ public abstract class World {
         return state;
     }
 
+    public MapEditor getMapEditor() {
+        return mapEditor;
+    }
+
     public abstract void update();
 
     public abstract void render(Graphics g);

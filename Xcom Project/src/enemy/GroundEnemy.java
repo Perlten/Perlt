@@ -26,6 +26,7 @@ public class GroundEnemy extends Enemy {
     @Override
     public void renderHighlight(Graphics g) {
         renderPathTile(g);
+        g.drawPolygon(viewLine.getPolygon(direction));
     }
 
     @Override

@@ -189,7 +189,7 @@ public class MapEditor {
         }
     }
 
-    private void saveWorld() {
+    public void saveWorld() {
         try {
             File tileFile = new File(worldPath + "tile");
             File enemyFile = new File(worldPath + "enemy");

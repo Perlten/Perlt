@@ -41,7 +41,7 @@ public class World0 extends OverWorld {
             npc.update();
         }
 
-        for (Actor enemy : enemyList) {
+        for (Enemy enemy : enemyList) {
             enemy.update();
         }
         for (Sprite sprite : spriteList) {
@@ -68,7 +68,7 @@ public class World0 extends OverWorld {
             }
         }
 
-        for (Actor enemy : enemyList) {
+        for (Enemy enemy : enemyList) {
             if (checkRenderDistance(playerX, playerY, enemy.getX(), enemy.getY(), 32)) {
                 enemy.render(g);
             }
