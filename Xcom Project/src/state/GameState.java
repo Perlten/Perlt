@@ -29,8 +29,9 @@ public class GameState implements State {
 
     @Override
     public void update() {
-        removeEnemy();
         currentWorld.update();
+        //removeEnemy() MUST come after currentWorld.update()
+        removeEnemy();
     }
 
     @Override
