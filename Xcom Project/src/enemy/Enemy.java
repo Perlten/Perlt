@@ -87,7 +87,7 @@ public abstract class Enemy extends Actor {
             g.drawImage(tile.getTexture(), tile.getX(), tile.getY(), null);
             g.drawString(String.valueOf(tile.getNum()), tile.getX(), tile.getY());
         }
-        g.drawPolygon(viewLine.getPolygon(direction));
+       
     }
 
     protected void addPathTile(int x, int y) {

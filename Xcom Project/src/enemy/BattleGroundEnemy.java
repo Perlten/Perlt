@@ -28,7 +28,7 @@ public class BattleGroundEnemy extends BattleEnemy {
     public void renderHighlight(Graphics g) {
         renderPathTile(g);
         g.drawString("AP: " + ap, x, y + 45);
-
+        g.drawPolygon(viewLine.getPolygon(direction));
     }
 
     @Override
