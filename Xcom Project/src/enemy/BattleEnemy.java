@@ -6,7 +6,6 @@ import world.World;
 
 public abstract class BattleEnemy extends Enemy implements BattleObject{
     
-    protected boolean endTurn;
     protected int ap;
     protected int maxAp;
     protected int health;
@@ -20,10 +19,6 @@ public abstract class BattleEnemy extends Enemy implements BattleObject{
         this.health = MaxHealth;
     }
     
-    public void setEndTurn(boolean endTurn) {
-        this.endTurn = endTurn;
-    }
-
     public int getAp() {
         return ap;
     }

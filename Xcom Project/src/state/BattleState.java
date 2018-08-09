@@ -32,28 +32,46 @@ public class BattleState implements State {
     @Override
     public void update() {
         world.update();
+        BattlePlayer player = world.getBattlePlayer();
 
-        //Changes turn
-        if (playerTurn) {
-            BattlePlayer p = world.getBattlePlayer();
-            playerTurn = p.isTurnOver();
-            p.update();
-        } else {
-            if (world.getEnemyList().isEmpty()) {
-                changeState(StateType.GAMESTATE);
-                BattlePlayer player = world.getBattlePlayer();
-                player.battleEnd();
-
+        //Checks if all enemys are dead
+        if (world.getEnemyList().isEmpty()) {
+            changeState(StateType.GAMESTATE);
+            world.getBattlePlayer().battleEnd();
+            for (BattleEnemy battleEnemy : world.getBattleEnemyList()) {
+                battleEnemy.battleEnd();
+            }
+            return;
+        }
+        //Player turn
+         if (playerTurn) {
+            playerTurn = player.isTurnOver();
+            //checks if player turn is over
+            if (!playerTurn) {
+                player.roundEnd();
                 for (BattleEnemy battleEnemy : world.getBattleEnemyList()) {
-                    battleEnemy.battleEnd();
+                    battleEnemy.roundStart();
                 }
-
                 return;
             }
+            player.update();
+        } else {
+            //Enemy turn
+            boolean enemyTurnEnd = true;
             for (BattleEnemy enemy : world.getBattleEnemyList()) {
                 enemy.update();
-                playerTurn = enemy.isTurnOver();
+                if (!enemy.isTurnOver()) {
+                    enemyTurnEnd = false;
+                }
             }
+            //Checks if enemy turn is ove
+            if (enemyTurnEnd) {
+                for (BattleEnemy battleEnemy : world.getBattleEnemyList()) {
+                    battleEnemy.roundEnd();
+                }
+                player.roundStart();
+            }
+            playerTurn = enemyTurnEnd;
         }
     }
 

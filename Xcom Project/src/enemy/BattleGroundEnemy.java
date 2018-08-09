@@ -12,9 +12,6 @@ public class BattleGroundEnemy extends BattleEnemy {
 
     @Override
     public void update() {
-        if (endTurn) {
-            endTurn = false;
-        }
         updateHitbox();
         updateCollision();
         move();
@@ -41,7 +38,7 @@ public class BattleGroundEnemy extends BattleEnemy {
 
     @Override
     public boolean isTurnOver() {
-        return endTurn;
+        return !isMoveing();
     }
 
     @Override
@@ -58,5 +55,14 @@ public class BattleGroundEnemy extends BattleEnemy {
 
     @Override
     public void battleEnd() {
+    }
+
+    @Override
+    public void roundStart() {
+        ap = maxAp;
+    }
+
+    @Override
+    public void roundEnd() {
     }
 }

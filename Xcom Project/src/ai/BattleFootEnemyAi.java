@@ -19,12 +19,10 @@ public class BattleFootEnemyAi implements AI, Serializable {
 
     @Override
     public Point move() {
-        //TODO: make sure enemy can have any movement speed
         for (PathTile tile : enemy.getPathTiles()) {
             if (tile.getNum() == targetTile) {
                 if (enemy.getAp() <= 0) {
-                    enemy.setEndTurn(true);
-                    enemy.setAp(enemy.getMaxAp());
+                    enemy.setMoveing(false);
                     return new Point(0, 0);
                 }
                 enemy.setMoveing(true);

@@ -167,6 +167,16 @@ public class BattlePlayer extends Player implements BattleObject {
         }
     }
     
+    @Override
+    public void roundStart() {
+        ap = 100;
+        playerTurn = true;
+    }
+
+    @Override
+    public void roundEnd() {
+    }
+    
      @Override
     public void battleStart() {
          System.out.println("Start");
