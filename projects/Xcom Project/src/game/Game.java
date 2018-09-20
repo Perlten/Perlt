@@ -87,7 +87,7 @@ public class Game {
             return;
         }
         if (currentState.getStateType() == StateType.OPTION) {
-            currentState = new OptionState(mouseInput);
+            currentState = new OptionState(mouseInput, keyInput);
             return;
         }
           if (currentState.getStateType() == StateType.BATTLE) {

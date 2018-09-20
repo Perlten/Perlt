@@ -38,13 +38,13 @@ public class KeyInput implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_I) {
             i = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_N){
+        if (e.getKeyCode() == KeyEvent.VK_N) {
             n = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_L){
+        if (e.getKeyCode() == KeyEvent.VK_L) {
             l = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             space = true;
         }
     }
@@ -91,7 +91,7 @@ public class KeyInput implements KeyListener {
         return temp;
     }
 
-    public boolean isN(){
+    public boolean isN() {
         boolean temp = n;
         n = false;
         return temp;
@@ -106,7 +106,7 @@ public class KeyInput implements KeyListener {
     public boolean isLevelChangeTest() {
         return levelChangeTest;
     }
-    
+
     public int lastestNumKey() {
         if (keysReleased[KeyEvent.VK_0]) {
             keysReleased[KeyEvent.VK_0] = false;
@@ -131,4 +131,7 @@ public class KeyInput implements KeyListener {
         return -1;
     }
 
+    public boolean[] getKeysReleased() {
+        return keysReleased;
+    }
 }

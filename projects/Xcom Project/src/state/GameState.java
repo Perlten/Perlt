@@ -1,14 +1,12 @@
 package state;
 
 import camera.Camera;
-import display.Display;
 import enemy.Enemy;
 import input.KeyInput;
 import input.MouseInput;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import util.TextureUtil;
 import world.OverWorld;
 import world.World;
 import world.World0;
@@ -49,7 +47,7 @@ public class GameState implements State {
     
     private void removeEnemy(){
         //Removes enemy from world when player enters a fight
-         if(lastEnemyToFight != null){
+         if(lastEnemyToFight != null && !currentWorld.getMapEditor().edit){
             currentWorld.getEnemyList().remove(lastEnemyToFight);
             currentWorld.getMapEditor().saveWorld();
             lastEnemyToFight = null;
