@@ -77,10 +77,10 @@ public class PetResource {
     }
     
     @GET
-    @Path("event/{year}/{month}/{day}")
+    @Path("event")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPetsOnEventDate(@PathParam("year") int year, @PathParam("month") int month, @PathParam("day") int day){
-        Date date = new GregorianCalendar(year, month - 1, day).getTime();
+    public Response getPetsOnEventDate(@QueryParam("year") String year, @QueryParam("month") String month, @QueryParam("day") String day){
+        Date date = new GregorianCalendar(Integer.parseInt(year), (Integer.parseInt(month)) - 1, Integer.parseInt(day)).getTime();
         List<Pet> petList = f.eventDatePetList(date);
         List<PetDTO> dtoList = convertPetList(petList);
         

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 
 public class Facade {
@@ -53,9 +54,10 @@ public class Facade {
     public List<Pet> eventDatePetList(Date date){
          EntityManager em = getEntityManager();
         try{
-            Query q = em.createQuery("SELECT p FROM Pet p where p.id = (SELECT e.pet.id FROM Event e WHERE e.date = :date)");
+            Query q = em.createQuery("SELECT p FROM Pet p where p.id In (SELECT e.pet.id FROM Event e WHERE e.date = :date)", Pet.class);
             q.setParameter("date", date);
-            return q.getResultList();
+            List<Pet> petList = q.getResultList();
+            return petList;
         }finally {
             em.close();
         }
