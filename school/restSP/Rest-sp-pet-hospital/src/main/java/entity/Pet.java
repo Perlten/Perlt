@@ -3,10 +3,12 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,8 +59,8 @@ public class Pet implements Serializable {
     @Column(name = "death")
     @Temporal(TemporalType.DATE)
     private Date death;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
-    private Collection<Event> eventCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+    private List<Event> eventCollection;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private Owner owner;
@@ -117,11 +119,15 @@ public class Pet implements Serializable {
         this.death = death;
     }
 
-    public Collection<Event> getEventCollection() {
+    public List<Event> getEventCollection() {
         return eventCollection;
     }
+    
+    public void addEvent(Event evnet){
+        eventCollection.add(evnet);
+    }
 
-    public void setEventCollection(Collection<Event> eventCollection) {
+    public void setEventCollection(List<Event> eventCollection) {
         this.eventCollection = eventCollection;
     }
 
@@ -155,7 +161,8 @@ public class Pet implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Pet[ id=" + id + " ]";
+        return "Pet{" + "id=" + id + ", name=" + name + ", birth=" + birth + ", species=" + species + ", death=" + death + ", eventCollection=" + eventCollection + ", owner=" + owner + '}';
     }
+
 
 }

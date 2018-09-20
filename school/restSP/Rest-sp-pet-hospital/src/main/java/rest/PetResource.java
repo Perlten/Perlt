@@ -8,15 +8,22 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.PetDTO;
+import entity.Event;
 import entity.Pet;
 import facade.Facade;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Persistence;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -68,6 +75,31 @@ public class PetResource {
         
         return Response.ok().entity(json).type(MediaType.APPLICATION_JSON).build();
     }
+    
+    @GET
+    @Path("event/{year}/{month}/{day}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPetsOnEventDate(@PathParam("year") int year, @PathParam("month") int month, @PathParam("day") int day){
+        Date date = new GregorianCalendar(year, month - 1, day).getTime();
+        List<Pet> petList = f.eventDatePetList(date);
+        List<PetDTO> dtoList = convertPetList(petList);
+        
+        String json = gson.toJson(dtoList);
+        
+        return Response.ok().entity(json).type(MediaType.APPLICATION_JSON).build();
+    }
+    
+    @POST
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createEventForPet(String json, @PathParam("id") int id){
+        Event event1 = gson.fromJson(json, Event.class);
+        Event event = f.createEventForPet(event1, id);
+        
+//        String responseJson = gson.toJson(event);
+        return Response.ok().entity("{\"done\" : true}").type(MediaType.APPLICATION_JSON).build();
+    }
 
     private List<PetDTO> convertPetList(List<Pet> petList) {
         List<PetDTO> dto = new ArrayList<>();
@@ -76,5 +108,7 @@ public class PetResource {
         }
         return dto;
     }
+    
+    
 
 }

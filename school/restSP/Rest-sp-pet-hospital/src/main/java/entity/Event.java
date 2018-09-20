@@ -59,10 +59,10 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-    public Event(Integer id, String event, Date date) {
-        this.id = id;
+    public Event(String event, Date date, String remark) {
         this.event = event;
         this.date = date;
+        this.remark = remark;
     }
 
     public Integer getId() {

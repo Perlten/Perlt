@@ -1,5 +1,8 @@
 package facade;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import entity.Event;
 import entity.Pet;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 
 
 public class Facade {
@@ -48,9 +50,43 @@ public class Facade {
         }
     }
     
+    public List<Pet> eventDatePetList(Date date){
+         EntityManager em = getEntityManager();
+        try{
+            Query q = em.createQuery("SELECT p FROM Pet p where p.id = (SELECT e.pet.id FROM Event e WHERE e.date = :date)");
+            q.setParameter("date", date);
+            return q.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+    
+    public Event createEventForPet(Event event, int petId){
+         EntityManager em = getEntityManager();
+        try{
+            em.getTransaction().begin();
+            Pet pet = em.find(Pet.class, petId);
+            pet.addEvent(event);
+            event.setPet(pet);
+            em.persist(event);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return event;
+    }
+    
     public static void main(String[] args) {
         Facade f = new Facade(Persistence.createEntityManagerFactory("pu"));
-        System.out.println(f.getLiveingPet());
+        
+        Pet pet = f.getAllPets().get(0);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Event event = pet.getEventCollection().get(0);
+        event.setPet(null);
+        String json = gson.toJson(event);
+        
+        System.out.println(json);
     }
+    
     
 }
