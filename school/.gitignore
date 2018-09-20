@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/git,java,linux,maven,macos,windows,netbeans,visualstudio
 
+*/META-INF/*
+
 ### Git ###
 *.orig
 
