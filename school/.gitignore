@@ -1,7 +1,7 @@
 
 # Created by https://www.gitignore.io/api/git,java,linux,maven,macos,windows,netbeans,visualstudio
 
-*/META-INF/*
+**persistence.xml
 
 ### Git ###
 *.orig
