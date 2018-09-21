@@ -95,9 +95,8 @@ public class PetResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createEventForPet(String json, @PathParam("id") int id){
         Event event1 = gson.fromJson(json, Event.class);
-        Event event = f.createEventForPet(event1, id);
+        f.createEventForPet(event1, id);
         
-//        String responseJson = gson.toJson(event);
         return Response.ok().entity("{\"done\" : true}").type(MediaType.APPLICATION_JSON).build();
     }
 
