@@ -68,7 +68,7 @@ public class PetResource {
     }
     
     @GET
-    @Path("dead")
+    @Path("alive")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllLiveingPets() {
         
