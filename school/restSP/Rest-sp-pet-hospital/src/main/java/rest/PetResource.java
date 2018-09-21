@@ -7,6 +7,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dto.PetDTO;
 import entity.Event;
 import entity.Pet;
@@ -46,8 +47,11 @@ public class PetResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPetSize() {
         int size = f.getAllPets().size();
-        String json = "{\"size\" :" + size + "}";
-
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("size", size);
+        
+        String json = gson.toJson(jsonObject);
+        
         return Response.ok().entity(json).type(MediaType.APPLICATION_JSON).build();
     }
 

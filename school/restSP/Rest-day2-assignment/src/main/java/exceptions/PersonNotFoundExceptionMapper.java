@@ -25,7 +25,7 @@ public class PersonNotFoundExceptionMapper extends Exception implements Exceptio
     @Override
     public Response toResponse(PersonNotFoundExceptionMapper exception) {
         ExceptionDTO edto = new ExceptionDTO(exception, 404, DEBUG, message);
-        return Response.status(404).entity(gson.toJson(edto)).type(MediaType.APPLICATION_JSON).build();
+        return Response.status(edto.getCode()).entity(gson.toJson(edto)).type(MediaType.APPLICATION_JSON).build();
     }
 
 }
