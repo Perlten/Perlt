@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="chatStyle.css">
+    </head>
+    <body>
+        <button onclick=' window.location.href = "index.html"' >Back</button>
+        <h1 id="headLine"></h1>
+        <div class="roundBorder" id="chatBox"></div>
+        
+        <form onsubmit="return false">
+            <input id="message" type="text" placeholder="Message"/>
+            <input id="send" type="submit" value="Send"/>
+        </form>
+        <script src="chat.js"></script>
+    </body>
+</html>

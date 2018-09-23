@@ -1,0 +1,8 @@
+entity/MessageManager.class
+rest/ChatResource.class
+entity/Message.class
+exception/ExceptionDTO.class
+exception/ExceptionMapper.class
+rest/ApplicationConfig.class
+entity/ChatRoom.class
+entity/MessageManager$1.class

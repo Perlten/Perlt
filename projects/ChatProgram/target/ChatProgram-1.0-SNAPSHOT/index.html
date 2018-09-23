@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h3>Enter name</h3>
+        <input id="name" type="text" placeholder="Name" required/>
+        
+        <br>
+        <br>
+        
+        <h3>Join chatroom</h3>
+        <form onsubmit="return false">
+            <input id="joinChatRoomName" type="text" placeholder="Chat room name" required/>
+            <br>
+            <input id="join" type="submit" value="Next"/>
+        </form>
+
+        <br>        
+        <br>        
+        
+        <h3>Create chatroom</h3>
+        <form onsubmit="return false">
+            <input id="createChatRoomName" type="text" placeholder="Chat room name" required/>
+            <br>
+            <input id="publicRoom" type="checkbox" checked/>Public room
+            <br>
+            <input id="create" type="submit" value="Next"/>
+        </form>
+        
+        <h3 id="error"></h3>
+        
+        <br>
+        <h3>Public rooms</h3>
+        <div id="createdRooms"></div>
+        
+        <script src="indexJavaScript.js"> </script>
+    </body>
+</html>
