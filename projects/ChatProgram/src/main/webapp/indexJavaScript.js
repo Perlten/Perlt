@@ -10,7 +10,14 @@ window.addEventListener("load", function () {
 window.addEventListener("load", createPublicRoomHtml);
 window.setInterval(createPublicRoomHtml, 5000);
 
-
+window.setInterval(function () {
+    var name = document.getElementById("name").value;
+    if (name === "" || name === " ") {
+        document.getElementById("forms").style.visibility = "hidden";
+    }else{
+        document.getElementById("forms").style.visibility = "visible";
+    }
+}, 20);
 function createChatRoom() {
     var name = document.getElementById("name").value;
     var chatRoomName = document.getElementById("createChatRoomName").value;
@@ -44,7 +51,7 @@ function createChatRoom() {
         if (response.status === 200) {
             createNameAndRoomCookie(name, chatRoomName);
             window.location.href = "chat.html";
-        }else{
+        } else {
             ERROR.innerText = "Error room already exits";
         }
     });
