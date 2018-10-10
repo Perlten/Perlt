@@ -18,11 +18,21 @@
 </head>
 
 <body>
-    <p id="test"></p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="loginPage.html">
+                    <input type="submit" value="Login" />
+                </form>
 
-<script>
-    document.getElementById("test").innerText = sessionStorage.getItem("user");
-</script>
+            </div>
+            <div class="col-md-6">
+                <form action="createUser.html">
+                    <input type="submit" value="Create user"/>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

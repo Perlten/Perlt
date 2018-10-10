@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 
 
 @Entity
@@ -25,7 +26,7 @@ public class ChatRoom implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "chatroom")
     @JoinColumn
     private List<Message> messagesList = new ArrayList<>();
     @Column(unique = true)

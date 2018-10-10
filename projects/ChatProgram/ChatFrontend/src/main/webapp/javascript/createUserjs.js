@@ -38,8 +38,7 @@ function createUser() {
     REST(rootURL + "user", function (response) {
         sessionStorage.setItem("user", JSON.stringify(response));
         console.log(sessionStorage.getItem("user"));
-        //TODO: Redirect to chatpage
-        // location.href = "index.html"
+        location.href = "chatRooms.html";
     }, opts);
 
 

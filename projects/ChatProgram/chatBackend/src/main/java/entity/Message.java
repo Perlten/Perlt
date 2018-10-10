@@ -24,7 +24,6 @@ public class Message implements Serializable {
     private User sender;
     
     @ManyToOne
-    @JoinColumn()
     private ChatRoom chatroom;
 
     public Message() {
@@ -71,9 +70,4 @@ public class Message implements Serializable {
     public void setSender(User sender) {
         this.sender = sender;
     }
-    
-    
-    
-    
-
 }

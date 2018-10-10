@@ -1,6 +1,7 @@
 package dto.chatRoom;
 
 import dto.user.UserDTO;
+import javax.persistence.Persistence;
 
 
 public class CreateChatRoomDTO {
@@ -12,5 +13,5 @@ public class CreateChatRoomDTO {
         this.owner = owner;
         this.roomName = roomName;
     }
-
+    
 }

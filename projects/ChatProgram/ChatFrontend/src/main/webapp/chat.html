@@ -6,6 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <style>
         /* Chat containers */
         .container {
@@ -62,16 +73,31 @@
 <body>
     <div class="container">
         <div class="row">
-            <div id="chat"></div>
+            <div class="col-md-12">
+                <div id="chat"></div>
+            </div>
         </div>
-        <button type="button" id="test" class="btn btn-primary">TEST</button>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- <form id="chatForm" onsubmit="return false">
+                    <textarea id="text" rows="5" cols="50"></textarea>
+                    <button type="button" id="sendbtn" class="btn btn-primary">Send</button>
+                </form> -->
+                <form id="sendForm" onsubmit="return false">
+                    <div class="form-group">
+                        <label for="text">Message:</label>
+                        <input id="text" type="text" placeholder="Message" class="form-control"  />
+                        <button type="submit" id="sendbtn" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <script>
-        sessionStorage.setItem("room", "room");
-    </script>
+
     <script src="javascript/fetch.js"></script>
     <script src="javascript/chatjs.js"></script>
+    <script src="javascript/errorCheck.js"></script>
 </body>
 
 </html>

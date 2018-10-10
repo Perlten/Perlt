@@ -1,4 +1,4 @@
-var rootURL = "http://localhost:8084/ChatProgram/api/"
+var rootURL = "https://perlt.net/chat/api/"
 
 function REST(URL, callback, options) {
     fetch(URL, options)
@@ -21,8 +21,8 @@ function errorCheck(res) {
 function errorHandler(err) {
     if (err.httpError) {    
         err.fullError.then(errjson => {
-            console.log(errjson)
-        })
+                console.log(errjson)
+            })
     } else {
         console.log("Network Error " + err)
     }

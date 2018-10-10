@@ -19,7 +19,6 @@ function login(){
     REST(rootURL + "user/login", function(response){
         console.log(response);
         sessionStorage.setItem("user", JSON.stringify(response));
-        //TODO relocate to right location
-        location.href = "index.html"
+        location.href = "chatRooms.html"
     }, opts);
 }
