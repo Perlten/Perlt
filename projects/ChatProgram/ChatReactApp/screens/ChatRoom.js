@@ -14,7 +14,11 @@ export default class ChatRoom extends React.Component {
         console.log(this.user);
 
         this.getMsg();
-        setInterval(this.getMsg, 3000);
+       this.intervalId = setInterval(this.getMsg, 3000);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.intervalId);
     }
 
     getUser = async () => {

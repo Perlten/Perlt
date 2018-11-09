@@ -33,6 +33,7 @@ export default class LoginScreen extends React.Component {
     verifyLogin = async () => {
         const email = this.state.email;
         const password = this.state.password;
+        this.setState({email: "", password: ""});
         const user = await LoginFacade.verifyLogin(email, password);
         if (user) {
            await this.saveUser(user);
