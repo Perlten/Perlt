@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+mkdir $1
+cd $1
+npm init -y
+mkdir src
+touch src/index.js
+npm install nodemon --save-dev
+npm install @babel/core @babel/node --save-dev
+npm install @babel/preset-env --save-dev
+touch .babelrc
+echo "{
+  "presets": [
+    \"@babel/preset-env\"
+  ]
+}" >> .babelrc
+json -I -f package.json -e "this.scripts.start=\"nodemon --exec babel-node src/index.js\""
+
