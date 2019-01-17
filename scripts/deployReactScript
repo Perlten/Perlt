@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-page='carondoEmployee'
-site='https://perlt.net/'
-ip=165.227.144.152
+#For it to work you need npm install -g json
+#And you need to insert a #sh in the default file on your nginx server
+
+
+page='carondoEmployee' #  f.eks. perlt.net/carondoEmployee
+site='https://perlt.net/' #domain name with a / after it 
+ip=165.227.144.152 #ip to nginx
 
 edit='false'
 ins="false"
